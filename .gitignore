@@ -1,0 +1,37 @@
+# Claude / oh-my-claudecode runtime state
+.omc/
+.claude/
+
+# macOS
+.DS_Store
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python (future)
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Node (future)
+node_modules/
+dist/
+build/
+*.log
+
+# OS
+Thumbs.db
