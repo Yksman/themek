@@ -1,0 +1,23 @@
+{
+  "period": "2023",
+  "segments": [
+    {"name_ko": "메모리반도체", "share_pct": 42.5,
+     "description": "DRAM/NAND 등", "products": ["DRAM", "NAND", "HBM"]},
+    {"name_ko": "스마트폰/네트워크", "share_pct": 38.0,
+     "description": "갤럭시 시리즈", "products": ["갤럭시 스마트폰", "갤럭시 워치"]},
+    {"name_ko": "디스플레이", "share_pct": 15.5,
+     "description": "OLED 패널", "products": ["OLED 패널"]}
+  ],
+  "customers": [
+    {"name_raw": "Apple Inc.", "revenue_share_pct": 18.0, "tier": "1차"},
+    {"name_raw": "주요 글로벌 IT 고객사 (비공개)", "revenue_share_pct": null, "tier": "unknown"}
+  ],
+  "geographic": [
+    {"region_code": "KR", "share_pct": 18.0},
+    {"region_code": "US", "share_pct": 35.0},
+    {"region_code": "CN", "share_pct": 20.0},
+    {"region_code": "EU", "share_pct": 15.0},
+    {"region_code": "JP", "share_pct": 5.0},
+    {"region_code": "ROW", "share_pct": 7.0}
+  ]
+}
