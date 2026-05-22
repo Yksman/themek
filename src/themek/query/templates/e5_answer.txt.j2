@@ -1,0 +1,35 @@
+[{{ result.stock_name }} ({{ result.stock_ticker }}){% if result.sector_name %} — {{ result.sector_name }}{% endif %}]
+{% if result.source_report_rcept_no -%}
+출처: 사업보고서 (period={{ result.period }}, DART rcept_no={{ result.source_report_rcept_no }}){% if result.source_report_url %}
+링크: {{ result.source_report_url }}{% endif %}
+
+## 사업 부문 매출 구성
+{% if result.segments -%}
+{% for seg in result.segments -%}
+- {{ seg.name }}{% if seg.share_pct is not none %} {{ seg.share_pct }}%{% else %} (비중 미명시){% endif %}{% if seg.description %} — {{ seg.description }}{% endif %}
+{% endfor -%}
+{%- else -%}
+(보고서에서 사업부문 정보가 추출되지 않았습니다.)
+{%- endif %}
+
+## 주요 고객사 / 매출처
+{% if result.top_customers -%}
+{% for c in result.top_customers -%}
+- {{ c.name_raw }}{% if c.revenue_share_pct is not none %} ({{ c.revenue_share_pct }}%){% endif %}{% if c.tier != "unknown" %} · {{ c.tier }} 협력사{% endif %}
+{% endfor -%}
+{%- else -%}
+(보고서에서 주요 고객사가 추출되지 않았습니다.)
+{%- endif %}
+
+## 지역별 매출 노출
+{% if result.top_regions -%}
+{% for g in result.top_regions -%}
+- {{ g.region_name_ko }} ({{ g.region_code }}): {{ g.share_pct }}%
+{% endfor -%}
+{%- else -%}
+(보고서에서 지역별 매출 정보가 추출되지 않았습니다.)
+{%- endif %}
+{%- else -%}
+이 종목에 대한 사업보고서가 아직 ingest되지 않았습니다.
+먼저 `themek ingest --rcept-no <dart_rcept_no>` 로 보고서를 등록한 뒤 다시 조회하세요.
+{%- endif %}
