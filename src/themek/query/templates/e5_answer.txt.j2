@@ -1,12 +1,11 @@
-[{{ result.stock_name }} ({{ result.stock_ticker }}){% if result.sector_name %} — {{ result.sector_name }}{% endif %}]
+[{{ result.stock_name }} ({{ result.stock_ticker }}){{ (" — " ~ result.sector_name) if result.sector_name else "" }}]
 {% if result.source_report_rcept_no -%}
-출처: 사업보고서 (period={{ result.period }}, DART rcept_no={{ result.source_report_rcept_no }}){% if result.source_report_url %}
-링크: {{ result.source_report_url }}{% endif %}
+출처: 사업보고서 (period={{ result.period }}, DART rcept_no={{ result.source_report_rcept_no }}){{ ("\n링크: " ~ result.source_report_url) if result.source_report_url else "" }}
 
 ## 사업 부문 매출 구성
 {% if result.segments -%}
 {% for seg in result.segments -%}
-- {{ seg.name }}{% if seg.share_pct is not none %} {{ seg.share_pct }}%{% else %} (비중 미명시){% endif %}{% if seg.description %} — {{ seg.description }}{% endif %}
+- {{ seg.name }}{{ (" " ~ seg.share_pct|string ~ "%") if seg.share_pct is not none else " (비중 미명시)" }}{{ (" — " ~ seg.description) if seg.description else "" }}
 {% endfor -%}
 {%- else -%}
 (보고서에서 사업부문 정보가 추출되지 않았습니다.)
@@ -15,7 +14,7 @@
 ## 주요 고객사 / 매출처
 {% if result.top_customers -%}
 {% for c in result.top_customers -%}
-- {{ c.name_raw }}{% if c.revenue_share_pct is not none %} ({{ c.revenue_share_pct }}%){% endif %}{% if c.tier != "unknown" %} · {{ c.tier }} 협력사{% endif %}
+- {{ c.name_raw }}{{ (" (" ~ c.revenue_share_pct|string ~ "%)") if c.revenue_share_pct is not none else "" }}{{ (" · " ~ c.tier ~ " 협력사") if c.tier != "unknown" else "" }}
 {% endfor -%}
 {%- else -%}
 (보고서에서 주요 고객사가 추출되지 않았습니다.)

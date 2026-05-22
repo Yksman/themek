@@ -38,6 +38,36 @@ def test_synthesize_basic():
     assert "dart.fss.or.kr" in answer
 
 
+def test_synthesize_segments_each_on_own_line():
+    answer = synthesize_e5_answer(_sample_result())
+    # 사업 부문 3개가 각각 별 줄에 와야 함
+    seg_lines = [line for line in answer.splitlines() if line.startswith("- ")
+                 and any(name in line for name in ["메모리반도체", "스마트폰", "디스플레이"])]
+    assert len(seg_lines) == 3, f"Expected 3 segment lines, got: {seg_lines}"
+
+
+def test_synthesize_customers_each_on_own_line():
+    answer = synthesize_e5_answer(_sample_result())
+    cust_lines = [line for line in answer.splitlines() if line.startswith("- ")
+                  and any(name in line for name in ["Apple Inc.", "주요 글로벌 IT 고객사"])]
+    assert len(cust_lines) == 2
+
+
+def test_synthesize_regions_each_on_own_line():
+    answer = synthesize_e5_answer(_sample_result())
+    region_lines = [line for line in answer.splitlines() if line.startswith("- ")
+                    and any(name in line for name in ["미주", "중국", "국내"])]
+    assert len(region_lines) == 3
+
+
+def test_synthesize_url_on_own_line():
+    answer = synthesize_e5_answer(_sample_result())
+    lines = answer.splitlines()
+    # "링크:"가 자체 줄에 와야 함 (출처: 와 한 줄로 붙으면 안 됨)
+    link_line = next((l for l in lines if l.startswith("링크:")), None)
+    assert link_line is not None, f"링크: line missing — full output:\n{answer}"
+
+
 def test_synthesize_handles_missing_report():
     result = E5Result(
         stock_ticker="999999", stock_name="가상종목",
