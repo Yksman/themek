@@ -1,15 +1,30 @@
+"""pytest 공통 fixture.
+
+테스트 격리 정책:
+- pytest 시작 즉시 POSTGRES_DSN을 임시 파일로 override해서 production
+  ./themek.db를 절대 건드리지 않도록 강제한다. themek 코드를 import하기
+  전에 이 작업을 해야 Settings()가 새 환경변수를 읽는다.
+"""
+import os
+import tempfile
+from pathlib import Path
+
+# --- 격리 가드: themek import 전에 환경변수 set ---
+_TEST_DB_DIR = Path(tempfile.mkdtemp(prefix="themek_pytest_"))
+_TEST_DB_PATH = _TEST_DB_DIR / "test.db"
+os.environ["POSTGRES_DSN"] = f"sqlite:///{_TEST_DB_PATH}"
+# --- 격리 가드 끝 ---
+
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-from themek.config import get_settings
 from themek.db.engine import Base
 import themek.db.models  # noqa: F401 — 모든 모델 등록
 
 
 @pytest.fixture(scope="session")
 def engine():
-    settings = get_settings()
-    eng = create_engine(settings.postgres_dsn, future=True)
+    eng = create_engine(f"sqlite:///{_TEST_DB_PATH}", future=True)
     yield eng
 
 
