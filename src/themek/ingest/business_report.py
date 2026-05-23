@@ -82,13 +82,20 @@ def ingest_business_report(
             source_report_id=report.dart_rcept_no,
         ))
 
+    # Dedup: 같은 region_code로 매핑된 여러 항목은 share_pct를 합산해 1 row로.
+    # (subject_corp_id, region_id, period) 조합은 ontology상 unique해야 함.
+    geo_by_region: dict[str, float] = {}
     for geo in extraction.geographic:
+        geo_by_region[geo.region_code] = (
+            geo_by_region.get(geo.region_code, 0.0) + float(geo.share_pct)
+        )
+    for region_code, share_pct in geo_by_region.items():
         session.add(GeographicExposure(
             id=str(uuid.uuid4()),
             subject_corp_id=corporation_id,
             subject_segment_id=None,
-            region_id=geo.region_code,
+            region_id=region_code,
             period=period,
-            share_pct=geo.share_pct,
+            share_pct=share_pct,
             source_report_id=report.dart_rcept_no,
         ))

@@ -23,6 +23,7 @@ BUSINESS_EXTRACTION_PROMPT_TEMPLATE = """\
 [지침]
 - 보고서에 명시되지 않은 수치는 null로 두세요. 추측 금지.
 - region_code는 위 6종만 사용. "아시아"는 CN/JP 외엔 ROW. "유럽 전체"는 EU.
+- 동일한 region_code로 매핑되는 항목이 여러 개면 share_pct를 합산해 한 줄로만 보고하세요. (예: "아시아 13%" + "기타 6%"가 둘 다 ROW면 → ROW 19%로 한 번만)
 - 고객사가 비공개("주요 고객 A" 등)면 name_raw에 그대로 적고 tier="unknown".
 - segments의 share_pct 총합이 ~100이 되지 않아도 됩니다 (보고서 기준 그대로).
 - products는 보고서에서 직접 언급된 제품/서비스명만 (브랜드명 OK).
