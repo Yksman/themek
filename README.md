@@ -4,7 +4,9 @@
 
 ## Status
 
-**Walking Skeleton (Plan #1) 구현 완료** — 2026-05-23. E5 ("이 회사 뭐 만들어?") 한 CQ를 DART 사업보고서 1건에 대해 end-to-end로 답하는 vertical slice가 동작합니다.
+**Walking Skeleton (Plan #1) + Eval Harness (Plan #6) 구현 완료** — 2026-05-25.
+E5 ("이 회사 뭐 만들어?") CQ가 DART 사업보고서 1건에 대해 end-to-end로 동작하고,
+삼성전자 ground truth로 추출 품질 4 metric(segment / customer / region 정확도 + share_pct MAE)을 측정할 수 있습니다.
 
 ## Vision
 
@@ -75,6 +77,17 @@ uv run themek ingest \
 uv run themek query e5 --ticker 005930
 ```
 
+### E5 추출 품질 평가 (Plan #6)
+
+```bash
+uv run themek eval e5 \
+  --html-file tests/fixtures/samsung_business_report_excerpt.html \
+  --period 2023 \
+  --ground-truth data/eval/ground_truth/samsung_e5_2023.json
+```
+
+출력: segment / customer / region recall+precision + share_pct MAE 점수표 + Missed/Extra 진단. baseline 기록은 `docs/eval-e5-smoke-run-notes.md`.
+
 출력 예시 (실 Claude 추출 결과):
 
 ```
@@ -144,7 +157,7 @@ src/themek/
 - **Plan #3**: DART API client 자동 fetch (현재는 수동 fixture)
 - **Plan #4**: pgvector 통합 → E2·E4 semantic 매칭 / Event analog
 - **Plan #5**: 24개월 backfill orchestrator
-- **Plan #6**: Evaluation rubric harness (`themek eval e5 --ground-truth ...`)
+- ~~**Plan #6**: Evaluation rubric harness~~ ✅ 완료 (`docs/superpowers/plans/2026-05-23-e5-eval-harness.md`)
 - **Plan #7**: 텔레/블로그/팍스넷 소스 ingestion → social narrative layer
 
 ## License
