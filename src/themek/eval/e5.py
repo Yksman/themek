@@ -158,3 +158,53 @@ def load_ground_truth(
     metadata = payload.get("metadata", {})
     extraction = BusinessExtraction.model_validate(payload["extraction"])
     return extraction, metadata
+
+
+def _fmt_score(x: Optional[float]) -> str:
+    return "n/a" if x is None else f"{x:.3f}"
+
+
+def _fmt_ratio(num: int, den: int) -> str:
+    return f"{num}/{den}" if den > 0 else "0/0"
+
+
+def format_eval_result_text(
+    result: EvalResult,
+    *,
+    metadata: dict,
+    ground_truth_path: str,
+    html_path: str,
+) -> str:
+    """EvalResult를 사람이 읽기 좋은 점수표 텍스트로 변환."""
+    ticker = metadata.get("ticker", "?")
+    name_ko = metadata.get("name_ko", "?")
+    period = metadata.get("period", "?")
+    mae_str = "n/a" if result.share_pct_mae is None else f"{result.share_pct_mae:.2f} %p"
+    lines = [
+        f"=== Eval: E5 — {name_ko} ({ticker}) period={period} ===",
+        f"Ground truth:  {ground_truth_path}",
+        f"HTML fixture:  {html_path}",
+        "",
+        f"Segments        recall= "
+        f"{_fmt_ratio(result.matched_segment_count, result.truth_segment_count)} "
+        f"= {_fmt_score(result.segment_recall)}    "
+        f"precision= "
+        f"{_fmt_ratio(result.matched_segment_count, result.extracted_segment_count)} "
+        f"= {_fmt_score(result.segment_precision)}",
+        f"Customers       recall= {_fmt_score(result.customer_recall)}    "
+        f"precision= {_fmt_score(result.customer_precision)}",
+        f"Regions         recall= {_fmt_score(result.region_recall)}    "
+        f"precision= {_fmt_score(result.region_precision)}",
+        f"Share_pct MAE   {mae_str} (matched={result.matched_segment_count})",
+        "",
+        "Missed (truth에 있는데 LLM이 놓침):",
+        f"  segments:  {result.missed_segments}",
+        f"  customers: {result.missed_customers}",
+        f"  regions:   {result.missed_regions}",
+        "",
+        "Extra (LLM이 만들었는데 truth엔 없음):",
+        f"  segments:  {result.extra_segments}",
+        f"  customers: {result.extra_customers}",
+        f"  regions:   {result.extra_regions}",
+    ]
+    return "\n".join(lines)
