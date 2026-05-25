@@ -75,3 +75,18 @@ def customer_metrics(
     recall = _safe_div(len(matched_keys), len(truth_keys))
     precision = _safe_div(len(matched_keys), len(ext_keys))
     return recall, precision, matched_names, missed, extra
+
+
+def region_metrics(
+    extracted: BusinessExtraction,
+    truth: BusinessExtraction,
+) -> tuple[Optional[float], Optional[float], list[str], list[str], list[str]]:
+    """region recall/precision + 진단 리스트. 매칭: region_code exact."""
+    truth_codes = {g.region_code for g in truth.geographic}
+    ext_codes = {g.region_code for g in extracted.geographic}
+    matched = sorted(truth_codes & ext_codes)
+    missed = sorted(truth_codes - ext_codes)
+    extra = sorted(ext_codes - truth_codes)
+    recall = _safe_div(len(matched), len(truth_codes))
+    precision = _safe_div(len(matched), len(ext_codes))
+    return recall, precision, matched, missed, extra

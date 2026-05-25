@@ -1,4 +1,4 @@
-from themek.eval.e5 import EvalResult, segment_metrics, customer_metrics
+from themek.eval.e5 import EvalResult, segment_metrics, customer_metrics, region_metrics
 from themek.llm.schemas import BusinessExtraction
 
 
@@ -124,3 +124,41 @@ def test_customer_empty_both():
     assert precision is None
     assert missed == []
     assert extra == []
+
+
+def _geo_ext(geo):
+    return BusinessExtraction.model_validate({
+        "period": "2023", "segments": [],
+        "customers": [], "geographic": geo,
+    })
+
+
+def test_region_perfect_match():
+    truth = _geo_ext([
+        {"region_code": "KR", "share_pct": 14.8},
+        {"region_code": "ROW", "share_pct": 19.2},
+    ])
+    ext = _geo_ext([
+        {"region_code": "KR", "share_pct": 14.8},
+        {"region_code": "ROW", "share_pct": 19.2},
+    ])
+    recall, precision, matched, missed, extra = region_metrics(ext, truth)
+    assert recall == 1.0
+    assert precision == 1.0
+    assert sorted(matched) == ["KR", "ROW"]
+
+
+def test_region_missing_and_extra():
+    truth = _geo_ext([
+        {"region_code": "KR", "share_pct": 14.8},
+        {"region_code": "US", "share_pct": 35.6},
+    ])
+    ext = _geo_ext([
+        {"region_code": "KR", "share_pct": 14.8},
+        {"region_code": "ROW", "share_pct": 50.0},  # 환각
+    ])
+    recall, precision, _, missed, extra = region_metrics(ext, truth)
+    assert recall == 0.5
+    assert precision == 0.5
+    assert missed == ["US"]
+    assert extra == ["ROW"]
