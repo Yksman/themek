@@ -1,5 +1,9 @@
+from pathlib import Path
+
 from themek.llm.schemas import BusinessExtraction
-from themek.eval.e5 import evaluate_e5, EvalResult
+from themek.eval.e5 import evaluate_e5, EvalResult, load_ground_truth
+
+FIXTURE = Path(__file__).parent / "fixtures" / "sample_ground_truth.json"
 
 
 def _full(segments, customers, geo):
@@ -62,3 +66,38 @@ def test_evaluate_e5_partial():
     assert result.extra_segments == ["환각"]
     assert result.missed_customers == ["Apple Inc."]
     assert result.missed_regions == ["US"]
+
+
+def test_load_ground_truth_returns_extraction():
+    extraction, metadata = load_ground_truth(FIXTURE)
+    assert isinstance(extraction, BusinessExtraction)
+    assert extraction.period == "2023"
+    assert extraction.segments[0].name_ko == "테스트부문"
+    assert metadata["ticker"] == "999999"
+    assert metadata["name_ko"] == "테스트회사"
+
+
+def test_load_ground_truth_file_not_found(tmp_path):
+    import pytest
+    with pytest.raises(FileNotFoundError):
+        load_ground_truth(tmp_path / "missing.json")
+
+
+def test_load_ground_truth_invalid_schema(tmp_path):
+    """ground truth가 BusinessExtraction 스키마를 위반하면 ValidationError."""
+    import pytest
+    from pydantic import ValidationError
+    bad = tmp_path / "bad.json"
+    bad.write_text("""
+    {
+      "metadata": {"ticker": "x"},
+      "extraction": {
+        "period": "2023",
+        "segments": [],
+        "customers": [],
+        "geographic": [{"region_code": "XX", "share_pct": 100.0}]
+      }
+    }
+    """, encoding="utf-8")
+    with pytest.raises(ValidationError):
+        load_ground_truth(bad)

@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "ticker": "999999",
+    "name_ko": "테스트회사",
+    "period": "2023",
+    "source_rcept_no": "00000000000000",
+    "fixture_path": "n/a",
+    "created_at": "2026-05-23",
+    "notes": "loader 테스트용"
+  },
+  "extraction": {
+    "period": "2023",
+    "segments": [{"name_ko": "테스트부문", "share_pct": 100.0, "products": []}],
+    "customers": [],
+    "geographic": [{"region_code": "KR", "share_pct": 100.0}]
+  }
+}

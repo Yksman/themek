@@ -3,7 +3,9 @@
 Spec: docs/superpowers/specs/2026-05-23-e5-eval-harness-design.md
 """
 from __future__ import annotations
+import json
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Optional
 
 from themek.llm.schemas import BusinessExtraction
@@ -143,3 +145,16 @@ def evaluate_e5(
         missed_regions=reg_missed,
         extra_regions=reg_extra,
     )
+
+
+def load_ground_truth(
+    path: Path | str,
+) -> tuple[BusinessExtraction, dict]:
+    """ground truth JSON을 (BusinessExtraction, metadata dict)로 로드."""
+    p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(f"ground truth not found: {p}")
+    payload = json.loads(p.read_text(encoding="utf-8"))
+    metadata = payload.get("metadata", {})
+    extraction = BusinessExtraction.model_validate(payload["extraction"])
+    return extraction, metadata
