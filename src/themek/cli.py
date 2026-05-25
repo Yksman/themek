@@ -14,10 +14,13 @@ from themek.ingest.business_report import ingest_business_report
 from themek.query.e5 import query_e5
 from themek.query.synthesize import synthesize_e5_answer
 from themek.llm.schemas import BusinessExtraction
+from themek.eval.e5 import evaluate_e5, load_ground_truth, format_eval_result_text
 
 app = typer.Typer(help="themek — 한국 테마주 ontology CLI")
 query_app = typer.Typer(help="Run competency queries")
 app.add_typer(query_app, name="query")
+eval_app = typer.Typer(help="Run extraction quality evaluation")
+app.add_typer(eval_app, name="eval")
 
 
 def _session() -> Session:
@@ -90,6 +93,38 @@ def query_e5_cmd(ticker: str = typer.Option(..., "--ticker")):
             typer.echo(f"Error: {e}", err=True)
             raise typer.Exit(code=1)
     typer.echo(synthesize_e5_answer(result))
+
+
+@eval_app.command("e5")
+def eval_e5_cmd(
+    html_file: Path = typer.Option(..., "--html-file"),
+    period: str = typer.Option(..., "--period"),
+    ground_truth: Path = typer.Option(..., "--ground-truth"),
+):
+    """E5 추출 품질을 ground truth와 비교해 점수표 출력."""
+    try:
+        truth, metadata = load_ground_truth(ground_truth)
+    except FileNotFoundError as e:
+        typer.echo(f"Error: {e}", err=True)
+        raise typer.Exit(code=1)
+
+    html = html_file.read_text(encoding="utf-8")
+    text = extract_business_content(html)
+
+    extractor = _stub_extractor_from_env()
+    if extractor is not None:
+        extracted = extractor(text, period)
+    else:
+        from themek.ingest.business_report import _default_extractor
+        extracted = _default_extractor(text, period)
+
+    result = evaluate_e5(extracted, truth)
+    typer.echo(format_eval_result_text(
+        result,
+        metadata=metadata,
+        ground_truth_path=str(ground_truth),
+        html_path=str(html_file),
+    ))
 
 
 if __name__ == "__main__":
