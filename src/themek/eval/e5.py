@@ -114,3 +114,32 @@ def share_pct_mae(
     if not diffs:
         return None, 0
     return sum(diffs) / len(diffs), len(diffs)
+
+
+def evaluate_e5(
+    extracted: BusinessExtraction,
+    truth: BusinessExtraction,
+) -> EvalResult:
+    """추출 결과와 ground truth를 비교해 EvalResult를 반환한다."""
+    seg_r, seg_p, seg_matched, seg_missed, seg_extra = segment_metrics(extracted, truth)
+    cust_r, cust_p, _, cust_missed, cust_extra = customer_metrics(extracted, truth)
+    reg_r, reg_p, _, reg_missed, reg_extra = region_metrics(extracted, truth)
+    mae, _mae_count = share_pct_mae(extracted, truth)
+    return EvalResult(
+        segment_recall=seg_r,
+        segment_precision=seg_p,
+        customer_recall=cust_r,
+        customer_precision=cust_p,
+        region_recall=reg_r,
+        region_precision=reg_p,
+        share_pct_mae=mae,
+        matched_segment_count=len(seg_matched),
+        truth_segment_count=len(truth.segments),
+        extracted_segment_count=len(extracted.segments),
+        missed_segments=seg_missed,
+        extra_segments=seg_extra,
+        missed_customers=cust_missed,
+        extra_customers=cust_extra,
+        missed_regions=reg_missed,
+        extra_regions=reg_extra,
+    )
