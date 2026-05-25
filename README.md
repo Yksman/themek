@@ -8,6 +8,14 @@
 E5 ("이 회사 뭐 만들어?") CQ가 DART 사업보고서 1건에 대해 end-to-end로 동작하고,
 삼성전자 ground truth로 추출 품질 4 metric(segment / customer / region 정확도 + share_pct MAE)을 측정할 수 있습니다.
 
+진행 history:
+- Plan #1 (Walking Skeleton, 17 task TDD) ✅ 2026-05-23
+- 이슈 #1 (conftest production DB 격리) ✅
+- 이슈 #2 (geographic region_code dedup) ✅
+- Plan #6 (Eval Harness, 12 task TDD) ✅ 2026-05-25 — 1회 smoke run baseline: 4 metric 모두 1.000 / MAE 0.00 %p
+
+**다음 작업:** Plan #3 — DART API client 자동 fetch (spec 작성 단계).
+
 ## Vision
 
 한국 테마주 시장의 narrative·구조·시계열 사건을 4종 소스(텔레그램 채널 / 네이버 블로그 / 팍스넷 종목토론방 / DART)에서 추출해 **2-layer grounded ontology**(social interpretation + structural fact)로 구조화. 자연어 쿼리에 인용·구조와 함께 답하는 정보 서비스의 핵심 자산.
@@ -122,7 +130,7 @@ uv run themek eval e5 \
 uv run pytest
 ```
 
-전 46개 테스트 통과 (실 LLM 호출 없이 fixture/mock 기반).
+전 78개 테스트 통과 (실 LLM 호출 없이 fixture/mock 기반). Plan #6 eval harness 포함.
 
 ### 디렉토리 구조
 
@@ -153,12 +161,14 @@ src/themek/
 
 이 walking skeleton은 ontology spec의 일부만 구현. 다음 plan들로 확장:
 
-- **Plan #2**: Theme / Narrative / Membership / Activation 클래스 추가 → E1·E2·E3·E6 CQ 지원
-- **Plan #3**: DART API client 자동 fetch (현재는 수동 fixture)
+권장 누적 순서: **#3 (폭 확장: scale) → #2 + #7 (깊이 확장: social layer) → #4 (pgvector 연결) → #5 (시계열 backfill)**.
+
+- 🚧 **Plan #3 (다음)**: DART API client 자동 fetch — 현재 수동 fixture를 전 종목으로 확장하는 backbone
+- **Plan #2**: Theme / Narrative / Membership / Activation 클래스 추가 → E1·E2·E3·E6 CQ 지원 (스키마 축)
+- **Plan #7**: 텔레/블로그/팍스넷 소스 ingestion → social narrative layer (데이터 축, #2와 한 쌍)
 - **Plan #4**: pgvector 통합 → E2·E4 semantic 매칭 / Event analog
 - **Plan #5**: 24개월 backfill orchestrator
 - ~~**Plan #6**: Evaluation rubric harness~~ ✅ 완료 (`docs/superpowers/plans/2026-05-23-e5-eval-harness.md`)
-- **Plan #7**: 텔레/블로그/팍스넷 소스 ingestion → social narrative layer
 
 ## License
 
