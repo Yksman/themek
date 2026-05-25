@@ -1,4 +1,10 @@
-from themek.eval.e5 import EvalResult, segment_metrics, customer_metrics, region_metrics
+from themek.eval.e5 import (
+    EvalResult,
+    segment_metrics,
+    customer_metrics,
+    region_metrics,
+    share_pct_mae,
+)
 from themek.llm.schemas import BusinessExtraction
 
 
@@ -162,3 +168,53 @@ def test_region_missing_and_extra():
     assert precision == 0.5
     assert missed == ["US"]
     assert extra == ["ROW"]
+
+
+def test_share_pct_mae_basic():
+    truth = _ext([
+        {"name_ko": "메모리", "share_pct": 20.0},
+        {"name_ko": "MX", "share_pct": 40.0},
+    ])
+    ext = _ext([
+        {"name_ko": "메모리", "share_pct": 21.5},  # +1.5
+        {"name_ko": "MX", "share_pct": 35.5},      # -4.5
+    ])
+    mae, matched_count = share_pct_mae(ext, truth)
+    assert abs(mae - 3.0) < 0.001  # (1.5+4.5)/2
+    assert matched_count == 2
+
+
+def test_share_pct_mae_no_matched_segments():
+    truth = _ext([{"name_ko": "메모리", "share_pct": 20.0}])
+    ext = _ext([{"name_ko": "환각", "share_pct": 99.0}])
+    mae, matched_count = share_pct_mae(ext, truth)
+    assert mae is None
+    assert matched_count == 0
+
+
+def test_share_pct_mae_excludes_null_truth_share():
+    truth = _ext([
+        {"name_ko": "메모리", "share_pct": 20.0},
+        {"name_ko": "기타", "share_pct": None},
+    ])
+    ext = _ext([
+        {"name_ko": "메모리", "share_pct": 22.0},  # +2.0
+        {"name_ko": "기타", "share_pct": 5.0},
+    ])
+    mae, matched_count = share_pct_mae(ext, truth)
+    assert mae == 2.0  # 기타는 분모/분자 둘 다 제외
+    assert matched_count == 1
+
+
+def test_share_pct_mae_excludes_null_extracted_share():
+    truth = _ext([
+        {"name_ko": "메모리", "share_pct": 20.0},
+        {"name_ko": "MX", "share_pct": 40.0},
+    ])
+    ext = _ext([
+        {"name_ko": "메모리", "share_pct": 22.0},  # +2.0
+        {"name_ko": "MX", "share_pct": None},
+    ])
+    mae, matched_count = share_pct_mae(ext, truth)
+    assert mae == 2.0
+    assert matched_count == 1

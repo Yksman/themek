@@ -90,3 +90,27 @@ def region_metrics(
     recall = _safe_div(len(matched), len(truth_codes))
     precision = _safe_div(len(matched), len(ext_codes))
     return recall, precision, matched, missed, extra
+
+
+def share_pct_mae(
+    extracted: BusinessExtraction,
+    truth: BusinessExtraction,
+) -> tuple[Optional[float], int]:
+    """matched segment의 share_pct 평균 절대 오차.
+
+    truth.share_pct 또는 extracted.share_pct가 null이면 그 segment는 제외.
+    matched(양쪽 share_pct 모두 존재) segment가 0개이면 (None, 0) 반환.
+    """
+    truth_share = {s.name_ko: s.share_pct for s in truth.segments}
+    ext_share = {s.name_ko: s.share_pct for s in extracted.segments}
+    diffs: list[float] = []
+    for name_ko, t_share in truth_share.items():
+        if t_share is None:
+            continue
+        e_share = ext_share.get(name_ko)
+        if e_share is None:
+            continue
+        diffs.append(abs(float(e_share) - float(t_share)))
+    if not diffs:
+        return None, 0
+    return sum(diffs) / len(diffs), len(diffs)
