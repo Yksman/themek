@@ -37,3 +37,33 @@ BUSINESS_EXTRACTION_PROMPT_TEMPLATE = """\
 
 def build_business_extraction_prompt(text: str, period_hint: str) -> str:
     return BUSINESS_EXTRACTION_PROMPT_TEMPLATE.format(text=text, period=period_hint)
+
+
+HEADER_CLASSIFICATION_PROMPT_TEMPLATE = """\
+다음은 한국 상장사 사업보고서 "II. 사업의 내용" 챕터의 헤더 후보 목록이야.
+
+{candidates_block}
+
+다음 카테고리에 *정확히 부합하는* 헤더 번호를 골라줘.
+부합하는 헤더가 없으면 null로 둬. 추측 금지.
+
+카테고리:
+- overview: 사업 개요 또는 전반 설명
+- products: 주요 제품·서비스 라인 (제품군 나열)
+- revenue: 매출 구성·수주 현황 (수치 분포)
+
+JSON only — 다른 텍스트 금지:
+{{"overview": <int|null>, "products": <int|null>, "revenue": <int|null>}}
+"""
+
+
+def build_header_classification_prompt(
+    candidates: list[str], missing_targets: list[str],
+) -> str:
+    if candidates:
+        block = "\n".join(f"[{i + 1}] {h}" for i, h in enumerate(candidates))
+    else:
+        block = "(헤더 후보 없음)"
+    return HEADER_CLASSIFICATION_PROMPT_TEMPLATE.format(
+        candidates_block=block,
+    )
