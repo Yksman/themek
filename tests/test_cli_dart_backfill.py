@@ -191,7 +191,7 @@ def test_cli_dart_incremental_outputs_metrics(
             to_ingest=1, ingested=1, failed=[],
         )
 
-    monkeypatch.setattr(incremental_mod, "run_incremental", fake_run_incremental)
+    monkeypatch.setattr("themek.cli.run_incremental", fake_run_incremental)
 
     result = runner.invoke(app, [
         "dart", "incremental",
