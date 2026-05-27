@@ -471,9 +471,17 @@ DEFAULT_UNIVERSE_FILE = "data/universe/active.txt"
 
 @backfill_app.command("init")
 def backfill_init_cmd(
-    universe_file: Path = typer.Option(
-        DEFAULT_UNIVERSE_FILE, "--universe-file",
-        help="corp_code 1줄당 1개. # 주석 허용.",
+    universe_file: Optional[Path] = typer.Option(
+        None, "--universe-file",
+        help="corp_code 1줄당 1개. # 주석 허용. --from-stocks와 배타.",
+    ),
+    from_stocks: bool = typer.Option(
+        False, "--from-stocks",
+        help="Stock 테이블의 active 종목을 universe로 사용 (--universe-file 대체).",
+    ),
+    include_delisted: bool = typer.Option(
+        False, "--include-delisted",
+        help="--from-stocks 사용 시 delisted_at set된 종목도 포함.",
     ),
     periods: str = typer.Option(
         ..., "--periods",
@@ -484,19 +492,44 @@ def backfill_init_cmd(
         help="dry-run 끄고 실제 row 생성",
     ),
 ):
-    """active.txt + periods → BackfillTarget row 생성 (dry-run 기본)."""
+    """universe × periods → BackfillTarget row 생성 (dry-run 기본)."""
     from sqlalchemy import select
 
-    from themek.dart.backfill import enumerate_targets
+    from themek.dart.backfill import (
+        enumerate_targets, enumerate_targets_from_corps,
+    )
+    from themek.dart.universe import load_universe_from_stocks
     from themek.db.models import BackfillTarget
 
-    specs = enumerate_targets(universe_file=universe_file, periods=periods)
+    if from_stocks and universe_file is not None:
+        typer.echo(
+            "Error: --from-stocks와 --universe-file 동시 사용 불가",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+
+    if from_stocks:
+        with _session() as sess:
+            corps = load_universe_from_stocks(
+                sess, include_delisted=include_delisted,
+            )
+        specs = enumerate_targets_from_corps(
+            corp_codes=corps, periods=periods,
+        )
+        universe_label = (
+            f"Stock table ({'incl. delisted' if include_delisted else 'active only'})"
+        )
+    else:
+        uf = universe_file or Path(DEFAULT_UNIVERSE_FILE)
+        specs = enumerate_targets(universe_file=uf, periods=periods)
+        universe_label = str(uf)
+
     n_targets = len(specs)
     n_calls = n_targets * 2
     est_cost = n_targets * 0.25
 
     typer.echo("=== Backfill Init Dry-Run ===")
-    typer.echo(f"universe-file: {universe_file}")
+    typer.echo(f"universe: {universe_label}")
     typer.echo(f"periods: {periods}")
     typer.echo(f"예상 처리: {n_targets} target")
     typer.echo(f"예상 DART 호출: ~{n_calls} (limit 38000/day)")
