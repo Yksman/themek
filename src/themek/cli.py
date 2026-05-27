@@ -31,6 +31,8 @@ from themek.eval.e5 import (
     evaluate_e5, load_ground_truth, format_eval_result_text,
     aggregate_runs, format_aggregated_result_text,
 )
+from themek.krx.client import KrxClient
+from themek.krx.sync import sync_listed_stocks, fetch_listed_universe
 
 app = typer.Typer(help="themek — 한국 테마주 ontology CLI")
 query_app = typer.Typer(help="Run competency queries")
@@ -39,6 +41,8 @@ eval_app = typer.Typer(help="Run extraction quality evaluation")
 app.add_typer(eval_app, name="eval")
 dart_app = typer.Typer(help="DART OpenAPI 명령")
 app.add_typer(dart_app, name="dart")
+krx_app = typer.Typer(help="KRX 상장사 sync 명령")
+app.add_typer(krx_app, name="krx")
 
 DEFAULT_LEARNED_PATTERNS_PATH = "data/dart/learned_header_patterns.json"
 DEFAULT_PROPOSALS_PATH = "data/dart/pattern_proposals.json"
@@ -459,6 +463,228 @@ def dart_ingest_cmd(
     typer.echo(f"Ingested report {rcept_no}")
 
 
+backfill_app = typer.Typer(help="다종목 backfill 명령")
+dart_app.add_typer(backfill_app, name="backfill")
+
+DEFAULT_UNIVERSE_FILE = "data/universe/active.txt"
+
+
+@backfill_app.command("init")
+def backfill_init_cmd(
+    universe_file: Path = typer.Option(
+        DEFAULT_UNIVERSE_FILE, "--universe-file",
+        help="corp_code 1줄당 1개. # 주석 허용.",
+    ),
+    periods: str = typer.Option(
+        ..., "--periods",
+        help="YYYY 단일 또는 YYYY:YYYY 범위",
+    ),
+    confirm: bool = typer.Option(
+        False, "--confirm",
+        help="dry-run 끄고 실제 row 생성",
+    ),
+):
+    """active.txt + periods → BackfillTarget row 생성 (dry-run 기본)."""
+    from sqlalchemy import select
+
+    from themek.dart.backfill import enumerate_targets
+    from themek.db.models import BackfillTarget
+
+    specs = enumerate_targets(universe_file=universe_file, periods=periods)
+    n_targets = len(specs)
+    n_calls = n_targets * 2
+    est_cost = n_targets * 0.25
+
+    typer.echo("=== Backfill Init Dry-Run ===")
+    typer.echo(f"universe-file: {universe_file}")
+    typer.echo(f"periods: {periods}")
+    typer.echo(f"예상 처리: {n_targets} target")
+    typer.echo(f"예상 DART 호출: ~{n_calls} (limit 38000/day)")
+    typer.echo(f"예상 LLM 비용: ~${est_cost:.2f} (평균 단가 기준)")
+
+    if not confirm:
+        typer.echo("\n--confirm 추가 시 실제 BackfillTarget row 생성.")
+        return
+
+    inserted, skipped = 0, 0
+    with _session() as sess:
+        for spec in specs:
+            existing = sess.scalar(
+                select(BackfillTarget)
+                .where(BackfillTarget.corp_code == spec.corp_code)
+                .where(BackfillTarget.period == spec.period)
+            )
+            if existing is not None:
+                skipped += 1
+                continue
+            sess.add(BackfillTarget(
+                corp_code=spec.corp_code, period=spec.period, status="pending",
+            ))
+            inserted += 1
+        sess.commit()
+    typer.echo(f"\ninserted={inserted} skipped (already exists)={skipped}")
+
+
+@backfill_app.command("run")
+def backfill_run_cmd(
+    max_targets: int = typer.Option(500, "--max-targets"),
+    daily_cap: Optional[int] = typer.Option(None, "--daily-cap"),
+    reset_stale_minutes: int = typer.Option(180, "--reset-stale-minutes"),
+    purge_zip: bool = typer.Option(
+        False, "--purge-zip-after-extract",
+        help="business.html 추출 후 document.zip 삭제 (디스크 절약)",
+    ),
+):
+    """pending BackfillTarget을 한도 안에서 처리."""
+    from themek.dart.backfill import run_batch
+    from themek.dart.rate_budget import RateBudget, RateBudgetExceeded
+
+    s = get_settings()
+    try:
+        client, cache = _dart_client_and_cache()
+    except DartAuthError as e:
+        typer.echo(f"Error: {e}", err=True)
+        raise typer.Exit(code=2)
+
+    budget = RateBudget(
+        daily_cap=daily_cap or 38000,
+        state_file=s.dart_cache_dir / "budget_state.json",
+    )
+    extractor = _stub_extractor_from_env()
+    try:
+        with _session() as sess:
+            summary = run_batch(
+                session=sess, client=client, cache=cache,
+                rate_budget=budget, extractor=extractor,
+                max_targets=max_targets,
+                reset_stale_minutes=reset_stale_minutes,
+                purge_zip=purge_zip,
+            )
+    except RateBudgetExceeded as e:
+        typer.echo(f"Budget exceeded: {e}", err=True)
+        raise typer.Exit(code=6)
+
+    typer.echo(
+        f"processed={summary.processed} done={summary.done} "
+        f"skipped={summary.skipped} failed={summary.failed} "
+        f"pending_remaining={summary.pending_remaining} "
+        f"budget_remaining={summary.budget_remaining}"
+    )
+
+
+@backfill_app.command("status")
+def backfill_status_cmd(
+    verbose: bool = typer.Option(
+        False, "--verbose", "-v",
+        help="escalation 분포 + 비용 top-10 표시",
+    ),
+):
+    """BackfillTarget status 분포 + 누적 LLM 비용."""
+    from sqlalchemy import select, func, desc
+
+    from themek.db.models import BackfillTarget
+
+    with _session() as sess:
+        rows = sess.execute(
+            select(BackfillTarget.status, func.count())
+            .group_by(BackfillTarget.status)
+        ).all()
+        counts = {status: n for status, n in rows}
+        total = sum(counts.values())
+        total_cost = sess.scalar(
+            select(func.sum(BackfillTarget.cost_estimate_usd))
+        ) or 0
+
+    typer.echo("=== BackfillTarget summary ===")
+    for status in ("pending", "in_progress", "done", "failed", "skipped"):
+        typer.echo(f"  {status:12s}: {counts.get(status, 0):6d}")
+    typer.echo(f"  {'total':12s}: {total:6d}")
+    typer.echo(f"\nTotal LLM cost (done): ${float(total_cost):.2f}")
+
+    if not verbose:
+        return
+
+    with _session() as sess:
+        esc_rows = sess.execute(
+            select(BackfillTarget.escalation_level, func.count())
+            .where(BackfillTarget.status == "done")
+            .group_by(BackfillTarget.escalation_level)
+        ).all()
+        typer.echo("\n=== Escalation distribution (done) ===")
+        for level, n in esc_rows:
+            typer.echo(f"  {str(level):12s}: {n:6d}")
+
+        top = sess.execute(
+            select(
+                BackfillTarget.corp_code, BackfillTarget.period,
+                BackfillTarget.input_chars, BackfillTarget.cost_estimate_usd,
+            )
+            .where(BackfillTarget.status == "done")
+            .order_by(desc(BackfillTarget.cost_estimate_usd))
+            .limit(10)
+        ).all()
+        typer.echo("\n=== Top 10 by cost ===")
+        for cc, p, ic, cost in top:
+            typer.echo(
+                f"  {cc} {p}: input_chars={ic} cost=${float(cost or 0):.4f}"
+            )
+
+
+@dart_app.command("incremental")
+def dart_incremental_cmd(
+    since: str = typer.Option("yesterday", "--since"),
+    until: str = typer.Option("today", "--until"),
+    universe_file: Path = typer.Option(
+        DEFAULT_UNIVERSE_FILE, "--universe-file",
+        help="active.txt 경로 (backfill과 동일)",
+    ),
+    purge_zip: bool = typer.Option(False, "--purge-zip-after-extract"),
+):
+    """Layer B: scan → universe filter → 신규만 ingest."""
+    from datetime import timedelta
+
+    from themek.dart.incremental import run_incremental
+    from themek.dart.universe import load_universe
+    from themek.dart.rate_budget import RateBudget
+
+    s = get_settings()
+    today = date.today()
+    since_d = (
+        today - timedelta(days=1) if since == "yesterday"
+        else date.fromisoformat(since)
+    )
+    until_d = (
+        today if until == "today" else date.fromisoformat(until)
+    )
+
+    try:
+        client, cache = _dart_client_and_cache()
+    except DartAuthError as e:
+        typer.echo(f"Error: {e}", err=True)
+        raise typer.Exit(code=2)
+
+    universe = set(load_universe(universe_file))
+    budget = RateBudget(
+        daily_cap=38000,
+        state_file=s.dart_cache_dir / "budget_state.json",
+    )
+    extractor = _stub_extractor_from_env()
+
+    with _session() as sess:
+        result = run_incremental(
+            client=client, cache=cache, session=sess,
+            universe=universe, rate_budget=budget, extractor=extractor,
+            since=since_d, until=until_d,
+            purge_zip=purge_zip,
+        )
+    typer.echo(
+        f"scanned={result.scanned} in_universe={result.in_universe} "
+        f"already_ingested={result.already_ingested} "
+        f"to_ingest={result.to_ingest} ingested={result.ingested} "
+        f"failed={len(result.failed)}"
+    )
+
+
 @dart_app.command("parser-stats")
 def dart_parser_stats_cmd():
     """학습 누적 상태 출력."""
@@ -540,6 +766,84 @@ def dart_parser_consolidate_cmd():
     after = sum(len(lp.target_patterns(t))
                 for t in ("overview", "products", "revenue"))
     typer.echo(f"consolidated: {before} → {after} patterns")
+
+
+@krx_app.command("sync-listed")
+def krx_sync_listed_cmd(
+    auto_enroll: bool = typer.Option(
+        False, "--auto-enroll",
+        help="신규 상장 종목마다 BackfillTarget pending row 자동 생성",
+    ),
+    periods: Optional[str] = typer.Option(
+        None, "--periods",
+        help="--auto-enroll 사용 시 BackfillTarget 생성 period 범위 (예: 2023:2024)",
+    ),
+    dry_run: bool = typer.Option(
+        False, "--dry-run",
+        help="KRX 호출까지만 하고 DB 미변경, ticker 수만 출력",
+    ),
+):
+    """KOSPI/KOSDAQ 상장사를 Stock 테이블에 sync."""
+    from sqlalchemy import select
+
+    from themek.db.models import BackfillTarget, Stock
+    from themek.dart.backfill import _parse_periods
+
+    try:
+        _, cache = _dart_client_and_cache()
+    except DartAuthError as e:
+        typer.echo(f"Error: {e}", err=True)
+        raise typer.Exit(code=2)
+
+    client = KrxClient()
+
+    if dry_run:
+        listed = fetch_listed_universe(client)
+        typer.echo(
+            f"[dry-run] KOSPI/KOSDAQ {len(listed)} listed tickers "
+            f"(KOSPI={sum(1 for v in listed.values() if v == 'KOSPI')}, "
+            f"KOSDAQ={sum(1 for v in listed.values() if v == 'KOSDAQ')})"
+        )
+        return
+
+    with _session() as sess:
+        r = sync_listed_stocks(
+            sess, krx_client=client, cache=cache, today=date.today(),
+        )
+    typer.echo(
+        f"added={len(r.added)} delisted={len(r.delisted)} "
+        f"updated={len(r.updated)} unlinked={len(r.unlinked)}"
+    )
+
+    if auto_enroll and r.added:
+        if not periods:
+            typer.echo(
+                "Warning: --auto-enroll 사용 시 --periods 필요 — skip",
+                err=True,
+            )
+            return
+        period_list = _parse_periods(periods)
+        inserted = 0
+        with _session() as sess:
+            for ticker in r.added:
+                stock = sess.get(Stock, ticker)
+                if stock is None:
+                    continue
+                for p in period_list:
+                    existing = sess.scalar(
+                        select(BackfillTarget)
+                        .where(BackfillTarget.corp_code == stock.issued_by_id)
+                        .where(BackfillTarget.period == p)
+                    )
+                    if existing is not None:
+                        continue
+                    sess.add(BackfillTarget(
+                        corp_code=stock.issued_by_id, period=p,
+                        status="pending",
+                    ))
+                    inserted += 1
+            sess.commit()
+        typer.echo(f"auto-enrolled {inserted} new BackfillTarget rows")
 
 
 if __name__ == "__main__":
