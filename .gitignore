@@ -43,7 +43,9 @@ build/
 Thumbs.db
 
 # Plan #3: DART 캐시 (corp_master + raw zip + 추출 HTML)
-/data/dart/
+/data/dart/corp_master.json
+/data/dart/raw/
+# Plan #4: 학습 patterns / proposals JSON은 commit 함
 
 # 정찰 스크립트 (T0 1회용)
 /scripts/recon_dart.py

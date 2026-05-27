@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "updated_at": "2026-05-27T00:35:11.191494+00:00",
+  "patterns": {
+    "overview": [
+      {
+        "type": "keyword",
+        "regex": "사업.{0,3}개요",
+        "source": "code_baseline"
+      }
+    ],
+    "products": [
+      {
+        "type": "keyword",
+        "regex": "주요.{0,3}제품",
+        "source": "code_baseline"
+      },
+      {
+        "type": "keyword",
+        "regex": "제품.{0,3}서비스",
+        "source": "code_baseline"
+      }
+    ],
+    "revenue": [
+      {
+        "type": "keyword",
+        "regex": "매출",
+        "source": "code_baseline"
+      },
+      {
+        "type": "keyword",
+        "regex": "수주.{0,3}현황",
+        "source": "code_baseline"
+      }
+    ]
+  },
+  "prefixes": [
+    {
+      "type": "prefix",
+      "regex": "^\\s*\\d{1,2}\\.\\s+",
+      "source": "code_baseline"
+    },
+    {
+      "type": "prefix",
+      "regex": "^\\s*[가-힣]\\.\\s+",
+      "source": "code_baseline"
+    }
+  ]
+}
