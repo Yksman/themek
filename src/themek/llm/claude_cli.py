@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+from dataclasses import dataclass
 from typing import Any
 from themek.config import get_settings
 
@@ -14,8 +15,19 @@ class ClaudeCallError(RuntimeError):
     pass
 
 
-def call_claude(prompt: str, *, timeout_sec: int | None = None) -> str:
-    """`claude -p <prompt> --output-format json` 호출 후 result 필드 텍스트 반환."""
+@dataclass(frozen=True)
+class CallResult:
+    """claude -p --output-format json 의 응답 + 사용량 메타."""
+    text: str
+    input_tokens: int
+    output_tokens: int
+    cost_usd: float
+    duration_ms: int
+    raw_payload: dict
+
+
+def call_claude(prompt: str, *, timeout_sec: int | None = None) -> CallResult:
+    """`claude -p <prompt> --output-format json` 호출 후 CallResult 반환."""
     settings = get_settings()
     timeout = timeout_sec or settings.claude_cli_timeout_sec
     try:
@@ -46,7 +58,15 @@ def call_claude(prompt: str, *, timeout_sec: int | None = None) -> str:
     if not isinstance(payload, dict) or "result" not in payload:
         raise ClaudeCallError(f"unexpected claude payload: {payload!r}")
 
-    return payload["result"]
+    usage = payload.get("usage") or {}
+    return CallResult(
+        text=payload["result"],
+        input_tokens=int(usage.get("input_tokens") or 0),
+        output_tokens=int(usage.get("output_tokens") or 0),
+        cost_usd=float(payload.get("total_cost_usd") or 0.0),
+        duration_ms=int(payload.get("duration_ms") or 0),
+        raw_payload=payload,
+    )
 
 
 _JSON_FENCE_RE = re.compile(r"```(?:json)?\s*(\{.*?\}|\[.*?\])\s*```", re.DOTALL)

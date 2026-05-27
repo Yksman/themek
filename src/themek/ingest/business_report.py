@@ -15,7 +15,7 @@ def _default_extractor(text: str, period_hint: str) -> BusinessExtraction:
     from themek.llm.claude_cli import call_claude, extract_json_block
     from themek.llm.prompts import build_business_extraction_prompt
     prompt = build_business_extraction_prompt(text, period_hint=period_hint)
-    raw = call_claude(prompt)
+    raw = call_claude(prompt).text
     payload = extract_json_block(raw)
     return BusinessExtraction.model_validate(payload)
 
