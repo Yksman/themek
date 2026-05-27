@@ -547,3 +547,75 @@ def test_dart_incremental_universe_source_file_still_works(mocker, tmp_path):
     ])
     assert result.exit_code == 0
     assert captured["universe"] == {"00126380"}
+
+
+def test_dart_sync_corp_skips_when_fresh(tmp_path, mocker):
+    """--if-stale-days N: corp_master.json mtime이 N일 이내면 skip."""
+    import os
+    import time
+
+    from typer.testing import CliRunner
+
+    from themek.cli import app
+    from themek.dart.cache import DartCache
+
+    cache = DartCache(base_dir=tmp_path)
+    cache.save_corp_master([{"corp_code": "00000001", "corp_name": "x",
+                              "stock_code": "", "modify_date": "20240101"}])
+    # 방금 저장되어 mtime이 now
+    fake_sync = mocker.patch("themek.cli.sync_corp_master")
+    mocker.patch(
+        "themek.cli._dart_client_and_cache",
+        return_value=(mocker.MagicMock(), cache),
+    )
+
+    local_runner = CliRunner()
+    result = local_runner.invoke(app, ["dart", "sync-corp", "--if-stale-days", "90"])
+    assert result.exit_code == 0
+    assert "skipped" in result.stdout.lower()
+    fake_sync.assert_not_called()
+
+
+def test_dart_sync_corp_runs_when_stale(tmp_path, mocker):
+    import os
+    import time
+
+    from typer.testing import CliRunner
+
+    from themek.cli import app
+    from themek.dart.cache import DartCache
+
+    cache = DartCache(base_dir=tmp_path)
+    cache.save_corp_master([])
+    old_mtime = time.time() - 100 * 86400  # 100일 전
+    os.utime(cache.corp_master_path, (old_mtime, old_mtime))
+
+    fake_sync = mocker.patch("themek.cli.sync_corp_master", return_value=42)
+    mocker.patch(
+        "themek.cli._dart_client_and_cache",
+        return_value=(mocker.MagicMock(), cache),
+    )
+
+    local_runner = CliRunner()
+    result = local_runner.invoke(app, ["dart", "sync-corp", "--if-stale-days", "90"])
+    assert result.exit_code == 0
+    fake_sync.assert_called_once()
+
+
+def test_dart_sync_corp_runs_when_missing(tmp_path, mocker):
+    from typer.testing import CliRunner
+
+    from themek.cli import app
+    from themek.dart.cache import DartCache
+
+    cache = DartCache(base_dir=tmp_path)
+    fake_sync = mocker.patch("themek.cli.sync_corp_master", return_value=42)
+    mocker.patch(
+        "themek.cli._dart_client_and_cache",
+        return_value=(mocker.MagicMock(), cache),
+    )
+
+    local_runner = CliRunner()
+    result = local_runner.invoke(app, ["dart", "sync-corp", "--if-stale-days", "90"])
+    assert result.exit_code == 0
+    fake_sync.assert_called_once()

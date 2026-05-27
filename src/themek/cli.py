@@ -279,13 +279,32 @@ def _dart_client_and_cache() -> tuple[DartClient, DartCache]:
 
 
 @dart_app.command("sync-corp")
-def dart_sync_corp_cmd():
+def dart_sync_corp_cmd(
+    if_stale_days: Optional[int] = typer.Option(
+        None, "--if-stale-days",
+        help="N일 이내 sync된 corp_master는 skip (cron 안전용)",
+    ),
+):
     """corp_code 마스터를 DART에서 받아 캐시."""
+    import time
+
     try:
         client, cache = _dart_client_and_cache()
     except DartAuthError as e:
         typer.echo(f"Error: {e}", err=True)
         raise typer.Exit(code=2)
+
+    if if_stale_days is not None and cache.corp_master_path.exists():
+        age_days = (
+            time.time() - cache.corp_master_path.stat().st_mtime
+        ) / 86400
+        if age_days < if_stale_days:
+            typer.echo(
+                f"corp_master {age_days:.1f} days old "
+                f"< {if_stale_days} — skipped"
+            )
+            return
+
     try:
         n = sync_corp_master(client, cache)
     except DartApiError as e:
