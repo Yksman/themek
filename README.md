@@ -18,8 +18,9 @@ DART OpenAPI에서 corp_code 조회 → 사업보고서 자동 fetch → 본문 
 - Plan #6 follow-up (CallResult + --runs aggregation + --save-runs) ✅ 2026-05-26 — 실 LLM baseline 측정 scaffolding
 - Plan #3 (DART API client, 11 task TDD + 실 API 정찰) ✅ 2026-05-25 — 종목 1 → N 확장 backbone, 실 API smoke 3종목 정상
 - Plan #4 (Parser Robust Extraction, 21 task TDD; Task 20 deferred) ✅ 2026-05-27 — 3-tier escalation + self-improving regex 학습 사이클
+- Plan #5 (Multi-Corp Backfill, 14 task TDD + production smoke 10 종목 × 2024:2025 검증) ✅ 2026-05-27 — Layer A initial backfill + Layer B daily incremental cron + RateBudget 38K/day cap + universe single-source-of-truth (`data/universe/active.txt`)
 
-**다음 작업:** 실 `claude` CLI 기반 E5 baseline 측정 — Plan #6 follow-up scaffolding을 사용해 삼성/현대/레인보우 3종목 × 3 runs로 segment/customer/region 점수 + 분산 측정. 동시에 Plan #4 Task 20 (fixture coverage 확장)도 자동으로 진행. 그 다음 Plan #5(다종목 backfill 자동화) 또는 Plan #2/7(social layer ingestion).
+**다음 작업:** Plan #2 + #7 (social layer ontology + 텔레/블로그/팍스넷 ingestion) 또는 Plan #5.1 (정정보고서 query 최신 선택 검증 + LLM 비용 자동 cap + 시계열 query layer).
 
 ## Vision
 
@@ -105,6 +106,30 @@ uv run themek ingest \
   --url "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240312000736"
 ```
 
+### 다종목 backfill (Plan #5)
+
+```bash
+# 1. universe 정의 (단일 source of truth) — corp_code 1줄당 1개
+mkdir -p data/universe
+echo "00126380   # 005930 삼성전자" >> data/universe/active.txt
+
+# 2. 1회: BackfillTarget 생성 (dry-run → confirm)
+uv run themek dart backfill init \
+  --universe-file data/universe/active.txt --periods 2024:2025
+uv run themek dart backfill init \
+  --universe-file data/universe/active.txt --periods 2024:2025 --confirm
+
+# 3. 매일 cron (scripts/themek_backfill.sh 등록)
+uv run themek dart incremental --since yesterday --until today \
+  --purge-zip-after-extract
+uv run themek dart backfill run --purge-zip-after-extract
+
+# 4. 모니터링 (escalation 분포 + 비용 top-10)
+uv run themek dart backfill status --verbose
+```
+
+운영 매뉴얼: [`docs/dart-backfill-runbook.md`](docs/dart-backfill-runbook.md)
+
 ### E5 쿼리
 
 ```bash
@@ -173,6 +198,9 @@ src/themek/
 ├── db/
 │   ├── engine.py         # SQLAlchemy + SQLite FK PRAGMA
 │   └── models.py         # 14개 클래스 (Stock/Corp/...Revenue/Customer/...)
+├── krx/                  # [Plan #5.2] KRX 상장사 sync
+│   ├── client.py         # pykrx wrapper
+│   └── sync.py           # Stock 테이블 upsert + delisting 감지
 ├── dart/
 │   ├── parser.py         # [Plan #4] 3-tier escalation 추출 (regex→LLM→full_text)
 │   ├── learned_patterns.py # [Plan #4] baseline + 학습 패턴 JSON loader
@@ -213,11 +241,12 @@ tests/fixtures/dart_variants/     # [Plan #4] commit — ingest 자동 mirror
 
 권장 누적 순서: **실 LLM baseline → #5 (시계열·다종목 backfill) → #2 + #7 (social layer) → pgvector**.
 
-- 🚧 **다음**: 실 `claude` CLI 기반 E5 추출 baseline 측정 (삼성/현대/레인보우 3종목 × 3 runs, `--save-runs` 사용) — Plan #6 follow-up scaffolding 활용. 동시에 Plan #4 Task 20 fixture coverage 확장도 자동 진행 (`dart ingest`가 mirror).
+- 🚧 **다음**: 실 `claude` CLI 기반 E5 추출 baseline 측정 (3종목 × 3 runs, `--save-runs` 사용) + Plan #5.2 KRX 자동 universe (KOSPI/KOSDAQ 전체 sync + cron 자동화).
 - **Plan #5**: 다종목·시계열 backfill orchestrator — token bucket, 동시 fetch, 진행상황 logging, 실패 재시도
 - **Plan #2**: Theme / Narrative / Membership / Activation 클래스 추가 → E1·E2·E3·E6 CQ 지원 (스키마 축)
 - **Plan #7**: 텔레/블로그/팍스넷 소스 ingestion → social narrative layer (데이터 축, #2와 한 쌍)
 - **pgvector 통합**: E2·E4 semantic 매칭 / Event analog
+- ~~**Plan #5.2**: KRX 자동 universe (pykrx KOSPI/KOSDAQ sync + Stock 테이블 SSOT + 신규 상장 자동 BackfillTarget enroll)~~ ✅ 완료 (`docs/superpowers/plans/2026-05-27-krx-stock-sync-and-auto-universe.md`)
 - ~~**Plan #6**: Evaluation rubric harness~~ ✅ 완료 (`docs/superpowers/plans/2026-05-23-e5-eval-harness.md`)
   - follow-up scaffolding(CallResult + --runs/--save-runs): `docs/superpowers/plans/2026-05-26-e5-real-llm-baseline.md`
 - ~~**Plan #3**: DART API client~~ ✅ 완료 (`docs/superpowers/plans/2026-05-25-dart-api-client.md`)
