@@ -75,6 +75,71 @@ def test_cli_eval_e5_missing_ground_truth(monkeypatch, tmp_path):
     assert "ground truth not found" in (result.stdout + (result.stderr or ""))
 
 
+def test_cli_eval_e5_runs_3_with_stub_outputs_aggregated_table(monkeypatch, tmp_path):
+    payload = {
+        "period": "2023",
+        "segments": [{"name_ko": "메모리", "share_pct": 20.0, "products": []}],
+        "customers": [{"name_raw": "Apple Inc.", "tier": "1차"}],
+        "geographic": [{"region_code": "KR", "share_pct": 100.0}],
+    }
+    stub = _write_stub(tmp_path, payload)
+    gt = _write_ground_truth(tmp_path, payload)
+    html = _write_html(tmp_path)
+    monkeypatch.setenv("THEMEK_STUB_EXTRACTION_FILE", str(stub))
+
+    result = runner.invoke(app, [
+        "eval", "e5",
+        "--html-file", str(html),
+        "--period", "2023",
+        "--ground-truth", str(gt),
+        "--runs", "3",
+    ])
+    assert result.exit_code == 0, result.stdout
+    assert "(N=3)" in result.stdout
+    assert "Token usage" in result.stdout
+    assert "Section filter" in result.stdout
+
+
+def test_cli_eval_e5_default_runs_one_keeps_existing_format(monkeypatch, tmp_path):
+    """--runs 미지정 시 N=1, 기존 포맷 유지 (회귀 가드)."""
+    payload = {
+        "period": "2023", "segments": [], "customers": [], "geographic": [],
+    }
+    stub = _write_stub(tmp_path, payload)
+    gt = _write_ground_truth(tmp_path, payload)
+    html = _write_html(tmp_path)
+    monkeypatch.setenv("THEMEK_STUB_EXTRACTION_FILE", str(stub))
+    result = runner.invoke(app, [
+        "eval", "e5",
+        "--html-file", str(html),
+        "--period", "2023",
+        "--ground-truth", str(gt),
+    ])
+    assert result.exit_code == 0
+    assert "(N=" not in result.stdout       # N=1 포맷에는 N=N 표시 없음
+    assert "Token usage" not in result.stdout
+
+
+def test_cli_eval_e5_runs_3_shows_escalation_level(monkeypatch, tmp_path):
+    """N>1 출력의 Section filter 블록에 escalation_level 라인이 포함된다."""
+    payload = {
+        "period": "2023", "segments": [], "customers": [], "geographic": [],
+    }
+    stub = _write_stub(tmp_path, payload)
+    gt = _write_ground_truth(tmp_path, payload)
+    html = _write_html(tmp_path)
+    monkeypatch.setenv("THEMEK_STUB_EXTRACTION_FILE", str(stub))
+    result = runner.invoke(app, [
+        "eval", "e5",
+        "--html-file", str(html),
+        "--period", "2023",
+        "--ground-truth", str(gt),
+        "--runs", "3",
+    ])
+    assert result.exit_code == 0, result.stdout
+    assert "escalation" in result.stdout.lower()
+
+
 def test_cli_eval_e5_reports_missed(monkeypatch, tmp_path):
     truth_payload = {
         "period": "2023",
