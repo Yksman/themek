@@ -41,3 +41,16 @@ def lookup_corp_code(cache: DartCache, *, ticker: str) -> str:
         if r.get("stock_code") == ticker:
             return r["corp_code"]
     raise LookupError(f"ticker={ticker} corp_master에 없음")
+
+
+def build_ticker_index(cache: DartCache) -> dict[str, dict]:
+    """corp_master.json → {stock_code: row}. stock_code 빈 값은 제외.
+
+    O(1) lookup 필요할 때 (예: sync_listed_stocks 2,500종목 조회).
+    """
+    rows = cache.load_corp_master()
+    if rows is None:
+        raise LookupError(
+            "corp_master 없음. `themek dart sync-corp` 먼저 실행하세요."
+        )
+    return {r["stock_code"]: r for r in rows if r.get("stock_code")}

@@ -136,3 +136,27 @@ def test_sync_and_lookup_with_real_zip(tmp_path):
     # 레인보우로보틱스
     rainbow = lookup_corp_code(cache, ticker="277810")
     assert rainbow and len(rainbow) == 8
+
+
+def test_build_ticker_index_skips_empty_stock_code(tmp_path, monkeypatch):
+    """stock_code=''은 비상장 → 인덱스 제외."""
+    from themek.dart.cache import DartCache
+    from themek.dart.corp_lookup import build_ticker_index
+    cache = DartCache(base_dir=tmp_path)
+    cache.save_corp_master([
+        {"corp_code": "00109693", "corp_name": "DL", "stock_code": "000210", "modify_date": "20250919"},
+        {"corp_code": "00434003", "corp_name": "다코", "stock_code": "", "modify_date": "20170630"},
+        {"corp_code": "00126380", "corp_name": "삼성전자", "stock_code": "005930", "modify_date": "20240312"},
+    ])
+    idx = build_ticker_index(cache)
+    assert set(idx.keys()) == {"000210", "005930"}
+    assert idx["005930"]["corp_code"] == "00126380"
+    assert idx["005930"]["corp_name"] == "삼성전자"
+
+
+def test_build_ticker_index_missing_master_raises(tmp_path):
+    from themek.dart.cache import DartCache
+    from themek.dart.corp_lookup import build_ticker_index
+    cache = DartCache(base_dir=tmp_path)
+    with pytest.raises(LookupError, match="corp_master"):
+        build_ticker_index(cache)
