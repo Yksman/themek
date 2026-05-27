@@ -1,10 +1,11 @@
 """SQLAlchemy declarative models for themek ontology."""
 from __future__ import annotations
 from typing import Optional
-from datetime import date as _date
+from datetime import date as _date, datetime as _datetime
 from sqlalchemy import (
     String, ForeignKey, Enum as SQLEnum,
-    Date, Numeric, Boolean, Text, CheckConstraint,
+    Date, DateTime, Numeric, Boolean, Text, CheckConstraint,
+    Integer, UniqueConstraint, func,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from themek.db.engine import Base
@@ -72,6 +73,13 @@ class Stock(Base):
         String(8), ForeignKey("corporations.dart_code"), nullable=False
     )
     issued_by: Mapped[Corporation] = relationship()
+
+    # Plan #5.2: lifecycle
+    delisted_at: Mapped[Optional[_date]] = mapped_column(Date)
+    last_seen_at: Mapped[Optional[_date]] = mapped_column(Date)
+    created_at: Mapped[Optional[_datetime]] = mapped_column(
+        DateTime, server_default=func.current_timestamp(),
+    )
 
 
 class BusinessReport(Base):
@@ -192,4 +200,36 @@ class GeographicExposure(Base):
             "(subject_corp_id IS NOT NULL) <> (subject_segment_id IS NOT NULL)",
             name="ge_subject_exactly_one",
         ),
+    )
+
+
+class BackfillTarget(Base):
+    __tablename__ = "backfill_targets"
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    corp_code: Mapped[str] = mapped_column(String(8), nullable=False)
+    period: Mapped[str] = mapped_column(String(16), nullable=False)
+    status: Mapped[str] = mapped_column(
+        SQLEnum(
+            "pending", "in_progress", "done", "failed", "skipped",
+            name="backfill_target_status_enum",
+        ),
+        nullable=False, default="pending",
+    )
+    attempts: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    last_attempt_at: Mapped[Optional[_datetime]] = mapped_column(DateTime)
+    last_error: Mapped[Optional[str]] = mapped_column(Text)
+    rcept_no: Mapped[Optional[str]] = mapped_column(String(14))
+    # C4: 비용·품질 추적 컬럼
+    escalation_level: Mapped[Optional[str]] = mapped_column(String(32))
+    input_chars: Mapped[Optional[int]] = mapped_column(Integer)
+    cost_estimate_usd: Mapped[Optional[float]] = mapped_column(Numeric(8, 4))
+    created_at: Mapped[_datetime] = mapped_column(
+        DateTime, nullable=False, server_default=func.current_timestamp(),
+    )
+    updated_at: Mapped[_datetime] = mapped_column(
+        DateTime, nullable=False, server_default=func.current_timestamp(),
+    )
+
+    __table_args__ = (
+        UniqueConstraint("corp_code", "period", name="ux_backfill_corp_period"),
     )

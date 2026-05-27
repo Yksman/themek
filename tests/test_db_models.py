@@ -164,3 +164,31 @@ def test_geographic_exposure(db_session):
     fetched = db_session.get(GeographicExposure, ge.id)
     assert fetched.region_id == "US"
     assert float(fetched.share_pct) == 35.0
+
+
+def test_stock_lifecycle_columns_exist():
+    """Stock 모델에 delisted_at, last_seen_at, created_at 컬럼이 존재한다."""
+    from themek.db.models import Stock
+    cols = {c.name for c in Stock.__table__.columns}
+    assert "delisted_at" in cols
+    assert "last_seen_at" in cols
+    assert "created_at" in cols
+
+
+def test_stock_lifecycle_columns_nullable(db_session):
+    """delisted_at/last_seen_at NULL 허용 + created_at 자동 set."""
+    from datetime import date
+    from themek.db.models import Stock, Corporation
+    db_session.add(Corporation(dart_code="00000001", name_ko="테스트"))
+    db_session.flush()
+    s = Stock(
+        ticker="999999", name_ko="테스트주", market="KOSPI",
+        share_class="common", issued_by_id="00000001",
+        last_seen_at=date(2026, 5, 27),
+    )
+    db_session.add(s)
+    db_session.commit()
+    db_session.refresh(s)
+    assert s.delisted_at is None
+    assert s.last_seen_at == date(2026, 5, 27)
+    assert s.created_at is not None  # server_default
