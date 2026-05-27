@@ -4,17 +4,22 @@
 
 ## Status
 
-**Walking Skeleton (Plan #1) + Eval Harness (Plan #6) 구현 완료** — 2026-05-25.
-E5 ("이 회사 뭐 만들어?") CQ가 DART 사업보고서 1건에 대해 end-to-end로 동작하고,
-삼성전자 ground truth로 추출 품질 4 metric(segment / customer / region 정확도 + share_pct MAE)을 측정할 수 있습니다.
+**Walking Skeleton (#1) + Eval Harness (#6) + DART API Client (#3) + Parser Robust Extraction (#4) 구현 완료** — 2026-05-27.
+
+E5 ("이 회사 뭐 만들어?") CQ가 **종목+연도만 입력하면** end-to-end로 동작하며, 사업보고서 형식 변형에 robust한 3-tier escalation 추출까지 갖춰진 상태:
+DART OpenAPI에서 corp_code 조회 → 사업보고서 자동 fetch → 본문 추출 (regex → LLM → full_text escalation, 학습 누적) → LLM ingest → query → eval.
+종목 1개 → N개 확장 backbone + parser self-improving loop 완성.
 
 진행 history:
 - Plan #1 (Walking Skeleton, 17 task TDD) ✅ 2026-05-23
 - 이슈 #1 (conftest production DB 격리) ✅
 - 이슈 #2 (geographic region_code dedup) ✅
-- Plan #6 (Eval Harness, 12 task TDD) ✅ 2026-05-25 — 1회 smoke run baseline: 4 metric 모두 1.000 / MAE 0.00 %p
+- Plan #6 (Eval Harness, 12 task TDD) ✅ 2026-05-25 — stub 1회 smoke baseline: 4 metric 모두 1.000 / MAE 0.00 %p
+- Plan #6 follow-up (CallResult + --runs aggregation + --save-runs) ✅ 2026-05-26 — 실 LLM baseline 측정 scaffolding
+- Plan #3 (DART API client, 11 task TDD + 실 API 정찰) ✅ 2026-05-25 — 종목 1 → N 확장 backbone, 실 API smoke 3종목 정상
+- Plan #4 (Parser Robust Extraction, 21 task TDD; Task 20 deferred) ✅ 2026-05-27 — 3-tier escalation + self-improving regex 학습 사이클
 
-**다음 작업:** Plan #3 — DART API client 자동 fetch (spec 작성 단계).
+**다음 작업:** 실 `claude` CLI 기반 E5 baseline 측정 — Plan #6 follow-up scaffolding을 사용해 삼성/현대/레인보우 3종목 × 3 runs로 segment/customer/region 점수 + 분산 측정. 동시에 Plan #4 Task 20 (fixture coverage 확장)도 자동으로 진행. 그 다음 Plan #5(다종목 backfill 자동화) 또는 Plan #2/7(social layer ingestion).
 
 ## Vision
 
@@ -56,27 +61,48 @@ E5 ("이 회사 뭐 만들어?") CQ가 DART 사업보고서 1건에 대해 end-t
 # 의존성 설치
 uv sync
 
-# 환경 변수 (SQLite 기본)
+# 환경 변수 (SQLite 기본 + DART API key 발급 필요)
 cp .env.example .env
+# .env에 DART_API_KEY=<https://opendart.fss.or.kr 발급> 입력
 
 # 마이그레이션 적용
 uv run alembic upgrade head
 
-# 샘플 시드 (3 종목: 삼성전자 / 현대차 / 레인보우로보틱스)
+# 샘플 시드 (sectors / regions / 3 종목 corporation 기본 row)
 uv run themek seed
 ```
 
-### 사업보고서 1건 ingest (실 Claude CLI 호출, 1~2분 소요)
+### DART API 자동 fetch + ingest (Plan #3 + Plan #4, 가장 빈번한 사용 패턴)
+
+```bash
+# 1. corp_code 마스터 1회 sync (DART OpenAPI 1회 호출, ~120K 기업)
+uv run themek dart sync-corp
+
+# 2. 종목 + 연도로 자동 ingest (cache miss 시 list.json + document.xml 2 호출)
+uv run themek dart ingest --ticker 005930 --period 2023
+# [section_filter] escalation=regex output_chars=38085 invalid=[]
+# 두 번째 실행은 cache hit으로 DART API 0회 + DB idempotent
+# ingest 후 자동: tests/fixtures/dart_variants/ mirror + 학습 패턴 누적
+
+# 3. Plan #4 학습 사이클 상태 / 수동 trigger
+uv run themek dart parser-stats          # fixtures + learned + pending proposals
+uv run themek dart parser-learn          # N=3 도달 proposal을 learned로 promote
+uv run themek dart parser-consolidate    # 학습 패턴 머지·dedup
+```
+
+### (선택) 수동 fixture로 ingest
+
+DART API key 없이 로컬 HTML로 ingest하고 싶을 때:
 
 ```bash
 uv run themek ingest \
-  --rcept-no 20240314000123 \
+  --rcept-no 20240312000736 \
   --corp 00126380 \
   --report-type 사업보고서 \
   --period 2023 \
-  --filing-date 2024-03-14 \
+  --filing-date 2024-03-12 \
   --html-file tests/fixtures/samsung_business_report_excerpt.html \
-  --url "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240314000123"
+  --url "https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20240312000736"
 ```
 
 ### E5 쿼리
@@ -88,8 +114,9 @@ uv run themek query e5 --ticker 005930
 ### E5 추출 품질 평가 (Plan #6)
 
 ```bash
+# 실 DART fetched HTML 사용
 uv run themek eval e5 \
-  --html-file tests/fixtures/samsung_business_report_excerpt.html \
+  --html-file data/dart/raw/20240312000736/business.html \
   --period 2023 \
   --ground-truth data/eval/ground_truth/samsung_e5_2023.json
 ```
@@ -130,18 +157,31 @@ uv run themek eval e5 \
 uv run pytest
 ```
 
-전 78개 테스트 통과 (실 LLM 호출 없이 fixture/mock 기반). Plan #6 eval harness 포함.
+전 **198개** 테스트 통과 (실 LLM 호출 없이 fixture/mock 기반).
+- Plan #1 walking skeleton + Plan #6 eval harness: 76
+- Plan #3 DART client/cache/lookup/fetch/CLI: 56
+- Plan #3 실 fixture playback (corpCode.zip 118k row, list.json, document.xml zip): 8
+- Plan #4 parser escalation + learning loop + fixture mirror + parser-* CLI: 48
+- Plan #6 follow-up (aggregate, save-runs, CallResult): 10
+- config + 회귀: 나머지
 
 ### 디렉토리 구조
 
 ```
 src/themek/
-├── config.py             # Pydantic Settings (DSN, claude CLI 등)
+├── config.py             # Pydantic Settings (DSN, claude CLI, DART 등)
 ├── db/
 │   ├── engine.py         # SQLAlchemy + SQLite FK PRAGMA
 │   └── models.py         # 14개 클래스 (Stock/Corp/...Revenue/Customer/...)
 ├── dart/
-│   └── parser.py         # 사업보고서 HTML → 텍스트
+│   ├── parser.py         # [Plan #4] 3-tier escalation 추출 (regex→LLM→full_text)
+│   ├── learned_patterns.py # [Plan #4] baseline + 학습 패턴 JSON loader
+│   ├── pattern_learning.py # [Plan #4] propose → record → validate → promote
+│   ├── fixture_mirror.py # [Plan #4] cache → tests/fixtures mirror
+│   ├── client.py         # [Plan #3] DART OpenAPI HTTP client
+│   ├── cache.py          # [Plan #3] 응답 디스크 캐시
+│   ├── corp_lookup.py    # [Plan #3] corp_code 마스터 sync + ticker 조회
+│   └── fetch.py          # [Plan #3] document.xml zip → 사업의 내용 XML 추출
 ├── llm/
 │   ├── schemas.py        # BusinessExtraction Pydantic
 │   ├── prompts.py        # 추출 prompt 빌더
@@ -154,21 +194,38 @@ src/themek/
 │   └── templates/
 │       └── e5_answer.txt.j2
 ├── seeds.py
-└── cli.py                # typer entrypoint
+└── cli.py                # typer entrypoint (seed/ingest/query/eval/dart)
+
+data/dart/
+├── corp_master.json              # gitignored — sync-corp 결과 (~120K 기업)
+├── learned_header_patterns.json  # [Plan #4] commit — 학습 누적 regex
+├── pattern_proposals.json        # [Plan #4] commit — N=3 도달 전 proposal
+└── raw/<rcept_no>/               # gitignored
+    ├── document.zip              # DART 원본
+    └── business.html             # 추출된 'II. 사업의 내용' (XML→HTML wrap)
+
+tests/fixtures/dart_variants/     # [Plan #4] commit — ingest 자동 mirror
+├── <ticker>_<period>.html
+└── <ticker>_<period>_headers.json  # 회귀 검증용 expected_headers
 ```
 
 ## 후속 Plan들 (예정)
 
-이 walking skeleton은 ontology spec의 일부만 구현. 다음 plan들로 확장:
+권장 누적 순서: **실 LLM baseline → #5 (시계열·다종목 backfill) → #2 + #7 (social layer) → pgvector**.
 
-권장 누적 순서: **#3 (폭 확장: scale) → #2 + #7 (깊이 확장: social layer) → #4 (pgvector 연결) → #5 (시계열 backfill)**.
-
-- 🚧 **Plan #3 (다음)**: DART API client 자동 fetch — 현재 수동 fixture를 전 종목으로 확장하는 backbone
+- 🚧 **다음**: 실 `claude` CLI 기반 E5 추출 baseline 측정 (삼성/현대/레인보우 3종목 × 3 runs, `--save-runs` 사용) — Plan #6 follow-up scaffolding 활용. 동시에 Plan #4 Task 20 fixture coverage 확장도 자동 진행 (`dart ingest`가 mirror).
+- **Plan #5**: 다종목·시계열 backfill orchestrator — token bucket, 동시 fetch, 진행상황 logging, 실패 재시도
 - **Plan #2**: Theme / Narrative / Membership / Activation 클래스 추가 → E1·E2·E3·E6 CQ 지원 (스키마 축)
 - **Plan #7**: 텔레/블로그/팍스넷 소스 ingestion → social narrative layer (데이터 축, #2와 한 쌍)
-- **Plan #4**: pgvector 통합 → E2·E4 semantic 매칭 / Event analog
-- **Plan #5**: 24개월 backfill orchestrator
+- **pgvector 통합**: E2·E4 semantic 매칭 / Event analog
 - ~~**Plan #6**: Evaluation rubric harness~~ ✅ 완료 (`docs/superpowers/plans/2026-05-23-e5-eval-harness.md`)
+  - follow-up scaffolding(CallResult + --runs/--save-runs): `docs/superpowers/plans/2026-05-26-e5-real-llm-baseline.md`
+- ~~**Plan #3**: DART API client~~ ✅ 완료 (`docs/superpowers/plans/2026-05-25-dart-api-client.md`)
+  - 정찰 기록: `docs/dart-api-recon-notes.md`
+  - smoke baseline: `docs/dart-fetch-smoke-run-notes.md`
+  - status: `docs/dart-api-client-status-2026-05-25.md`
+- ~~**Plan #4**: Parser robust extraction~~ ✅ 완료 (`docs/superpowers/plans/2026-05-26-dart-parser-robust-extraction.md`, Task 20 deferred)
+  - status: `docs/dart-parser-robust-extraction-status-2026-05-27.md`
 
 ## License
 
