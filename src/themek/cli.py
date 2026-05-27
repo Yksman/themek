@@ -629,13 +629,15 @@ def backfill_run_cmd(
 def backfill_status_cmd(
     verbose: bool = typer.Option(
         False, "--verbose", "-v",
-        help="escalation 분포 + 비용 top-10 표시",
+        help="escalation 분포 + 비용 top-10 + 7일 신규/폐지 표시",
     ),
 ):
-    """BackfillTarget status 분포 + 누적 LLM 비용."""
+    """BackfillTarget status 분포 + 누적 LLM 비용 + lifecycle 요약."""
+    from datetime import datetime, timedelta
+
     from sqlalchemy import select, func, desc
 
-    from themek.db.models import BackfillTarget
+    from themek.db.models import BackfillTarget, Stock
 
     with _session() as sess:
         rows = sess.execute(
@@ -681,6 +683,23 @@ def backfill_status_cmd(
             typer.echo(
                 f"  {cc} {p}: input_chars={ic} cost=${float(cost or 0):.4f}"
             )
+
+        # 7일 lifecycle 요약
+        cutoff = datetime.utcnow() - timedelta(days=7)
+        new_n = sess.scalar(
+            select(func.count())
+            .select_from(Stock)
+            .where(Stock.created_at >= cutoff)
+        ) or 0
+        delisted_n = sess.scalar(
+            select(func.count())
+            .select_from(Stock)
+            .where(Stock.delisted_at.isnot(None))
+            .where(Stock.delisted_at >= cutoff.date())
+        ) or 0
+        typer.echo("\n=== Lifecycle (7일) ===")
+        typer.echo(f"  신규 상장 (7일): {new_n}")
+        typer.echo(f"  상장폐지 (7일): {delisted_n}")
 
 
 @dart_app.command("incremental")

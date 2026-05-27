@@ -301,3 +301,58 @@ def test_backfill_init_rejects_both_universe_sources():
     ])
     assert result.exit_code != 0
     assert "동시" in result.stdout or "동시" in (result.stderr or "")
+
+
+def test_backfill_status_lifecycle_summary(monkeypatch, fresh_db):
+    """status --verbose는 최근 7일 신규 상장 / 상장폐지 카운트도 표시."""
+    from datetime import date, datetime, timedelta
+
+    from typer.testing import CliRunner
+
+    from themek.cli import app
+    from themek.db.models import Corporation, Stock
+    from themek.db.engine import make_engine, make_session_factory
+
+    monkeypatch.setenv("DART_API_KEY", "test")
+
+    today = date.today()
+    recent = today - timedelta(days=3)
+    old = today - timedelta(days=30)
+    # created_at values: only 신규상장 is recent; the rest are backdated
+    old_dt = datetime.utcnow() - timedelta(days=30)
+
+    Session = make_session_factory(make_engine())
+    with Session() as s:
+        s.add_all([
+            Corporation(dart_code="00000001", name_ko="신규상장"),
+            Corporation(dart_code="00000002", name_ko="기상장"),
+            Corporation(dart_code="00000003", name_ko="최근폐지"),
+            Corporation(dart_code="00000004", name_ko="옛날폐지"),
+        ])
+        s.flush()
+        s.add_all([
+            # 신규상장: created_at 기본값(now) → 7일 내
+            Stock(ticker="111111", name_ko="신규상장", market="KOSPI",
+                  share_class="common", issued_by_id="00000001",
+                  last_seen_at=recent),
+            # 기상장: created_at을 30일 전으로 명시 → 7일 밖
+            Stock(ticker="222222", name_ko="기상장", market="KOSPI",
+                  share_class="common", issued_by_id="00000002",
+                  last_seen_at=old, created_at=old_dt),
+            # 최근폐지: created_at 30일 전 + delisted_at 3일 전
+            Stock(ticker="333333", name_ko="최근폐지", market="KOSPI",
+                  share_class="common", issued_by_id="00000003",
+                  delisted_at=recent, created_at=old_dt),
+            # 옛날폐지: created_at 30일 전 + delisted_at 30일 전
+            Stock(ticker="444444", name_ko="옛날폐지", market="KOSPI",
+                  share_class="common", issued_by_id="00000004",
+                  delisted_at=old, created_at=old_dt),
+        ])
+        s.commit()
+
+    runner = CliRunner()
+    result = runner.invoke(app, ["dart", "backfill", "status", "--verbose"])
+    assert result.exit_code == 0, result.stdout
+    # 최근 7일 — 신규 1개, 폐지 1개. 옛날 것은 카운트 안 됨.
+    assert "신규 상장 (7일): 1" in result.stdout
+    assert "상장폐지 (7일): 1" in result.stdout
