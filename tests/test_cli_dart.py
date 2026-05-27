@@ -472,3 +472,78 @@ def test_cli_dart_ingest_idempotent(
     )
     assert r2.exit_code == 0, r2.stdout
     assert doc_call_count["n"] == 1, "cache hit이면 document.xml 호출 안 함"
+
+
+def test_dart_incremental_universe_source_stocks(monkeypatch, fresh_db, mocker):
+    """--universe-source stocks는 Stock 테이블에서 corp_code set을 만든다."""
+    from datetime import date
+
+    from typer.testing import CliRunner
+
+    from themek.cli import app
+    from themek.db.models import Corporation, Stock
+    from themek.dart.incremental import IncrementalRunResult
+    from themek.db.engine import make_engine, make_session_factory
+
+    monkeypatch.setenv("DART_API_KEY", "test")
+    Session = make_session_factory(make_engine())
+    with Session() as s:
+        s.add(Corporation(dart_code="00126380", name_ko="삼성전자"))
+        s.flush()
+        s.add(Stock(
+            ticker="005930", name_ko="삼성전자", market="KOSPI",
+            share_class="common", issued_by_id="00126380",
+            last_seen_at=date(2026, 5, 27),
+        ))
+        s.commit()
+
+    captured: dict = {}
+
+    def fake_run(*, universe, **kwargs):
+        captured["universe"] = universe
+        return IncrementalRunResult()
+
+    mocker.patch("themek.cli.run_incremental", fake_run)
+    mocker.patch(
+        "themek.cli._dart_client_and_cache",
+        return_value=(mocker.MagicMock(), mocker.MagicMock()),
+    )
+
+    local_runner = CliRunner()
+    result = local_runner.invoke(app, [
+        "dart", "incremental",
+        "--universe-source", "stocks",
+        "--since", "yesterday", "--until", "today",
+    ])
+    assert result.exit_code == 0, result.stdout
+    assert captured["universe"] == {"00126380"}
+
+
+def test_dart_incremental_universe_source_file_still_works(mocker, tmp_path):
+    from typer.testing import CliRunner
+
+    from themek.cli import app
+    from themek.dart.incremental import IncrementalRunResult
+
+    p = tmp_path / "active.txt"
+    p.write_text("00126380\n", encoding="utf-8")
+
+    captured: dict = {}
+
+    def fake_run(*, universe, **kwargs):
+        captured["universe"] = universe
+        return IncrementalRunResult()
+
+    mocker.patch("themek.cli.run_incremental", fake_run)
+    mocker.patch(
+        "themek.cli._dart_client_and_cache",
+        return_value=(mocker.MagicMock(), mocker.MagicMock()),
+    )
+
+    local_runner = CliRunner()
+    result = local_runner.invoke(app, [
+        "dart", "incremental",
+        "--universe-file", str(p),
+    ])
+    assert result.exit_code == 0
+    assert captured["universe"] == {"00126380"}

@@ -33,6 +33,7 @@ from themek.eval.e5 import (
 )
 from themek.krx.client import KrxClient
 from themek.krx.sync import sync_listed_stocks, fetch_listed_universe
+from themek.dart.incremental import run_incremental
 
 app = typer.Typer(help="themek — 한국 테마주 ontology CLI")
 query_app = typer.Typer(help="Run competency queries")
@@ -667,17 +668,24 @@ def backfill_status_cmd(
 def dart_incremental_cmd(
     since: str = typer.Option("yesterday", "--since"),
     until: str = typer.Option("today", "--until"),
+    universe_source: str = typer.Option(
+        "file", "--universe-source",
+        help="file | stocks",
+    ),
     universe_file: Path = typer.Option(
         DEFAULT_UNIVERSE_FILE, "--universe-file",
-        help="active.txt 경로 (backfill과 동일)",
+        help="active.txt 경로 (--universe-source=file 일 때만)",
+    ),
+    include_delisted: bool = typer.Option(
+        False, "--include-delisted",
+        help="--universe-source=stocks 시 delisted 종목 포함",
     ),
     purge_zip: bool = typer.Option(False, "--purge-zip-after-extract"),
 ):
     """Layer B: scan → universe filter → 신규만 ingest."""
     from datetime import timedelta
 
-    from themek.dart.incremental import run_incremental
-    from themek.dart.universe import load_universe
+    from themek.dart.universe import load_universe, load_universe_from_stocks
     from themek.dart.rate_budget import RateBudget
 
     s = get_settings()
@@ -696,7 +704,20 @@ def dart_incremental_cmd(
         typer.echo(f"Error: {e}", err=True)
         raise typer.Exit(code=2)
 
-    universe = set(load_universe(universe_file))
+    if universe_source == "stocks":
+        with _session() as sess:
+            universe = set(load_universe_from_stocks(
+                sess, include_delisted=include_delisted,
+            ))
+    elif universe_source == "file":
+        universe = set(load_universe(universe_file))
+    else:
+        typer.echo(
+            f"Error: --universe-source는 'file' 또는 'stocks' (got {universe_source!r})",
+            err=True,
+        )
+        raise typer.Exit(code=1)
+
     budget = RateBudget(
         daily_cap=38000,
         state_file=s.dart_cache_dir / "budget_state.json",
