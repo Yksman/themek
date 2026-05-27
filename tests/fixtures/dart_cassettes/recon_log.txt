@@ -1,0 +1,28 @@
+=== Step 1: corpCode.xml ===
+status=200 bytes=3579368 content-type=application/x-msdownload;charset=UTF-8
+saved: tests/fixtures/dart_cassettes/corp_code_zip_success.bin (3579368 bytes)
+corpCode zip files: ['CORPCODE.xml']
+CORPCODE.xml size: 29912902 bytes
+total rows: 118145
+  found 005930: corp_code=00126380 name=삼성전자
+
+=== Step 2: list.json (삼성전자 2024년 상반기) ===
+status=200
+saved: tests/fixtures/dart_cassettes/list_json_samsung_2023.json
+response status=000 message=정상
+list count: 2
+사업보고서 후보 (1):
+  rcept_no=20240312000736  report_nm=사업보고서 (2023.12)  rcept_dt=20240312
+-> 사용할 rcept_no = 20240312000736
+
+=== Step 3: document.xml (rcept_no=20240312000736) ===
+status=200 bytes=596351
+saved: tests/fixtures/dart_cassettes/document_zip_samsung_2023.bin
+document zip files (3개):
+  20240312000736.xml  (6150873 bytes)
+  20240312000736_00760.xml  (560092 bytes)
+  20240312000736_00761.xml  (660068 bytes)
+
+--- '사업의 내용' / 'business content' 후보 검색 ---
+
+HTML files sorted (0):

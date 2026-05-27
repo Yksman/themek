@@ -1,0 +1,19 @@
+{
+  "samsung_corp_code": "00126380",
+  "samsung_rcept_no": "20240312000736",
+  "samsung_report_nm": "사업보고서 (2023.12)",
+  "samsung_rcept_dt": "20240312",
+  "all_business_reports": [
+    {
+      "corp_code": "00126380",
+      "corp_name": "삼성전자",
+      "stock_code": "005930",
+      "corp_cls": "Y",
+      "report_nm": "사업보고서 (2023.12)",
+      "rcept_no": "20240312000736",
+      "flr_nm": "삼성전자",
+      "rcept_dt": "20240312",
+      "rm": "연"
+    }
+  ]
+}

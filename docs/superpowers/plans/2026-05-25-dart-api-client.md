@@ -81,14 +81,14 @@ themek/
 
 **Goal:** spec의 zip + HTML 휴리스틱 가정이 실제 응답에 맞는지 1회 검증 + cassette 저장. 이 task가 실패(zip 구조가 예상과 다름)하면 spec 수정 후 plan을 다시 조정해야 한다.
 
-- [ ] **Step 1: 의존성 추가**
+- [x] **Step 1: 의존성 추가**
 
 ```bash
 uv add httpx
 uv add --dev vcrpy
 ```
 
-- [ ] **Step 2: 임시 정찰 스크립트 작성 + 실 API 호출**
+- [x] **Step 2: 임시 정찰 스크립트 작성 + 실 API 호출**
 
 `scripts/recon_dart.py` (이 task 전용 — T0 commit에는 포함하지 않고 .gitignore 추가 또는 commit 시 제거):
 
@@ -148,7 +148,7 @@ Expected:
 - list.json에 사업보고서 1건 이상 (rcept_no=20240314000123 예상)
 - document.xml zip ~수십MB, 내부에 다수 HTML
 
-- [ ] **Step 3: zip 내부 HTML 구조 분석**
+- [x] **Step 3: zip 내부 HTML 구조 분석**
 
 ```bash
 # zip의 첫 5개 HTML 파일을 inspect
@@ -171,7 +171,7 @@ D1 휴리스틱 검증:
 2. 없으면 정렬 시 2번째 HTML이 본문인가?
 3. base64 인코딩 등 비표준 케이스가 있는가?
 
-- [ ] **Step 4: vcrpy cassette 저장 — Python 코드로 응답 캐시**
+- [x] **Step 4: vcrpy cassette 저장 — Python 코드로 응답 캐시**
 
 `scripts/recon_dart.py`를 cassette mode로 1회 더 실행 (응답을 yaml로 저장):
 
@@ -203,7 +203,7 @@ with my_vcr.use_cassette("document_zip_samsung_2023.yaml"):
 
 T0 step 4 실행 시점에 호환 안 되면 **옵션 2로 전환** + spec D2를 commit으로 정정.
 
-- [ ] **Step 5: `Corporation.dart_corp_code` 컬럼 존재 확인 (D5 확정)**
+- [x] **Step 5: `Corporation.dart_corp_code` 컬럼 존재 확인 (D5 확정)**
 
 ```bash
 grep -n "dart_corp_code\|corp_code" src/themek/db/models.py
@@ -211,7 +211,7 @@ grep -n "dart_corp_code\|corp_code" src/themek/db/models.py
 
 존재하면 D5=noop. 없으면 plan에 alembic migration task 추가 commit.
 
-- [ ] **Step 6: `docs/dart-api-recon-notes.md` 작성**
+- [x] **Step 6: `docs/dart-api-recon-notes.md` 작성**
 
 ```markdown
 # DART API Recon — 2026-05-25
@@ -245,7 +245,7 @@ grep -n "dart_corp_code\|corp_code" src/themek/db/models.py
 - FAIL 시 채택 대안: respx + 응답 fixture
 ```
 
-- [ ] **Step 7: cassette + recon notes 커밋, recon 스크립트 제거**
+- [x] **Step 7: cassette + recon notes 커밋, recon 스크립트 제거**
 
 ```bash
 # scripts/recon_dart.py를 .gitignore에 추가 또는 삭제
@@ -263,7 +263,7 @@ git commit -m "feat(dart): T0 실 API 정찰 + cassette 3건 저장 (Plan #3 T0)
 - Modify: `pyproject.toml`
 - Modify: `.env.example`
 
-- [ ] **Step 1: 실패 테스트 추가**
+- [x] **Step 1: 실패 테스트 추가**
 
 `tests/test_config.py` (없으면 새로):
 
@@ -285,7 +285,7 @@ def test_settings_dart_cache_dir_default():
     assert str(s.dart_cache_dir).endswith("data/dart")
 ```
 
-- [ ] **Step 2: `config.py` 확장**
+- [x] **Step 2: `config.py` 확장**
 
 ```python
 from pathlib import Path
@@ -306,14 +306,14 @@ class Settings(BaseSettings):
     dart_http_timeout_sec: int = Field(default=60)
 ```
 
-- [ ] **Step 3: `.env.example` 갱신**
+- [x] **Step 3: `.env.example` 갱신**
 
 ```
 DART_API_KEY=
 DART_CACHE_DIR=data/dart
 ```
 
-- [ ] **Step 4: 통과 확인 + 커밋**
+- [x] **Step 4: 통과 확인 + 커밋**
 
 ```bash
 uv run pytest tests/test_config.py -v
@@ -329,7 +329,7 @@ git commit -m "feat(config): add dart_api_key + dart_cache_dir settings (Plan #3
 - Create: `src/themek/dart/client.py`
 - Create: `tests/test_dart_client.py`
 
-- [ ] **Step 1: 실패 테스트 작성**
+- [x] **Step 1: 실패 테스트 작성**
 
 ```python
 from pathlib import Path
@@ -376,7 +376,7 @@ def test_fetch_document_zip_returns_bytes():
 
 (`cassette_playback`는 T0에서 결정한 라이브러리 — vcrpy 호환 OK면 vcr.VCR, 아니면 respx 어댑터)
 
-- [ ] **Step 2: 실패 확인**
+- [x] **Step 2: 실패 확인**
 
 ```bash
 uv run pytest tests/test_dart_client.py -v
@@ -384,7 +384,7 @@ uv run pytest tests/test_dart_client.py -v
 
 Expected: ImportError on `DartClient`.
 
-- [ ] **Step 3: `client.py` 구현**
+- [x] **Step 3: `client.py` 구현**
 
 ```python
 """DART OpenAPI HTTP client."""
@@ -454,7 +454,7 @@ class DartClient:
             raise DartApiError(f"HTTP {r.status_code}: {r.text[:200]}")
 ```
 
-- [ ] **Step 4: 통과 확인 + 커밋**
+- [x] **Step 4: 통과 확인 + 커밋**
 
 ```bash
 uv run pytest tests/test_dart_client.py -v
@@ -469,7 +469,7 @@ git commit -m "feat(dart): DartClient with corpCode/list/document fetch (Plan #3
 **Files:**
 - Modify: `tests/test_dart_client.py`
 
-- [ ] **Step 1: 실패 테스트 추가** — monkeypatch로 httpx.Client.get을 모킹
+- [x] **Step 1: 실패 테스트 추가** — monkeypatch로 httpx.Client.get을 모킹
 
 ```python
 def test_client_raises_auth_error_on_401(monkeypatch):
@@ -514,9 +514,9 @@ def _fake_response(status_code, text="", json_body=None):
     return r
 ```
 
-- [ ] **Step 2: 통과 확인** (현재 구현으로 통과해야 함 — Step 3 없음 except 통과 확인)
+- [x] **Step 2: 통과 확인** (현재 구현으로 통과해야 함 — Step 3 없음 except 통과 확인)
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 uv run pytest tests/test_dart_client.py -v
@@ -532,7 +532,7 @@ git commit -m "test(dart): DartClient error branches — auth/rate/5xx/api (Plan
 - Create: `src/themek/dart/cache.py`
 - Create: `tests/test_dart_cache.py`
 
-- [ ] **Step 1: 실패 테스트**
+- [x] **Step 1: 실패 테스트**
 
 ```python
 import json
@@ -570,7 +570,7 @@ def test_cache_save_and_lookup_business_html(tmp_path):
     assert p.read_bytes().startswith(b"<html>")
 ```
 
-- [ ] **Step 2: 구현 추가**
+- [x] **Step 2: 구현 추가**
 
 ```python
 """DART 응답 디스크 캐시."""
@@ -618,7 +618,7 @@ class DartCache:
         return self.raw_dir / rcept_no / "business.html"
 ```
 
-- [ ] **Step 3: 통과 확인 + 커밋**
+- [x] **Step 3: 통과 확인 + 커밋**
 
 ```bash
 uv run pytest tests/test_dart_cache.py -v
@@ -634,7 +634,7 @@ git commit -m "feat(dart): DartCache disk-based response cache (Plan #3 T4)"
 - Create: `src/themek/dart/corp_lookup.py`
 - Create: `tests/test_dart_corp_lookup.py`
 
-- [ ] **Step 1: 실패 테스트 작성**
+- [x] **Step 1: 실패 테스트 작성**
 
 ```python
 import zipfile
@@ -708,7 +708,7 @@ def test_lookup_corp_code_no_master_raises(tmp_path):
         lookup_corp_code(cache, ticker="005930")
 ```
 
-- [ ] **Step 2: 구현**
+- [x] **Step 2: 구현**
 
 ```python
 """DART corp_code 마스터 sync + ticker 조회."""
@@ -753,7 +753,7 @@ def lookup_corp_code(cache: DartCache, *, ticker: str) -> str:
     raise LookupError(f"ticker={ticker} corp_master에 없음")
 ```
 
-- [ ] **Step 3: 통과 확인 + 커밋**
+- [x] **Step 3: 통과 확인 + 커밋**
 
 ```bash
 uv run pytest tests/test_dart_corp_lookup.py -v
@@ -771,7 +771,7 @@ git commit -m "feat(dart): corp_master sync + ticker lookup (Plan #3 T5)"
 
 T0의 정찰 결과로 실제 zip 구조를 알게 된 상태. 휴리스틱을 그에 맞춰 정의.
 
-- [ ] **Step 1: 실패 테스트**
+- [x] **Step 1: 실패 테스트**
 
 ```python
 import zipfile
@@ -819,7 +819,7 @@ def test_extract_raises_when_no_html():
 
 (T0 정찰 결과 실 구조에 따라 추가 테스트 1-2건 더 추가 가능)
 
-- [ ] **Step 2: 구현**
+- [x] **Step 2: 구현**
 
 ```python
 """DART 보고서 본문 fetch 오케스트레이션."""
@@ -855,7 +855,7 @@ def extract_business_html_from_zip(zip_bytes: bytes) -> bytes:
         )
 ```
 
-- [ ] **Step 3: 통과 확인 + 커밋**
+- [x] **Step 3: 통과 확인 + 커밋**
 
 ```bash
 uv run pytest tests/test_dart_fetch.py -v -k extract_
@@ -871,7 +871,7 @@ git commit -m "feat(dart): extract_business_html_from_zip heuristic (Plan #3 T6)
 - Modify: `src/themek/dart/fetch.py`
 - Modify: `tests/test_dart_fetch.py`
 
-- [ ] **Step 1: 실패 테스트**
+- [x] **Step 1: 실패 테스트**
 
 ```python
 from themek.dart.fetch import find_business_report_rcept_no
@@ -909,7 +909,7 @@ def test_find_rcept_no_raises_when_no_match():
         find_business_report_rcept_no(_FakeClient(payload), corp_code="00126380", year=2023)
 ```
 
-- [ ] **Step 2: 구현**
+- [x] **Step 2: 구현**
 
 ```python
 def find_business_report_rcept_no(client, *, corp_code: str, year: int) -> str:
@@ -932,7 +932,7 @@ def find_business_report_rcept_no(client, *, corp_code: str, year: int) -> str:
     return candidates[0]["rcept_no"]
 ```
 
-- [ ] **Step 3: 통과 확인 + 커밋**
+- [x] **Step 3: 통과 확인 + 커밋**
 
 ```bash
 uv run pytest tests/test_dart_fetch.py -v -k find_
@@ -948,7 +948,7 @@ git commit -m "feat(dart): find_business_report_rcept_no list.json filter (Plan 
 - Modify: `src/themek/dart/fetch.py`
 - Modify: `tests/test_dart_fetch.py`
 
-- [ ] **Step 1: 실패 테스트** (cache hit/miss 양쪽)
+- [x] **Step 1: 실패 테스트** (cache hit/miss 양쪽)
 
 ```python
 from themek.dart.fetch import fetch_business_report_html
@@ -1003,7 +1003,7 @@ def test_fetch_cache_hit_skips_api(tmp_path):
     assert client.doc_calls == 0
 ```
 
-- [ ] **Step 2: 구현**
+- [x] **Step 2: 구현**
 
 ```python
 from pathlib import Path
@@ -1023,7 +1023,7 @@ def fetch_business_report_html(
     return path, rcept_no
 ```
 
-- [ ] **Step 3: 통과 확인 + 커밋**
+- [x] **Step 3: 통과 확인 + 커밋**
 
 ```bash
 uv run pytest tests/test_dart_fetch.py -v
@@ -1039,7 +1039,7 @@ git commit -m "feat(dart): fetch_business_report_html orchestration (Plan #3 T8)
 - Modify: `src/themek/cli.py`
 - Create: `tests/test_cli_dart.py`
 
-- [ ] **Step 1: 실패 테스트**
+- [x] **Step 1: 실패 테스트**
 
 ```python
 from typer.testing import CliRunner
@@ -1073,7 +1073,7 @@ def test_cli_dart_sync_corp_writes_master(monkeypatch, tmp_path):
     assert (tmp_path / "dart" / "corp_master.json").exists()
 ```
 
-- [ ] **Step 2: `cli.py`에 dart 서브앱 + sync-corp 추가**
+- [x] **Step 2: `cli.py`에 dart 서브앱 + sync-corp 추가**
 
 ```python
 from themek.dart.client import DartClient, DartAuthError
@@ -1104,7 +1104,7 @@ def dart_sync_corp_cmd():
     typer.echo(f"synced {n} corporations to {cache._corp_master}")
 ```
 
-- [ ] **Step 3: 통과 확인 + 커밋**
+- [x] **Step 3: 통과 확인 + 커밋**
 
 ```bash
 uv run pytest tests/test_cli_dart.py -v -k sync_corp
@@ -1120,7 +1120,7 @@ git commit -m "feat(cli): themek dart sync-corp (Plan #3 T9)"
 - Modify: `src/themek/cli.py`
 - Modify: `tests/test_cli_dart.py`
 
-- [ ] **Step 1: 실패 테스트**
+- [x] **Step 1: 실패 테스트**
 
 ```python
 def test_cli_dart_fetch_writes_html(monkeypatch, tmp_path):
@@ -1160,7 +1160,7 @@ def test_cli_dart_ingest_runs_full_pipeline(monkeypatch, tmp_path):
     ...
 ```
 
-- [ ] **Step 2: cli.py에 fetch + ingest 명령 추가**
+- [x] **Step 2: cli.py에 fetch + ingest 명령 추가**
 
 ```python
 @dart_app.command("fetch")
@@ -1226,7 +1226,7 @@ def dart_ingest_cmd(
     typer.echo(f"Ingested report {rcept_no}")
 ```
 
-- [ ] **Step 3: 통과 확인 + 커밋**
+- [x] **Step 3: 통과 확인 + 커밋**
 
 ```bash
 uv run pytest tests/test_cli_dart.py -v
@@ -1241,7 +1241,7 @@ git commit -m "feat(cli): themek dart fetch + ingest commands (Plan #3 T10)"
 **Files:**
 - Modify: `.gitignore`
 
-- [ ] **Step 1: `.gitignore`에 `/data/dart/` 추가**
+- [x] **Step 1: `.gitignore`에 `/data/dart/` 추가**
 
 ```gitignore
 # Plan #3: DART 캐시 (corp_master + raw zip + 추출 HTML)
@@ -1251,7 +1251,7 @@ git commit -m "feat(cli): themek dart fetch + ingest commands (Plan #3 T10)"
 /scripts/recon_dart.py
 ```
 
-- [ ] **Step 2: 전체 pytest 회귀**
+- [x] **Step 2: 전체 pytest 회귀**
 
 ```bash
 uv run pytest
@@ -1259,7 +1259,7 @@ uv run pytest
 
 Expected: 78 (기존) + 약 22 (Plan #3) = ~100 passed.
 
-- [ ] **Step 3: 커밋**
+- [x] **Step 3: 커밋**
 
 ```bash
 git add .gitignore
@@ -1273,7 +1273,7 @@ git commit -m "chore: gitignore /data/dart and recon script (Plan #3 T11)"
 **Files:**
 - Create: `docs/dart-fetch-smoke-run-notes.md`
 
-- [ ] **Step 1: 사전 — corp_master sync (실 API 1회)**
+- [x] **Step 1: 사전 — corp_master sync (실 API 1회)**
 
 ```bash
 uv run themek dart sync-corp
@@ -1281,7 +1281,7 @@ uv run themek dart sync-corp
 
 Expected: `synced ~92000 corporations to data/dart/corp_master.json`
 
-- [ ] **Step 2: 3 종목 ingest (실 DART + 실 LLM)**
+- [x] **Step 2: 3 종목 ingest (실 DART + 실 LLM)**
 
 ```bash
 for ticker in 005930 005380 277810; do
@@ -1292,7 +1292,7 @@ done | tee /tmp/dart_smoke.txt
 
 Expected: 각 종목 "Ingested report ..." 출력. 두 번째 실행 시 DB idempotent (재 ingest 안 됨) + DART API 0 호출 (cache hit).
 
-- [ ] **Step 3: 각 종목 E5 쿼리**
+- [x] **Step 3: 각 종목 E5 쿼리**
 
 ```bash
 for ticker in 005930 005380 277810; do
@@ -1300,7 +1300,7 @@ for ticker in 005930 005380 277810; do
 done | tee -a /tmp/dart_smoke.txt
 ```
 
-- [ ] **Step 4: 삼성전자 eval e5 (기존 ground truth 재사용)**
+- [x] **Step 4: 삼성전자 eval e5 (기존 ground truth 재사용)**
 
 ```bash
 uv run themek eval e5 \
@@ -1312,7 +1312,7 @@ uv run themek eval e5 \
 
 Expected: 4 metric 1.000 / MAE 0.00 (Plan #6 baseline과 동일 — fixture HTML이 실 DART 본문과 일치하는지 검증).
 
-- [ ] **Step 5: baseline notes 작성**
+- [x] **Step 5: baseline notes 작성**
 
 `docs/dart-fetch-smoke-run-notes.md`:
 
@@ -1340,7 +1340,7 @@ Expected: 4 metric 1.000 / MAE 0.00 (Plan #6 baseline과 동일 — fixture HTML
 - (휴리스틱 fallback이 작동한 종목 있는지 / 추출 HTML 본문 손실 있는지 / 등)
 ```
 
-- [ ] **Step 6: 커밋**
+- [x] **Step 6: 커밋**
 
 ```bash
 git add docs/dart-fetch-smoke-run-notes.md
@@ -1354,19 +1354,19 @@ git commit -m "docs(dart): smoke run baseline 3 종목 end-to-end (Plan #3 T12)"
 **Files:**
 - Modify: `README.md`
 
-- [ ] **Step 1: README "후속 Plan들" 섹션 갱신**
+- [x] **Step 1: README "후속 Plan들" 섹션 갱신**
 
 ```markdown
 - 🚧 **Plan #3 (다음)** → ~~**Plan #3**~~ ✅ 완료 (`docs/superpowers/plans/2026-05-25-dart-api-client.md`)
 ```
 
-- [ ] **Step 2: Status 섹션에 진행 history 항목 추가**
+- [x] **Step 2: Status 섹션에 진행 history 항목 추가**
 
 ```markdown
 - Plan #3 (DART API client, 13 task TDD) ✅ 2026-05-XX — 종목 1 → N 확장 backbone
 ```
 
-- [ ] **Step 3: Walking Skeleton 사용 예시 갱신 (수동 fixture → `dart ingest`로)**
+- [x] **Step 3: Walking Skeleton 사용 예시 갱신 (수동 fixture → `dart ingest`로)**
 
 기존 `themek ingest --rcept-no ... --html-file ...` 예시를 다음으로 대체:
 
@@ -1378,13 +1378,13 @@ uv run themek dart sync-corp
 uv run themek dart ingest --ticker 005930 --period 2023
 ```
 
-- [ ] **Step 4: "다음 작업" 갱신**
+- [x] **Step 4: "다음 작업" 갱신**
 
 ```markdown
 **다음 작업:** Plan #2 + #7 (social layer ontology + 텔레/블로그/팍스넷 ingestion), 또는 Plan #5 (다종목 backfill 전 자동화).
 ```
 
-- [ ] **Step 5: 커밋**
+- [x] **Step 5: 커밋**
 
 ```bash
 git add README.md

@@ -20,7 +20,7 @@ REGIONS = [
 CORPORATIONS = [
     {"dart_code": "00126380", "name_ko": "삼성전자", "in_sector_id": "G2520"},
     {"dart_code": "00164742", "name_ko": "현대자동차", "in_sector_id": "G2570"},
-    {"dart_code": "01133360", "name_ko": "레인보우로보틱스", "in_sector_id": "G2030"},
+    {"dart_code": "01261644", "name_ko": "레인보우로보틱스", "in_sector_id": "G2030"},
 ]
 
 STOCKS = [
@@ -29,7 +29,7 @@ STOCKS = [
     {"ticker": "005380", "name_ko": "현대차", "market": "KOSPI",
      "share_class": "common", "issued_by_id": "00164742"},
     {"ticker": "277810", "name_ko": "레인보우로보틱스", "market": "KOSDAQ",
-     "share_class": "common", "issued_by_id": "01133360"},
+     "share_class": "common", "issued_by_id": "01261644"},
 ]
 
 
