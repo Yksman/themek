@@ -11,13 +11,21 @@ from themek.db.models import (
 from themek.llm.schemas import BusinessExtraction
 
 
+def _make_default_extractor(
+    escalation_level: Optional[str] = None,
+) -> Callable[[str, str], BusinessExtraction]:
+    def extractor(text: str, period_hint: str) -> BusinessExtraction:
+        from themek.llm.claude_cli import call_claude, extract_json_block
+        from themek.llm.prompts import build_business_extraction_prompt
+        prompt = build_business_extraction_prompt(text, period_hint=period_hint)
+        raw = call_claude(prompt, escalation=escalation_level).text
+        payload = extract_json_block(raw)
+        return BusinessExtraction.model_validate(payload)
+    return extractor
+
+
 def _default_extractor(text: str, period_hint: str) -> BusinessExtraction:
-    from themek.llm.claude_cli import call_claude, extract_json_block
-    from themek.llm.prompts import build_business_extraction_prompt
-    prompt = build_business_extraction_prompt(text, period_hint=period_hint)
-    raw = call_claude(prompt).text
-    payload = extract_json_block(raw)
-    return BusinessExtraction.model_validate(payload)
+    return _make_default_extractor()(text, period_hint)
 
 
 def ingest_business_report(
@@ -30,12 +38,16 @@ def ingest_business_report(
     filing_date: date,
     raw_text_excerpt: str,
     url: Optional[str] = None,
-    extractor: Callable[[str, str], BusinessExtraction] = _default_extractor,
+    escalation_level: Optional[str] = None,
+    extractor: Optional[Callable[[str, str], BusinessExtraction]] = None,
 ) -> None:
     """사업보고서 1건을 ingest. 이미 존재하면 no-op (R4: idempotency)."""
     existing = session.get(BusinessReport, dart_rcept_no)
     if existing is not None:
         return
+
+    if extractor is None:
+        extractor = _make_default_extractor(escalation_level)
 
     extraction = extractor(raw_text_excerpt, period)
 

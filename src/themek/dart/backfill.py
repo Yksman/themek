@@ -153,6 +153,7 @@ def run_one_target(
             period=target.period,
             filing_date=date.today(),
             raw_text_excerpt=text,
+            escalation_level=escalation,
         )
         if extractor is not None:
             ingest_kwargs["extractor"] = extractor
