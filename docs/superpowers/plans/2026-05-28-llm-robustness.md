@@ -185,6 +185,20 @@ git add src/themek/config.py src/themek/llm/claude_cli.py src/themek/dart/parser
 git commit -m "feat(llm): escalation-aware claude CLI timeouts (regex=60s, full_text=600s)"
 ```
 
+### Task 1 Success Gate (deterministic, all mock-based)
+
+| # | 검증 명령 | Expected (정확치) |
+|---|----------|-----------------|
+| 1.1 | `uv run pytest tests/test_claude_cli.py::test_call_claude_uses_regex_timeout -v` | exit 0, 1 PASS, subprocess.run timeout == **60** |
+| 1.2 | `uv run pytest tests/test_claude_cli.py::test_call_claude_uses_full_text_timeout -v` | exit 0, 1 PASS, subprocess.run timeout == **600** |
+| 1.3 | `uv run pytest tests/test_claude_cli.py::test_call_claude_explicit_timeout_overrides_escalation -v` | exit 0, 1 PASS, subprocess.run timeout == **300** (explicit override) |
+| 1.4 | `uv run pytest tests/test_claude_cli.py::test_call_claude_no_escalation_keeps_default -v` | exit 0, 1 PASS, subprocess.run timeout == **120** (config default) |
+| 1.5 | `uv run python -c "from themek.config import get_settings; s = get_settings(); print(s.claude_cli_timeout_regex_sec, s.claude_cli_timeout_llm_sec, s.claude_cli_timeout_full_text_sec)"` | 정확히 `60 120 600` 출력 |
+| 1.6 | `uv run pytest tests/test_claude_cli.py tests/test_parser_escalation.py tests/test_dart_parser.py -v` | exit 0, **0 FAIL, 0 ERROR** (회귀) |
+| 1.7 | `grep -c "escalation=" src/themek/dart/parser.py` | ≥ **1** (parser가 `call_claude`에 escalation 전달함을 정적 확인) |
+
+**Task 1 PASS = 1.1~1.7 모두 통과.**
+
 ---
 
 ## Task 2: share_pct string-to-float coercion
@@ -314,6 +328,21 @@ git add src/themek/llm/schemas.py tests/test_llm_schemas.py
 git commit -m "fix(llm): coerce share_pct strings ('12%', '약 15') to float"
 ```
 
+### Task 2 Success Gate (deterministic, all mock-based)
+
+| # | 검증 명령 | Expected (정확치) |
+|---|----------|-----------------|
+| 2.1 | `uv run pytest tests/test_llm_schemas.py::test_geographic_share_pct_accepts_string_forms -v` | exit 0, 6 PASS (parametrize 6 케이스). 각 케이스에서 `.share_pct == expected` exact equality |
+| 2.2 | `uv run pytest tests/test_llm_schemas.py::test_geographic_share_pct_rejects_unparseable -v` | exit 0, 1 PASS. ValidationError 메시지에 "숫자" 문자열 포함 |
+| 2.3 | `uv run pytest tests/test_llm_schemas.py::test_segment_share_pct_optional_string_coercion -v` | exit 0, 1 PASS, `.share_pct == 50.0` |
+| 2.4 | `uv run pytest tests/test_llm_schemas.py::test_customer_revenue_share_pct_optional_string_coercion -v` | exit 0, 1 PASS, `.revenue_share_pct == 30.0` |
+| 2.5 | `uv run pytest tests/test_llm_schemas.py::test_share_pct_unchanged_for_normal_inputs -v` | exit 0, 1 PASS (정상 float/None 무영향) |
+| 2.6 | `uv run pytest tests/test_llm_schemas.py tests/test_parser_escalation.py tests/test_ingest_business_report.py -v` | exit 0, **0 FAIL, 0 ERROR** (회귀) |
+| 2.7 | `uv run python -c "from themek.llm.schemas import GeographicItem; g = GeographicItem(region_code='KR', share_pct='12.3%'); print(g.share_pct == 12.3)"` | 정확히 `True` 출력 |
+| 2.8 | `grep -c "field_validator" src/themek/llm/schemas.py` | ≥ **3** (Segment/Customer/Geographic 각 1) |
+
+**Task 2 PASS = 2.1~2.8 모두 통과.**
+
 ---
 
 ## Task 3: 실 데이터 검증 (manual operational smoke)
@@ -361,6 +390,21 @@ set -a && source .env && set +a && uv run themek dart backfill status --verbose 
 ```
 
 Expected: failed count 감소 (3→0), done count 증가 (17→20).
+
+### Task 3 Success Gate (실 API 호출, 환경 의존)
+
+| # | 검증 | Expected (정확치) |
+|---|------|-----------------|
+| 3.1 | **사전 reset 검증** — Step 1 실행 후 다음 SQL: `SELECT COUNT(*) FROM backfill_targets WHERE status='failed' AND corp_code IN ('00125080', '00219097', '01263022') AND period='2025'` | 정확히 **0** (모두 pending으로 reset됨) |
+| 3.2 | **재실행 결과** — Step 2 `backfill run --max-targets 3` stdout | 정규식 `processed=3 done=[23] skipped=[01] failed=0` 매치 (done=2~3 + skipped=0~1, failed=**0**) |
+| 3.3 | **사후 검증** — Step 2 완료 후 SQL: `SELECT COUNT(*) FROM backfill_targets WHERE status='failed' AND corp_code IN ('00125080', '00219097', '01263022')` | 정확히 **0** |
+| 3.4 | **누적 done 증가** — Step 3 status 출력의 `done` 카운트 | reset 전 done 카운트 + 처리된 개수 (≥2) |
+| 3.5 | **escalation 분포** — Step 3 status `Escalation distribution` 섹션 | full_text 카운트 ≥ 1 (대용량 PDF가 600s timeout으로 처리됐다는 증거) |
+| 3.6 | **share_pct 적재 검증** — `SELECT COUNT(*) FROM geographic_revenue WHERE share_pct > 0` 또는 이에 상응하는 동적 검증 | reset 전 count + 신규 row ≥ 1 (Task 2 fix 가 실 데이터에서 동작했다는 증거) |
+
+**Task 3 PASS = 3.1~3.5 모두 통과 (3.6은 schema/테이블 구조에 따라 best-effort).**
+
+**Task 3 MANUAL-NEEDED**: 실 DART/LLM 호출이라 CI 자동화 불가. 운영자가 Step 1-3를 순차 실행하고 각 gate를 수동 확인.
 
 ---
 
