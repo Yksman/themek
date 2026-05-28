@@ -127,11 +127,12 @@ uv run themek dart sync-corp --if-stale-days 90
 uv run themek krx sync-listed --dry-run                 # listed count 확인
 uv run themek krx sync-listed                            # 실 sync
 
-# 3. Stock 테이블 → BackfillTarget enroll (3년치)
+# 3. Stock 테이블 → BackfillTarget enroll (최근 2년 슬라이딩 윈도우)
+#    매년 자동 최신 2년치: PREV_YEAR=$((CURRENT_YEAR-1)) — 예: 2026년 시점에 2025:2026
 uv run themek dart backfill init --from-stocks \
-    --periods 2023:2025                                  # dry-run
+    --periods 2025:2026                                  # dry-run (예시; 운영 시점 연도로 치환)
 uv run themek dart backfill init --from-stocks \
-    --periods 2023:2025 --confirm                        # 약 7,500 row 생성
+    --periods 2025:2026 --confirm                        # 약 5,500 row 생성 (2,770종목 × 2년)
 
 # 4. 첫 backfill (RateBudget 38K/day로 ~2-3일 분산)
 uv run themek dart backfill run --purge-zip-after-extract
@@ -140,7 +141,7 @@ uv run themek dart backfill run --purge-zip-after-extract
 ### cron 흐름 (자동 모드)
 
 `scripts/themek_backfill.sh` 갱신본은 5단계:
-1. `themek krx sync-listed --auto-enroll --periods 2023:CURRENT` — 신규 상장 자동 enroll
+1. `themek krx sync-listed --auto-enroll --periods PREV:CURRENT` — 신규 상장 자동 enroll (최근 2년치 슬라이딩 윈도우, `PREV=$((CURRENT_YEAR-1))`)
 2. `themek dart sync-corp --if-stale-days 90` — 분기 1회 corp_master refresh
 3. `themek dart incremental --universe-source stocks` — Stock 테이블 기반 universe
 4. `themek dart backfill run --purge-zip-after-extract` — pending 처리

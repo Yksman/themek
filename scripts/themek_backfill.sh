@@ -17,10 +17,11 @@ DATE=$(date +%Y%m%d)
 mkdir -p data/log
 
 # 0. KRX 상장사 sync (Plan #5.2)
-#    신규 상장은 자동 BackfillTarget enroll (2023:current 3년치 백필)
+#    신규 상장은 자동 BackfillTarget enroll (최신 2년치 슬라이딩 윈도우)
 CURRENT_YEAR=$(date +%Y)
+PREV_YEAR=$((CURRENT_YEAR - 1))
 uv run themek krx sync-listed \
-    --auto-enroll --periods "2023:${CURRENT_YEAR}" \
+    --auto-enroll --periods "${PREV_YEAR}:${CURRENT_YEAR}" \
     >> "data/log/krx_sync_${DATE}.log" 2>&1
 
 # 1. DART corp_master refresh (90일 이내면 skip)
