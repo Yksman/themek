@@ -82,3 +82,44 @@ def test_extract_json_block_plain_json():
 def test_extract_json_block_raises_when_no_json():
     with pytest.raises(ClaudeCallError):
         extract_json_block("그냥 텍스트")
+
+
+def test_call_claude_uses_regex_timeout(mocker, monkeypatch):
+    """escalation='regex' → 60s timeout."""
+    monkeypatch.delenv("CLAUDE_CLI_REGEX_TIMEOUT_SEC", raising=False)
+    fake = mocker.patch("themek.llm.claude_cli.subprocess.run")
+    fake.return_value.stdout = json.dumps({"result": "{}"})
+    fake.return_value.returncode = 0
+    from themek.llm.claude_cli import call_claude
+    call_claude("p", escalation="regex")
+    assert fake.call_args.kwargs["timeout"] == 60
+
+
+def test_call_claude_uses_full_text_timeout(mocker, monkeypatch):
+    """escalation='full_text' → 600s timeout."""
+    fake = mocker.patch("themek.llm.claude_cli.subprocess.run")
+    fake.return_value.stdout = json.dumps({"result": "{}"})
+    fake.return_value.returncode = 0
+    from themek.llm.claude_cli import call_claude
+    call_claude("p", escalation="full_text")
+    assert fake.call_args.kwargs["timeout"] == 600
+
+
+def test_call_claude_explicit_timeout_overrides_escalation(mocker):
+    """timeout_sec 직접 지정이 escalation default보다 우선."""
+    fake = mocker.patch("themek.llm.claude_cli.subprocess.run")
+    fake.return_value.stdout = json.dumps({"result": "{}"})
+    fake.return_value.returncode = 0
+    from themek.llm.claude_cli import call_claude
+    call_claude("p", escalation="regex", timeout_sec=300)
+    assert fake.call_args.kwargs["timeout"] == 300
+
+
+def test_call_claude_no_escalation_keeps_default(mocker):
+    """escalation 미지정 시 기존 settings default 사용."""
+    fake = mocker.patch("themek.llm.claude_cli.subprocess.run")
+    fake.return_value.stdout = json.dumps({"result": "{}"})
+    fake.return_value.returncode = 0
+    from themek.llm.claude_cli import call_claude
+    call_claude("p")  # no escalation
+    assert fake.call_args.kwargs["timeout"] == 120  # config default

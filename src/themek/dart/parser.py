@@ -242,7 +242,7 @@ def llm_classify_headers(
 ) -> dict[str, Optional[int]]:
     """남은 헤더 후보를 LLM이 카테고리로 매핑. 1-based index 또는 null 반환."""
     prompt = build_header_classification_prompt(candidates, missing_targets)
-    result = call_claude(prompt)
+    result = call_claude(prompt, escalation="llm")
     payload = extract_json_block(result.text)
     if not isinstance(payload, dict):
         raise ClaudeCallError(

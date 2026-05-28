@@ -26,10 +26,30 @@ class CallResult:
     raw_payload: dict
 
 
-def call_claude(prompt: str, *, timeout_sec: int | None = None) -> CallResult:
-    """`claude -p <prompt> --output-format json` 호출 후 CallResult 반환."""
+def call_claude(
+    prompt: str,
+    *,
+    timeout_sec: int | None = None,
+    escalation: str | None = None,
+) -> CallResult:
+    """`claude -p <prompt> --output-format json` 호출 후 CallResult 반환.
+
+    timeout 우선순위:
+      1) 명시적 timeout_sec
+      2) escalation 별 default (regex=60s, llm=120s, full_text=600s)
+      3) settings.claude_cli_timeout_sec (legacy default)
+    """
     settings = get_settings()
-    timeout = timeout_sec or settings.claude_cli_timeout_sec
+    if timeout_sec is not None:
+        timeout = timeout_sec
+    elif escalation == "regex":
+        timeout = settings.claude_cli_timeout_regex_sec
+    elif escalation == "full_text":
+        timeout = settings.claude_cli_timeout_full_text_sec
+    elif escalation == "llm":
+        timeout = settings.claude_cli_timeout_llm_sec
+    else:
+        timeout = settings.claude_cli_timeout_sec
     try:
         proc = subprocess.run(
             [settings.claude_cli_bin, "-p", prompt,
