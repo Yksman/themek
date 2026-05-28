@@ -14,12 +14,28 @@ from themek.llm.schemas import BusinessExtraction
 def _make_default_extractor(
     escalation_level: Optional[str] = None,
 ) -> Callable[[str, str], BusinessExtraction]:
+    # "regex" escalation in the parser means header classification did not
+    # need LLM, but the extraction prompt itself is still substantial — use
+    # the default (120s) instead of the 60s reserved for tiny header-list
+    # prompts. Other levels map directly.
+    effective = None if escalation_level == "regex" else escalation_level
+
     def extractor(text: str, period_hint: str) -> BusinessExtraction:
         from themek.llm.claude_cli import call_claude, extract_json_block
         from themek.llm.prompts import build_business_extraction_prompt
         prompt = build_business_extraction_prompt(text, period_hint=period_hint)
-        raw = call_claude(prompt, escalation=escalation_level).text
+        raw = call_claude(prompt, escalation=effective).text
         payload = extract_json_block(raw)
+        # LLM occasionally returns share_pct=null for regions whose share is
+        # not disclosed; geographic.share_pct is required, so drop those rows
+        # rather than failing the entire extraction.
+        if isinstance(payload, dict):
+            geo = payload.get("geographic")
+            if isinstance(geo, list):
+                payload["geographic"] = [
+                    g for g in geo
+                    if isinstance(g, dict) and g.get("share_pct") is not None
+                ]
         return BusinessExtraction.model_validate(payload)
     return extractor
 
