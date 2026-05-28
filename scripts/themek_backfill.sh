@@ -17,11 +17,13 @@ DATE=$(date +%Y%m%d)
 mkdir -p data/log
 
 # 0. KRX 상장사 sync (Plan #5.2)
-#    신규 상장은 자동 BackfillTarget enroll (최신 2년치 슬라이딩 윈도우)
+#    신규 상장은 자동 BackfillTarget enroll
+#    최신 3년치 슬라이딩 윈도우 (PREV-1 ~ CURRENT). CURRENT 분은 사업보고서 제출
+#    전이라 skip 누적되지만 cron이 매일 돌며 자연스럽게 채워진다.
 CURRENT_YEAR=$(date +%Y)
-PREV_YEAR=$((CURRENT_YEAR - 1))
+PREV2_YEAR=$((CURRENT_YEAR - 2))
 uv run themek krx sync-listed \
-    --auto-enroll --periods "${PREV_YEAR}:${CURRENT_YEAR}" \
+    --auto-enroll --periods "${PREV2_YEAR}:${CURRENT_YEAR}" \
     >> "data/log/krx_sync_${DATE}.log" 2>&1
 
 # 1. DART corp_master refresh (90일 이내면 skip)
