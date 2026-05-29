@@ -61,3 +61,8 @@ Thumbs.db
 data/log/claude_cli_failures.jsonl
 /data/dart/budget_state.json
 /data/universe/
+
+# Obsidian vault (생성 산출물): 노트는 tracked, 사용자 작업 상태/캐시만 ignore
+/vault/.obsidian/workspace*
+/vault/.obsidian/cache
+/vault/.trash/
