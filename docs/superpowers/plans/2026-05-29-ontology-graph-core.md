@@ -2198,7 +2198,11 @@ git add -A
 git commit -m "refactor(ontology): cutover ingest/vault/seed to core; remove legacy models/modules"
 ```
 
-✅ **Success Gate:** 구 모델/모듈 참조 grep 0줄. `uv run pytest -q` 실패 0. `themek seed`·`themek vault build`·`themek query screen`·`themek ingest financials`·`themek ontology export-graph` 명령이 모두 코어 기반으로 동작.
+✅ **Success Gate (측정 가능):**
+1. `grep -rn "themek.db.models\|themek.vault\|query_e5\|seed_basic" src/ tests/ | grep -v "ontology/" | grep -v "core/models" | wc -l` → `0`.
+2. `uv run pytest -q` → 실패 0 (구 테스트 제거 후 ontology 신규 테스트 포함 전체 PASS).
+3. `uv run themek --help` → exit 0 이고 stdout에 `ingest`·`query`·`vault`·`ontology` 서브커맨드 모두 노출.
+4. `uv run python -c "import themek.cli"` → exit 0 (구 모델 import 잔존 시 ImportError로 실패).
 
 ---
 
@@ -2219,10 +2223,11 @@ uv run themek seed
 (사업구조 재적재는 기존 `themek dart` 백필 명령으로 수행 — 구체 명령은 README의 백필 절차를 따른다.)
 Expected: exit 0, 코어 테이블 생성, 시드 3개사 노드.
 
-- [ ] **Step 2: 재무 적재 (DART 키 필요)**
+- [ ] **Step 2: 재무 적재 (DART 키 필요 — best-effort, gating 아님)**
 
 Run: `uv run themek ingest financials --years 2022-2024`
-Expected: `ingested N financial facts` (N>0). 키 미설정/네트워크 불가 시: 시드 3개사 중 1개라도 카세트 기반 단위테스트가 통과하므로 게이트는 단위테스트로 충족하고, 실 적재는 환경 가능 시 수행.
+Expected (키/네트워크 가능 시): `ingested N financial facts` (N>0).
+**측정 분리:** 실 API는 환경 의존이라 **게이트가 아니다.** 재무 적재의 측정 가능 게이트는 Task 2.1~2.3의 카세트 기반 단위테스트(2+3+3=8 passed)로 이미 충족된다. 실 적재는 가능 환경에서만 수행하고 결과 수치를 Step 5 메모에 기록한다.
 
 - [ ] **Step 3: vault build + graph export + 예시질의**
 
@@ -2262,7 +2267,15 @@ git add docs/ontology-core-smoke-notes.md README.md vault/ graph/
 git commit -m "docs(ontology): core smoke build notes + README; real reingest snapshot"
 ```
 
-✅ **Success Gate:** `themek ingest financials`(또는 카세트 단위테스트)로 재무 fact 적재, `themek vault build`/`ontology export-graph` exit 0, graph broken_refs=0, `themek query screen` 예시질의 exit 0. README에 신규 명령 사용법, smoke 메모에 실수치 기록.
+✅ **Success Gate (측정 가능, 결정론적):**
+1. `uv run themek seed` → exit 0, 직후 `uv run python -c "from themek.db.engine import make_engine,make_session_factory; from themek.ontology.core.models import Node; s=make_session_factory(make_engine())(); print(s.query(Node).filter_by(kind='company').count())"` → `3` 출력.
+2. `uv run themek vault build --out vault` → exit 0 + stdout에 `vault built:` 포함, `vault/companies/*.md` ≥ 3개.
+3. `uv run themek ontology export-graph --out graph` → exit 0, `graph/nodes.json`·`graph/edges.json` 존재.
+4. Step 4 무결성 스크립트 → `broken_refs=0` 출력.
+5. `uv run themek query screen --segment 반도체 --metric operating_income --positive-since 2023FY` → exit 0 (매칭 0건도 통과; exit code만 측정).
+6. `docs/ontology-core-smoke-notes.md` 존재 + README에 `themek ingest financials`/`query screen`/`ontology export-graph` 문자열 포함(`grep -q` 통과).
+
+(실 DART 재무 적재량 N은 환경 의존이라 게이트에서 제외 — 메모에 기록만.)
 
 ---
 
