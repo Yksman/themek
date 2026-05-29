@@ -136,6 +136,20 @@ uv run themek dart backfill status --verbose
 uv run themek query e5 --ticker 005930
 ```
 
+### Obsidian vault 생성 (온톨로지 점검·탐색)
+
+적재된 DART 온톨로지를 Obsidian vault로 생성해 그래프로 둘러보고 데이터 품질을 점검한다.
+
+```bash
+uv run themek vault build            # vault/ 에 생성 (멱등 — 재실행 시 최신 DB 반영)
+```
+
+- `vault/companies/` 회사 노트(DB 1:1) · `segments/`·`regions/`·`sectors/` 개념 노드 · `customers/` 미연결 고객(설명문 포함 전부 노드화, `kind` 분류)
+- `vault/_qa-report.md` 데이터 품질 이슈 자동 집계(지역 중복·매출합 이상·미연결·누락)
+- Obsidian에서 "폴더를 vault로 열기" → Graph View로 노드 망 시각화
+
+백필로 적재가 늘면 `themek vault build`만 재실행하면 새 노드가 자동 반영된다.
+
 ### E5 추출 품질 평가 (Plan #6)
 
 ```bash
