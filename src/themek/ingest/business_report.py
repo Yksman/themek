@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 from themek.db.corp_models import BusinessReport, Corporation
 from themek.llm.schemas import BusinessExtraction
 from themek.ontology.core.ids import company_id
+from themek.ontology.core.models import Edge
 from themek.ontology.core.resolve import upsert_node
 from themek.ontology.ingest.business_structure import ingest_business_structure
 
@@ -61,9 +62,14 @@ def ingest_business_report(
     escalation_level: Optional[str] = None,
     extractor: Optional[Callable[[str, str], BusinessExtraction]] = None,
 ) -> None:
-    """사업보고서 1건을 ingest. 이미 존재하면 no-op (R4: idempotency)."""
-    existing = session.get(BusinessReport, dart_rcept_no)
-    if existing is not None:
+    """사업보고서 1건을 ingest.
+
+    멱등성(R4)은 **코어에 이 보고서의 구조가 적재됐는지**로 판단한다(source_ref=rcept_no
+    엣지 존재). BusinessReport row만 있고 코어가 비어있는 경우(예: 코어 재설계 후 재적재)
+    에도 코어를 채울 수 있다. BusinessReport는 get-or-create로 중복을 피한다.
+    """
+    existing_core = session.query(Edge).filter_by(source_ref=dart_rcept_no).first()
+    if existing_core is not None:
         return
 
     if extractor is None:
@@ -71,16 +77,16 @@ def ingest_business_report(
 
     extraction = extractor(raw_text_excerpt, period)
 
-    report = BusinessReport(
-        dart_rcept_no=dart_rcept_no,
-        corporation_id=corporation_id,
-        report_type=report_type,
-        period=period,
-        filing_date=filing_date,
-        url=url,
-    )
-    session.add(report)
-    session.flush()
+    if session.get(BusinessReport, dart_rcept_no) is None:
+        session.add(BusinessReport(
+            dart_rcept_no=dart_rcept_no,
+            corporation_id=corporation_id,
+            report_type=report_type,
+            period=period,
+            filing_date=filing_date,
+            url=url,
+        ))
+        session.flush()
 
     # 사업 구조 → graph-core nodes/edges. 회사 노드 보장 후 적재.
     # 라벨은 corp_models.Corporation.name_ko(=corp master 캐시 보강) 우선, 없으면 dart_code.
