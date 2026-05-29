@@ -151,6 +151,22 @@ uv run themek ontology export-graph --out graph
 share_pct 최대 세그먼트를 '주력'으로 판정한 뒤 `positive_since` 이후 기록된 모든 기간이
 양수인 회사만 반환한다.
 
+### 통합 파이프라인 (한 번에 구동)
+
+```bash
+# 전체: corp sync → 신규 사업보고서 적재 → 재무 자동적재 → vault+graph 산출
+uv run themek pipeline run
+
+# 초기 대량 적재(스캔 창 확대)
+uv run themek pipeline run --since 2023-01-01
+
+# 부분 실행 (예: 산출물만 재생성)
+uv run themek pipeline run --skip-sync --skip-structure --skip-financials
+```
+
+- 재무 적재 연도는 **적재된 사업보고서에서 자동 도출**(`--years` 불필요).
+- 단계별 `--skip-sync` / `--skip-structure` / `--skip-financials` / `--skip-export`.
+
 ### Obsidian vault 생성 (온톨로지 점검·탐색)
 
 코어 온톨로지를 Obsidian vault로 생성해 그래프로 둘러본다. 회사 노트는 섹터/세그먼트/
