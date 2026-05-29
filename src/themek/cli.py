@@ -32,6 +32,7 @@ from themek.ontology.ingest.seeds import seed_core
 from themek.ontology.projection.vault import build_vault
 from themek.ontology.projection.graph_export import export_graph
 from themek.ontology.core.models import Node
+from themek.ontology.pipeline import run_pipeline
 
 app = typer.Typer(help="themek — 한국 테마주 ontology CLI")
 query_app = typer.Typer(help="Run competency queries")
@@ -46,6 +47,8 @@ ingest_app = typer.Typer(help="온톨로지 적재 명령")
 app.add_typer(ingest_app, name="ingest")
 ontology_app = typer.Typer(help="온톨로지 export 명령")
 app.add_typer(ontology_app, name="ontology")
+pipeline_app = typer.Typer(help="DART 통합 파이프라인")
+app.add_typer(pipeline_app, name="pipeline")
 
 DEFAULT_LEARNED_PATTERNS_PATH = "data/dart/learned_header_patterns.json"
 DEFAULT_PROPOSALS_PATH = "data/dart/pattern_proposals.json"
@@ -825,6 +828,74 @@ def ontology_export_graph_cmd(
     with _session() as s:
         stats = export_graph(s, Path(out))
     typer.echo(f"graph exported: {stats['nodes']} nodes, {stats['edges']} edges → {out}/")
+
+
+@pipeline_app.command("run")
+def pipeline_run_cmd(
+    since: str = typer.Option("yesterday", "--since"),
+    until: str = typer.Option("today", "--until"),
+    universe_file: Path = typer.Option(DEFAULT_UNIVERSE_FILE, "--universe-file"),
+    out_vault: str = typer.Option("vault", "--out-vault"),
+    out_graph: str = typer.Option("graph", "--out-graph"),
+    skip_sync: bool = typer.Option(False, "--skip-sync"),
+    skip_structure: bool = typer.Option(False, "--skip-structure"),
+    skip_financials: bool = typer.Option(False, "--skip-financials"),
+    skip_export: bool = typer.Option(False, "--skip-export"),
+):
+    """DART 파이프라인 통합 구동: sync→structure→financials→export (재무 연도 자동)."""
+    from datetime import timedelta
+    from themek.dart.universe import load_universe
+    from themek.dart.rate_budget import RateBudget
+
+    s = get_settings()
+    today = date.today()
+    since_d = (today - timedelta(days=1) if since == "yesterday"
+               else date.fromisoformat(since))
+    until_d = today if until == "today" else date.fromisoformat(until)
+
+    # structure/sync 단계에서만 client/cache 필요
+    client = cache = None
+    universe: set[str] = set()
+    rate_budget = None
+    extractor = _stub_extractor_from_env()
+    if not (skip_sync and skip_structure and skip_financials):
+        try:
+            client, cache = _dart_client_and_cache()
+        except DartAuthError as e:
+            typer.echo(f"Error: {e}", err=True)
+            raise typer.Exit(code=2)
+    if not skip_structure:
+        universe = set(load_universe(universe_file))
+        rate_budget = RateBudget(daily_cap=38000,
+                                 state_file=s.dart_cache_dir / "budget_state.json")
+
+    with _session() as sess:
+        result = run_pipeline(
+            sess, client, cache=cache,
+            skip_sync=skip_sync, skip_structure=skip_structure,
+            skip_financials=skip_financials, skip_export=skip_export,
+            since=since_d, until=until_d, universe=universe,
+            rate_budget=rate_budget, extractor=extractor,
+            out_vault=out_vault, out_graph=out_graph,
+        )
+        sess.commit()
+
+    for stage in result.ran:
+        if stage == "sync":
+            typer.echo(f"[sync] corp master rows: {result.sync}")
+        elif stage == "structure":
+            r = result.structure
+            typer.echo(f"[structure] scanned={r.scanned} ingested={r.ingested} "
+                       f"failed={len(r.failed)}")
+        elif stage == "financials":
+            f = result.financials
+            typer.echo(f"[financials] years={f['years']} companies={f['companies']} "
+                       f"facts={f['facts']} failed={len(f['failed'])}")
+        elif stage == "export":
+            e = result.export
+            typer.echo(f"[export] vault {e['companies']} companies → {out_vault}/ ; "
+                       f"graph {e['nodes']} nodes/{e['edges']} edges → {out_graph}/")
+    typer.echo(f"pipeline done: ran={result.ran} skipped={result.skipped}")
 
 
 if __name__ == "__main__":
