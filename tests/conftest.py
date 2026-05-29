@@ -51,3 +51,21 @@ def fresh_db(engine):
     Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     yield
+
+
+@pytest.fixture
+def ontology_session(engine):
+    """코어 온톨로지 테이블만 reset 후 세션 제공."""
+    import themek.ontology.core.models  # noqa: F401 — 모델 등록
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
+    connection = engine.connect()
+    trans = connection.begin()
+    session = Session(bind=connection, expire_on_commit=False)
+    yield session
+    session.close()
+    try:
+        trans.rollback()
+    except Exception:
+        pass
+    connection.close()
