@@ -7,7 +7,7 @@ from sqlalchemy import (
     String, Float, Numeric, ForeignKey, Enum as SQLEnum, JSON,
     DateTime, UniqueConstraint, func,
 )
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from themek.db.engine import Base
 
@@ -58,6 +58,10 @@ class Edge(Base):
     extracted_at: Mapped[_dt] = mapped_column(
         DateTime, nullable=False, server_default=func.current_timestamp())
 
+    # many-to-one → UOW가 Node를 Edge보다 먼저 INSERT하도록 보장
+    subject_node: Mapped[Node] = relationship("Node", foreign_keys=[subject_id])
+    object_node: Mapped[Node] = relationship("Node", foreign_keys=[object_id])
+
 
 class FinancialFact(Base):
     __tablename__ = "financial_facts"
@@ -80,6 +84,8 @@ class FinancialFact(Base):
                                         nullable=False)
     confidence: Mapped[float] = mapped_column(Float, nullable=False, default=1.0)
 
+    company: Mapped[Node] = relationship("Node", foreign_keys=[company_id])
+
     __table_args__ = (
         UniqueConstraint("company_id", "bsns_year", "fiscal_period",
                          "fs_div", "metric_key", name="ux_financial_fact"),
@@ -93,3 +99,5 @@ class ConceptAlias(Base):
         String(96), ForeignKey("nodes.id"), nullable=False)
     source: Mapped[str] = mapped_column(String(16), nullable=False, default="manual")
     confidence: Mapped[float] = mapped_column(Float, nullable=False, default=1.0)
+
+    node: Mapped[Node] = relationship("Node", foreign_keys=[node_id])
