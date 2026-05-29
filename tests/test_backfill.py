@@ -340,3 +340,123 @@ def test_enumerate_targets_existing_universe_file_still_works(tmp_path):
     specs = enumerate_targets(universe_file=p, periods="2023")
     assert len(specs) == 1
     assert specs[0].corp_code == "00126380"
+
+
+# ──────────────────────────────────────────────────────────────────────────
+# 4-C: ClaudeRateLimitError handling in run_batch
+# ──────────────────────────────────────────────────────────────────────────
+
+
+def test_run_batch_exits_on_rate_limit_when_wait_disabled(
+    tmp_path, db_session, mocker, monkeypatch
+):
+    """기본 동작: rate limit hit → 즉시 종료 + target pending 복원."""
+    monkeypatch.setenv("THEMEK_WAIT_FOR_QUOTA", "0")
+
+    from themek.llm.claude_cli import ClaudeRateLimitError
+
+    # 2개 pending target 생성
+    t1 = BackfillTarget(corp_code="00000001", period="2025", status="pending")
+    t2 = BackfillTarget(corp_code="00000002", period="2025", status="pending")
+    db_session.add_all([t1, t2])
+    db_session.commit()
+
+    # run_one_target 첫 호출에서 ClaudeRateLimitError를 raise
+    mock_rot = mocker.patch(
+        "themek.dart.backfill.run_one_target",
+        side_effect=ClaudeRateLimitError("rate limit hit"),
+    )
+
+    summary = run_batch(
+        session=db_session,
+        client=object(),
+        cache=_tmp_cache(tmp_path),
+        rate_budget=_tmp_budget(tmp_path),
+        extractor=_stub_extractor(),
+        max_targets=10,
+    )
+
+    assert summary.rate_limit_hits == 1
+    assert summary.processed == 0
+
+    # run_one_target이 호출된 target은 pending으로 복원
+    db_session.refresh(t1)
+    assert t1.status == "pending"
+
+    # 두 번째 target은 건드리지 않음 (loop break)
+    assert mock_rot.call_count == 1
+
+
+def test_run_batch_waits_then_resumes_when_opt_in(
+    tmp_path, db_session, mocker, monkeypatch
+):
+    """THEMEK_WAIT_FOR_QUOTA=1: rate limit hit → sleep → 같은 target 재시도 성공."""
+    monkeypatch.setenv("THEMEK_WAIT_FOR_QUOTA", "1")
+    monkeypatch.setenv("THEMEK_WAIT_FOR_QUOTA_SEC", "300")
+
+    from themek.llm.claude_cli import ClaudeRateLimitError
+    from themek.dart.backfill import RunTargetResult
+
+    sleep_mock = mocker.patch("themek.dart.backfill.time.sleep")
+
+    t1 = BackfillTarget(corp_code="00000001", period="2025", status="pending")
+    db_session.add(t1)
+    db_session.commit()
+
+    # 첫 호출: raise, 두 번째 호출: done
+    mock_rot = mocker.patch(
+        "themek.dart.backfill.run_one_target",
+        side_effect=[
+            ClaudeRateLimitError("rate limit"),
+            RunTargetResult(status="done", rcept_no="20260301001"),
+        ],
+    )
+
+    summary = run_batch(
+        session=db_session,
+        client=object(),
+        cache=_tmp_cache(tmp_path),
+        rate_budget=_tmp_budget(tmp_path),
+        extractor=_stub_extractor(),
+        max_targets=1,
+    )
+
+    assert summary.done == 1
+    assert summary.processed == 1
+    sleep_mock.assert_called_once_with(300)
+
+
+def test_run_batch_max_wait_iterations(
+    tmp_path, db_session, mocker, monkeypatch
+):
+    """무한 wait 방지: max_iterations=2 도달 시 종료 (sleep 2회)."""
+    monkeypatch.setenv("THEMEK_WAIT_FOR_QUOTA", "1")
+    monkeypatch.setenv("THEMEK_WAIT_FOR_QUOTA_SEC", "300")
+    monkeypatch.setenv("THEMEK_WAIT_FOR_QUOTA_MAX_ITERATIONS", "2")
+
+    from themek.llm.claude_cli import ClaudeRateLimitError
+
+    sleep_mock = mocker.patch("themek.dart.backfill.time.sleep")
+
+    t1 = BackfillTarget(corp_code="00000001", period="2025", status="pending")
+    db_session.add(t1)
+    db_session.commit()
+
+    # run_one_target은 매번 rate limit raise
+    mocker.patch(
+        "themek.dart.backfill.run_one_target",
+        side_effect=ClaudeRateLimitError("rate limit always"),
+    )
+
+    summary = run_batch(
+        session=db_session,
+        client=object(),
+        cache=_tmp_cache(tmp_path),
+        rate_budget=_tmp_budget(tmp_path),
+        extractor=_stub_extractor(),
+        max_targets=10,
+    )
+
+    # sleep은 정확히 2회 (max_iterations=2, 세 번째는 break)
+    assert sleep_mock.call_count == 2
+    assert summary.rate_limit_hits >= 1

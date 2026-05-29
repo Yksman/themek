@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     dart_http_timeout_sec: int = Field(default=60)
     claude_cli_short_retry_attempts: int = Field(default=3)
     claude_cli_short_retry_backoffs_sec: list[int] = Field(default_factory=lambda: [10, 60, 300])
+    themek_wait_for_quota: bool = Field(default=False)
+    themek_wait_for_quota_sec: int = Field(default=18000)
+    themek_wait_for_quota_max_iterations: int = Field(default=2)
 
 
 def get_settings() -> Settings:

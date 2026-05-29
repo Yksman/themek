@@ -6,6 +6,7 @@
 - run_batch: pending row를 순서대로 처리. budget/max_targets/stale reset 처리.
 """
 from __future__ import annotations
+import time
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -15,6 +16,7 @@ import httpx
 from sqlalchemy import select, update, func
 from sqlalchemy.orm import Session
 
+from themek.config import get_settings
 from themek.db.models import BackfillTarget, Corporation
 from themek.dart.cache import DartCache
 from themek.dart.rate_budget import RateBudget, RateBudgetExceeded
@@ -24,6 +26,7 @@ from themek.dart.fetch import (
 from themek.dart.parser import extract_business_sections
 from themek.dart.universe import load_universe
 from themek.ingest.business_report import ingest_business_report
+from themek.llm.claude_cli import ClaudeRateLimitError
 
 MAX_ATTEMPTS = 3
 
@@ -58,6 +61,8 @@ class BatchSummary:
     failed: int = 0
     pending_remaining: int = 0
     budget_remaining: int = 0
+    rate_limit_hits: int = 0
+    rate_limit_waits: int = 0
 
 
 def _is_no_report_error(e: Exception) -> bool:
@@ -179,6 +184,9 @@ def run_one_target(
             escalation_level=escalation, input_chars=input_chars,
             cost_estimate_usd=cost,
         )
+    except ClaudeRateLimitError:
+        sp.rollback()
+        raise
     except Exception as e:
         # C5: LLM/extract/schema 에러는 retry 무의미 — 즉시 failed
         sp.rollback()
@@ -242,7 +250,9 @@ def run_batch(
     )
     session.commit()
 
+    settings = get_settings()
     summary = BatchSummary()
+    wait_iter = 0
     while summary.processed < max_targets:
         # Budget pre-check: don't even touch the next target if no budget
         if rate_budget.remaining() < 1:
@@ -261,6 +271,19 @@ def run_batch(
                 client=client, cache=cache, rate_budget=rate_budget,
                 extractor=extractor, fetcher=fetcher, purge_zip=purge_zip,
             )
+        except ClaudeRateLimitError:
+            target.status = "pending"
+            target.last_error = "rate limit (auto-recovery in progress)"
+            session.commit()
+            summary.rate_limit_hits += 1
+            if not settings.themek_wait_for_quota:
+                break
+            if wait_iter >= settings.themek_wait_for_quota_max_iterations:
+                break
+            wait_iter += 1
+            summary.rate_limit_waits += 1
+            time.sleep(settings.themek_wait_for_quota_sec)
+            continue
         except RateBudgetExceeded:
             break
         summary.processed += 1
