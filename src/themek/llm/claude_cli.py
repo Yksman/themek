@@ -17,11 +17,20 @@ class ClaudeCallError(RuntimeError):
 
 
 class ClaudeRateLimitError(ClaudeCallError):
-    """Raised when all short-retry attempts are exhausted due to transient failures.
-
-    4-B will add explicit rate-limit pattern detection.
-    """
+    """Raised when rate-limit is detected (explicit message or retry exhaustion)."""
     pass
+
+
+_RATE_LIMIT_PATTERNS = (
+    "rate limit", "usage limit", "5-hour limit",
+    "quota exceeded", "too many requests",
+)
+
+
+def _is_explicit_rate_limit(proc) -> bool:
+    blob = (proc.stderr or "") + " " + (proc.stdout or "")
+    blob_lc = blob.lower()
+    return any(p in blob_lc for p in _RATE_LIMIT_PATTERNS)
 
 
 @dataclass(frozen=True)
@@ -99,6 +108,10 @@ def call_claude(
 
         if not _is_transient_failure(proc):
             # explicit error message — raise immediately, no retry
+            if _is_explicit_rate_limit(proc):
+                raise ClaudeRateLimitError(
+                    f"claude CLI rate limit: {proc.stderr.strip()[:200]}"
+                )
             raise ClaudeCallError(
                 f"claude CLI exited {proc.returncode}: {proc.stderr.strip()}"
             )

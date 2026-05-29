@@ -155,3 +155,35 @@ def test_call_claude_non_transient_exit_skips_retry(mocker, monkeypatch):
     with pytest.raises(ClaudeCallError, match="auth failed"):
         call_claude("p", escalation="regex")
     assert fake.call_count == 1  # 즉시 fail, retry 안 함
+
+
+def test_call_claude_raises_rate_limit_on_explicit_message(mocker, monkeypatch):
+    """stderr에 'rate limit' 명시되면 retry 없이 즉시 ClaudeRateLimitError."""
+    monkeypatch.setenv("CLAUDE_CLI_SHORT_RETRY_ATTEMPTS", "3")
+    fake = mocker.patch("themek.llm.claude_cli.subprocess.run")
+    fake.return_value = mocker.Mock(
+        returncode=1, stdout="",
+        stderr="Error: 5-hour usage limit reached",
+    )
+    from themek.llm.claude_cli import call_claude, ClaudeRateLimitError
+    with pytest.raises(ClaudeRateLimitError, match="usage limit"):
+        call_claude("p")
+    assert fake.call_count == 1  # retry 안 함, 명시 알림이라 즉시 raise
+
+
+def test_rate_limit_error_is_subclass_of_claude_call_error():
+    """ClaudeRateLimitError는 ClaudeCallError 상속 (기존 catch 호환)."""
+    from themek.llm.claude_cli import ClaudeRateLimitError, ClaudeCallError
+    assert issubclass(ClaudeRateLimitError, ClaudeCallError)
+
+
+def test_call_claude_exhausted_retries_raises_rate_limit(mocker, monkeypatch):
+    """transient 패턴이 모든 retry에서 반복되면 최종 ClaudeRateLimitError."""
+    monkeypatch.setenv("CLAUDE_CLI_SHORT_RETRY_ATTEMPTS", "2")
+    mocker.patch("themek.llm.claude_cli.time.sleep")
+    fake = mocker.patch("themek.llm.claude_cli.subprocess.run")
+    fake.return_value = mocker.Mock(returncode=1, stdout="", stderr="")
+    from themek.llm.claude_cli import call_claude, ClaudeRateLimitError
+    with pytest.raises(ClaudeRateLimitError, match="after 2 attempts"):
+        call_claude("p")
+    assert fake.call_count == 2
