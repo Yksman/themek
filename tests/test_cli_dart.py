@@ -201,19 +201,22 @@ def test_cli_dart_ingest_runs_full_pipeline(
     assert result.exit_code == 0, result.stdout
     assert "20240314000123" in result.stdout
 
-    # query e5로 ingest 결과 확인
-    qresult = runner.invoke(
-        app, ["query", "e5", "--ticker", "005930"]
-    )
-    assert qresult.exit_code == 0, qresult.stdout
-    assert "20240314000123" in qresult.stdout
+    # ingest 결과 확인: BusinessReport 행 + 코어 사업구조 엣지(provenance)
+    from themek.db.engine import make_session_factory
+    from themek.db.corp_models import BusinessReport
+    from themek.ontology.core.models import Edge
+    with make_session_factory(engine)() as s:
+        assert s.get(BusinessReport, "20240314000123") is not None
+        edges = s.query(Edge).filter_by(
+            subject_id="company:00126380", source_ref="20240314000123").all()
+        assert len(edges) > 0
 
 
 def test_cli_dart_ingest_auto_creates_unknown_corporation(
     monkeypatch, tmp_path, engine, fresh_db,
 ):
     """seed에 없는 corp_code(예: 277810)도 corp_master 정보로 자동 upsert."""
-    from themek.db.models import Corporation
+    from themek.db.corp_models import Corporation
     monkeypatch.setenv("DART_API_KEY", "test-key")
     monkeypatch.setenv("DART_CACHE_DIR", str(tmp_path / "dart"))
     monkeypatch.setenv("THEMEK_STUB_EXTRACTION_FILE", str(FIXTURE_JSON))
@@ -481,7 +484,7 @@ def test_dart_incremental_universe_source_stocks(monkeypatch, fresh_db, mocker):
     from typer.testing import CliRunner
 
     from themek.cli import app
-    from themek.db.models import Corporation, Stock
+    from themek.db.corp_models import Corporation, Stock
     from themek.dart.incremental import IncrementalRunResult
     from themek.db.engine import make_engine, make_session_factory
 

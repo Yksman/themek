@@ -19,7 +19,8 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 from themek.db.engine import Base
-import themek.db.models  # noqa: F401 — 모든 모델 등록
+import themek.db.corp_models  # noqa: F401 — 운영 모델 등록
+import themek.ontology.core.models  # noqa: F401 — 코어 온톨로지 모델 등록
 
 
 @pytest.fixture(scope="session")

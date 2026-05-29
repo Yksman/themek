@@ -11,7 +11,7 @@ from themek.dart import incremental as incremental_mod
 from themek.dart import client as client_mod
 from themek.dart.backfill import BackfillTargetSpec, BatchSummary
 from themek.dart.incremental import IncrementalRunResult
-from themek.db.models import BackfillTarget
+from themek.db.corp_models import BackfillTarget
 
 
 runner = CliRunner()
@@ -223,7 +223,7 @@ def test_backfill_init_from_stocks_uses_stock_table(monkeypatch, fresh_db):
     from typer.testing import CliRunner
 
     from themek.cli import app
-    from themek.db.models import BackfillTarget, Corporation, Stock
+    from themek.db.corp_models import BackfillTarget, Corporation, Stock
     from themek.db.engine import make_engine, make_session_factory
 
     monkeypatch.setenv("DART_API_KEY", "test")
@@ -266,7 +266,7 @@ def test_backfill_init_from_stocks_dry_run_no_db_change(db_session, mocker):
     from typer.testing import CliRunner
 
     from themek.cli import app
-    from themek.db.models import BackfillTarget, Corporation, Stock
+    from themek.db.corp_models import BackfillTarget, Corporation, Stock
 
     db_session.add(Corporation(dart_code="00126380", name_ko="삼성전자"))
     db_session.flush()
@@ -310,7 +310,7 @@ def test_backfill_status_lifecycle_summary(monkeypatch, fresh_db):
     from typer.testing import CliRunner
 
     from themek.cli import app
-    from themek.db.models import Corporation, Stock
+    from themek.db.corp_models import Corporation, Stock
     from themek.db.engine import make_engine, make_session_factory
 
     monkeypatch.setenv("DART_API_KEY", "test")

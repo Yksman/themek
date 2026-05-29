@@ -31,7 +31,7 @@ from datetime import date as _date
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from themek.db.models import Stock, Corporation
+from themek.db.corp_models import Stock, Corporation
 from themek.dart.cache import DartCache
 from themek.dart.corp_lookup import build_ticker_index
 

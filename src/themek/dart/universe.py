@@ -46,7 +46,7 @@ def load_universe_from_stocks(
     include_delisted: bool = False,
 ) -> list[str]:
     """Stock 테이블 → distinct corp_code list. delisted 기본 제외."""
-    from themek.db.models import Stock
+    from themek.db.corp_models import Stock
 
     q = select(Stock.issued_by_id).distinct()
     if not include_delisted:

@@ -60,7 +60,7 @@ def test_krx_sync_listed_actual_run_inserts_stocks(
     """실 sync — Stock 3 row 추가."""
     from sqlalchemy import select
 
-    from themek.db.models import Stock
+    from themek.db.corp_models import Stock
 
     result = runner.invoke(app, ["krx", "sync-listed"])
     assert result.exit_code == 0, result.stdout
@@ -76,7 +76,7 @@ def test_krx_sync_listed_auto_enroll_creates_backfill_targets(
     """--auto-enroll --periods 2023 시 신규 ticker마다 BackfillTarget pending."""
     from sqlalchemy import select
 
-    from themek.db.models import BackfillTarget
+    from themek.db.corp_models import BackfillTarget
 
     result = runner.invoke(app, [
         "krx", "sync-listed",

@@ -10,7 +10,7 @@ from themek.dart.backfill import (
 from themek.dart.cache import DartCache
 from themek.dart.fetch import BusinessReportFetchError
 from themek.dart.rate_budget import RateBudget, RateBudgetExceeded
-from themek.db.models import BackfillTarget, Corporation
+from themek.db.corp_models import BackfillTarget, Corporation
 from themek.llm.schemas import BusinessExtraction, SegmentItem
 
 

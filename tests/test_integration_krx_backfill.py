@@ -8,7 +8,7 @@ from sqlalchemy import select
 from typer.testing import CliRunner
 
 from themek.cli import app
-from themek.db.models import BackfillTarget, Stock, Corporation
+from themek.db.corp_models import BackfillTarget, Stock, Corporation
 
 
 @pytest.fixture

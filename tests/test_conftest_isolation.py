@@ -50,8 +50,8 @@ def test_db_session_writes_do_not_touch_production(db_session):
         return
     mtime_before = PRODUCTION_DB_PATH.stat().st_mtime
 
-    from themek.db.models import Region
-    db_session.add(Region(code="ZZ", name_ko="테스트지역", name_en="Test"))
+    from themek.db.corp_models import Sector
+    db_session.add(Sector(fics_code="ZZ", name_ko="테스트섹터", name_en="Test"))
     db_session.flush()
 
     mtime_after = PRODUCTION_DB_PATH.stat().st_mtime

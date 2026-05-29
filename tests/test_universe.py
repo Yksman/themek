@@ -55,7 +55,7 @@ def test_load_universe_inline_comment(tmp_path):
 
 from datetime import date
 
-from themek.db.models import Stock, Corporation
+from themek.db.corp_models import Stock, Corporation
 
 
 def test_load_universe_from_stocks_returns_corp_codes(db_session):

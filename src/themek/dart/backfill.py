@@ -17,7 +17,7 @@ from sqlalchemy import select, update, func
 from sqlalchemy.orm import Session
 
 from themek.config import get_settings
-from themek.db.models import BackfillTarget, Corporation
+from themek.db.corp_models import BackfillTarget, Corporation
 from themek.dart.cache import DartCache
 from themek.dart.rate_budget import RateBudget, RateBudgetExceeded
 from themek.dart.fetch import (

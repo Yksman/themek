@@ -52,7 +52,7 @@ def test_fetch_listed_universe_kospi_kosdaq_overlap_kosdaq_wins():
 
 from sqlalchemy import select
 
-from themek.db.models import Stock, Corporation
+from themek.db.corp_models import Stock, Corporation
 
 
 def _save_corp_master(cache, rows):
