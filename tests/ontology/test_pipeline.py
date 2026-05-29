@@ -5,7 +5,8 @@ from pathlib import Path
 from themek.ontology.core.models import Node, FinancialFact
 from themek.ontology.core.resolve import upsert_node, upsert_edge
 from themek.ontology.pipeline import (
-    derive_financial_years, ingest_financials_all, run_pipeline,
+    derive_financial_years, company_report_years, ingest_financials_all,
+    run_pipeline,
 )
 
 _CASSETTE = Path("tests/fixtures/dart_cassettes/fnlttSinglAcntAll_samsung_2024.json")
@@ -42,6 +43,40 @@ class _FakeClient:
     def fetch_financials(self, *, corp_code, bsns_year, reprt_code, fs_div):
         self.calls.append((corp_code, bsns_year, reprt_code, fs_div))
         return self.rows if fs_div == "CFS" else []
+
+
+def test_company_report_years_is_per_company(ontology_session):
+    s = ontology_session
+    _edge(s, "company:A", "segment:a", "2023")
+    _edge(s, "company:A", "segment:a2", "2022")
+    _edge(s, "company:B", "segment:b", "2025")
+    s.commit()
+    assert company_report_years(s, "company:A") == ["2022", "2023"]
+    assert company_report_years(s, "company:B") == ["2025"]
+    assert company_report_years(s, "company:none") == []
+
+
+def test_ingest_financials_all_uses_per_company_years_by_default(ontology_session):
+    s = ontology_session
+    # A는 2023만, B는 2025만 제출 → 각자 자기 연도만 호출 (cross-product 아님)
+    upsert_node(s, "company:00000001", "company", "에이", {"dart_code": "00000001"})
+    upsert_node(s, "segment:sa", "segment", "sa")
+    upsert_edge(s, subject_id="company:00000001", predicate="HAS_SEGMENT",
+                object_id="segment:sa", period="2023", qualifier={},
+                source_type="llm", source_ref="r", method="llm", confidence=0.9)
+    upsert_node(s, "company:00000002", "company", "비", {"dart_code": "00000002"})
+    upsert_node(s, "segment:sb", "segment", "sb")
+    upsert_edge(s, subject_id="company:00000002", predicate="HAS_SEGMENT",
+                object_id="segment:sb", period="2025", qualifier={},
+                source_type="llm", source_ref="r", method="llm", confidence=0.9)
+    s.commit()
+    client = _FakeClient([])  # 빈 응답이어도 호출 인자만 검증
+    ingest_financials_all(s, client)  # years 미지정 → 회사별
+    years_by_corp = {}
+    for corp, yr, rc, fs in client.calls:
+        years_by_corp.setdefault(corp, set()).add(yr)
+    assert years_by_corp["00000001"] == {"2023"}   # A는 2023만
+    assert years_by_corp["00000002"] == {"2025"}   # B는 2025만 (2023 호출 안 함)
 
 
 def test_ingest_financials_all_iterates_companies_years_reprtcodes(ontology_session):

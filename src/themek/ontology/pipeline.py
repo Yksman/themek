@@ -14,7 +14,7 @@ _REPRT_CODES = ("11011", "11012", "11013", "11014")
 
 
 def derive_financial_years(session: Session) -> list[str]:
-    """코어 엣지 period 중 4자리 연도만 distinct·정렬 반환."""
+    """코어 엣지 period 중 4자리 연도만 distinct·정렬 반환 (전역 — 요약/로깅용)."""
     rows = session.execute(
         select(Edge.period).where(Edge.period.is_not(None)).distinct()
     ).scalars().all()
@@ -22,8 +22,25 @@ def derive_financial_years(session: Session) -> list[str]:
     return sorted(years)
 
 
-def ingest_financials_all(session: Session, client, *, years: list[str]) -> dict:
-    """DB 내 모든 company 노드 × years × 4 reprt_code 재무 적재. 회사별 실패 관용."""
+def company_report_years(session: Session, company_id: str) -> list[str]:
+    """해당 회사가 실제 제출한 보고서의 회계연도(4자리) — 그 회사 엣지 period 기준."""
+    rows = session.execute(
+        select(Edge.period).where(
+            Edge.subject_id == company_id, Edge.period.is_not(None)
+        ).distinct()
+    ).scalars().all()
+    return sorted({p for p in rows if p and _YEAR.match(p)})
+
+
+def ingest_financials_all(session: Session, client, *,
+                          years: list[str] | None = None) -> dict:
+    """재무 적재.
+
+    기본은 **회사별 실제 제출 회계연도**(`company_report_years`)만 적재한다 — 2023만
+    제출한 회사엔 2023 계열만 호출. `years`를 명시하면 그 연도를 전 회사에 강제 적용
+    (테스트·수동 override). fnlttSinglAcntAll 1콜=당기/전기/전전기 3개년이라 실제로는
+    제출연도 기준 ±2년까지 자동 확보된다.
+    """
     from themek.ontology.ingest.financials import ingest_financials_for_company
 
     companies = session.execute(
@@ -37,7 +54,9 @@ def ingest_financials_all(session: Session, client, *, years: list[str]) -> dict
         if not dart_code:
             continue
         processed += 1
-        for yr in years:
+        company_years = years if years is not None else company_report_years(
+            session, node.id)
+        for yr in company_years:
             for rc in _REPRT_CODES:
                 try:
                     facts += ingest_financials_for_company(
@@ -91,13 +110,12 @@ def run_pipeline(
             rate_budget=rate_budget, extractor=extractor, since=since, until=until)
         result.ran.append("structure")
 
-    # 3. financials (연도 자동 도출)
+    # 3. financials (회사별 실제 제출 회계연도 자동 적재)
     if skip_financials:
         result.skipped.append("financials")
     else:
-        years = derive_financial_years(session)
-        stats = ingest_financials_all(session, client, years=years)
-        stats["years"] = years
+        stats = ingest_financials_all(session, client)  # 회사별 연도
+        stats["years"] = derive_financial_years(session)  # 전역 요약(표시용)
         result.financials = stats
         result.ran.append("financials")
 
