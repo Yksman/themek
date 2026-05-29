@@ -123,3 +123,35 @@ def test_call_claude_no_escalation_keeps_default(mocker):
     from themek.llm.claude_cli import call_claude
     call_claude("p")  # no escalation
     assert fake.call_args.kwargs["timeout"] == 120  # config default
+
+
+def test_call_claude_retries_on_empty_body_exit_1(mocker, monkeypatch):
+    """exit 1 + empty stdout/stderr + 빠른 종료 → short retry 시도."""
+    monkeypatch.setenv("CLAUDE_CLI_SHORT_RETRY_ATTEMPTS", "3")
+    sleep_mock = mocker.patch("themek.llm.claude_cli.time.sleep")
+    fake = mocker.patch("themek.llm.claude_cli.subprocess.run")
+    # 첫 2회는 transient 실패, 3번째는 성공
+    fake.side_effect = [
+        mocker.Mock(returncode=1, stdout="", stderr=""),
+        mocker.Mock(returncode=1, stdout="", stderr=""),
+        mocker.Mock(returncode=0, stdout='{"result":"ok","usage":{}}', stderr=""),
+    ]
+    from themek.llm.claude_cli import call_claude
+    r = call_claude("p", escalation="regex")
+    assert r.text == "ok"
+    assert fake.call_count == 3
+    # back-off 두 번 호출 (10s, 60s)
+    assert sleep_mock.call_args_list == [
+        mocker.call(10), mocker.call(60),
+    ]
+
+
+def test_call_claude_non_transient_exit_skips_retry(mocker, monkeypatch):
+    """exit 1 이지만 stderr 메시지 있으면 retry 안 함 (real error로 간주)."""
+    monkeypatch.setenv("CLAUDE_CLI_SHORT_RETRY_ATTEMPTS", "3")
+    fake = mocker.patch("themek.llm.claude_cli.subprocess.run")
+    fake.return_value = mocker.Mock(returncode=1, stdout="", stderr="auth failed")
+    from themek.llm.claude_cli import call_claude, ClaudeCallError
+    with pytest.raises(ClaudeCallError, match="auth failed"):
+        call_claude("p", escalation="regex")
+    assert fake.call_count == 1  # 즉시 fail, retry 안 함

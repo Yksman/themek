@@ -6,12 +6,21 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+import time
 from dataclasses import dataclass
 from typing import Any
 from themek.config import get_settings
 
 
 class ClaudeCallError(RuntimeError):
+    pass
+
+
+class ClaudeRateLimitError(ClaudeCallError):
+    """Raised when all short-retry attempts are exhausted due to transient failures.
+
+    4-B will add explicit rate-limit pattern detection.
+    """
     pass
 
 
@@ -26,6 +35,15 @@ class CallResult:
     raw_payload: dict
 
 
+def _is_transient_failure(proc) -> bool:
+    """exit 1 + empty body 패턴 = transient (LLM call 미도달)."""
+    return (
+        proc.returncode != 0
+        and not (proc.stdout or "").strip()
+        and not (proc.stderr or "").strip()
+    )
+
+
 def call_claude(
     prompt: str,
     *,
@@ -38,6 +56,11 @@ def call_claude(
       1) 명시적 timeout_sec
       2) escalation 별 default (regex=60s, llm=120s, full_text=600s)
       3) settings.claude_cli_timeout_sec (legacy default)
+
+    transient failure (exit non-zero + empty stdout/stderr) 시 short retry:
+      - settings.claude_cli_short_retry_attempts 회 시도
+      - 각 실패 후 settings.claude_cli_short_retry_backoffs_sec[i] 초 대기
+      - 모두 소진 시 ClaudeRateLimitError
     """
     settings = get_settings()
     if timeout_sec is not None:
@@ -50,29 +73,51 @@ def call_claude(
         timeout = settings.claude_cli_timeout_llm_sec
     else:
         timeout = settings.claude_cli_timeout_sec
-    try:
-        proc = subprocess.run(
-            [settings.claude_cli_bin, "-p", prompt,
-             "--output-format", "json"],
-            capture_output=True, text=True, timeout=timeout,
-        )
-    except subprocess.TimeoutExpired as e:
-        raise ClaudeCallError(f"claude CLI timed out after {timeout}s") from e
-    except FileNotFoundError as e:
-        raise ClaudeCallError(
-            f"claude CLI not found at '{settings.claude_cli_bin}'"
-        ) from e
 
-    if proc.returncode != 0:
-        raise ClaudeCallError(
-            f"claude CLI exited {proc.returncode}: {proc.stderr.strip()}"
+    attempts = settings.claude_cli_short_retry_attempts
+    backoffs = settings.claude_cli_short_retry_backoffs_sec
+    last_proc = None
+
+    for attempt in range(attempts):
+        try:
+            proc = subprocess.run(
+                [settings.claude_cli_bin, "-p", prompt,
+                 "--output-format", "json"],
+                capture_output=True, text=True, timeout=timeout,
+            )
+        except subprocess.TimeoutExpired as e:
+            raise ClaudeCallError(f"claude CLI timed out after {timeout}s") from e
+        except FileNotFoundError as e:
+            raise ClaudeCallError(
+                f"claude CLI not found at '{settings.claude_cli_bin}'"
+            ) from e
+
+        last_proc = proc
+
+        if proc.returncode == 0:
+            break
+
+        if not _is_transient_failure(proc):
+            # explicit error message — raise immediately, no retry
+            raise ClaudeCallError(
+                f"claude CLI exited {proc.returncode}: {proc.stderr.strip()}"
+            )
+
+        # transient failure — back off and retry (unless last attempt)
+        if attempt + 1 < attempts:
+            time.sleep(backoffs[min(attempt, len(backoffs) - 1)])
+    else:
+        # all retry attempts exhausted with transient pattern
+        raise ClaudeRateLimitError(
+            f"transient failure after {attempts} attempts "
+            f"(exit={last_proc.returncode}, empty body)"
         )
 
     try:
-        payload = json.loads(proc.stdout)
+        payload = json.loads(last_proc.stdout)
     except json.JSONDecodeError as e:
         raise ClaudeCallError(
-            f"claude CLI output is not valid JSON: {proc.stdout[:300]}"
+            f"claude CLI output is not valid JSON: {last_proc.stdout[:300]}"
         ) from e
 
     if not isinstance(payload, dict) or "result" not in payload:
