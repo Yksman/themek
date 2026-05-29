@@ -1,0 +1,56 @@
+[
+  {
+    "subject_id": "company:00126380",
+    "predicate": "IN_SECTOR",
+    "object_id": "sector:G2520",
+    "period": null,
+    "qualifier": {},
+    "source_type": "manual",
+    "confidence": 1.0
+  },
+  {
+    "subject_id": "company:00126380",
+    "predicate": "ISSUES_STOCK",
+    "object_id": "stock:005930",
+    "period": null,
+    "qualifier": {},
+    "source_type": "manual",
+    "confidence": 1.0
+  },
+  {
+    "subject_id": "company:00164742",
+    "predicate": "IN_SECTOR",
+    "object_id": "sector:G2570",
+    "period": null,
+    "qualifier": {},
+    "source_type": "manual",
+    "confidence": 1.0
+  },
+  {
+    "subject_id": "company:00164742",
+    "predicate": "ISSUES_STOCK",
+    "object_id": "stock:005380",
+    "period": null,
+    "qualifier": {},
+    "source_type": "manual",
+    "confidence": 1.0
+  },
+  {
+    "subject_id": "company:01261644",
+    "predicate": "IN_SECTOR",
+    "object_id": "sector:G2030",
+    "period": null,
+    "qualifier": {},
+    "source_type": "manual",
+    "confidence": 1.0
+  },
+  {
+    "subject_id": "company:01261644",
+    "predicate": "ISSUES_STOCK",
+    "object_id": "stock:277810",
+    "period": null,
+    "qualifier": {},
+    "source_type": "manual",
+    "confidence": 1.0
+  }
+]

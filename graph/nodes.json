@@ -1,0 +1,107 @@
+[
+  {
+    "id": "company:00126380",
+    "kind": "company",
+    "label": "삼성전자",
+    "attrs": {
+      "dart_code": "00126380"
+    }
+  },
+  {
+    "id": "company:00164742",
+    "kind": "company",
+    "label": "현대자동차",
+    "attrs": {
+      "dart_code": "00164742"
+    }
+  },
+  {
+    "id": "company:01261644",
+    "kind": "company",
+    "label": "레인보우로보틱스",
+    "attrs": {
+      "dart_code": "01261644"
+    }
+  },
+  {
+    "id": "region:CN",
+    "kind": "region",
+    "label": "중국",
+    "attrs": {}
+  },
+  {
+    "id": "region:EU",
+    "kind": "region",
+    "label": "유럽",
+    "attrs": {}
+  },
+  {
+    "id": "region:JP",
+    "kind": "region",
+    "label": "일본",
+    "attrs": {}
+  },
+  {
+    "id": "region:KR",
+    "kind": "region",
+    "label": "국내",
+    "attrs": {}
+  },
+  {
+    "id": "region:ROW",
+    "kind": "region",
+    "label": "기타",
+    "attrs": {}
+  },
+  {
+    "id": "region:US",
+    "kind": "region",
+    "label": "미주",
+    "attrs": {}
+  },
+  {
+    "id": "sector:G2030",
+    "kind": "sector",
+    "label": "산업기계",
+    "attrs": {}
+  },
+  {
+    "id": "sector:G2520",
+    "kind": "sector",
+    "label": "반도체",
+    "attrs": {}
+  },
+  {
+    "id": "sector:G2570",
+    "kind": "sector",
+    "label": "자동차 및 부품",
+    "attrs": {}
+  },
+  {
+    "id": "stock:005380",
+    "kind": "stock",
+    "label": "현대자동차",
+    "attrs": {
+      "ticker": "005380",
+      "market": "KOSPI"
+    }
+  },
+  {
+    "id": "stock:005930",
+    "kind": "stock",
+    "label": "삼성전자",
+    "attrs": {
+      "ticker": "005930",
+      "market": "KOSPI"
+    }
+  },
+  {
+    "id": "stock:277810",
+    "kind": "stock",
+    "label": "레인보우로보틱스",
+    "attrs": {
+      "ticker": "277810",
+      "market": "KOSDAQ"
+    }
+  }
+]

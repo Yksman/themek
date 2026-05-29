@@ -130,25 +130,41 @@ uv run themek dart backfill status --verbose
 
 운영 매뉴얼: [`docs/dart-backfill-runbook.md`](docs/dart-backfill-runbook.md)
 
-### E5 쿼리
+### 온톨로지 코어 (graph-ready) — 재무 적재 · competency 질의 · graph export
+
+DART 온톨로지는 graph-ready 관계형 코어(`nodes`/`edges`/`financial_facts`/
+`concept_aliases`, `themek.ontology`)를 system-of-record로 쓴다.
 
 ```bash
-uv run themek query e5 --ticker 005930
+# 정형 재무(fnlttSinglAcntAll) 적재 — 회사별 4 reprt_code × 연도. DART_API_KEY 필요.
+uv run themek ingest financials --years 2022-2024          # 전체 company 노드 대상
+uv run themek ingest financials --years 2024 --corp 00126380  # 단일 회사
+
+# competency 스크리닝: '주력 세그먼트 + 특정 기간부터 연속 흑자'
+uv run themek query screen --segment 반도체 --metric operating_income --positive-since 2023FY
+
+# graph export (Neo4j/RDF import 가능 nodes.json/edges.json; financial_facts는 REPORTS 엣지)
+uv run themek ontology export-graph --out graph
 ```
+
+`query screen --segment`은 별칭/라벨로 세그먼트 개념을 해소(`concept_aliases`)하고,
+share_pct 최대 세그먼트를 '주력'으로 판정한 뒤 `positive_since` 이후 기록된 모든 기간이
+양수인 회사만 반환한다.
 
 ### Obsidian vault 생성 (온톨로지 점검·탐색)
 
-적재된 DART 온톨로지를 Obsidian vault로 생성해 그래프로 둘러보고 데이터 품질을 점검한다.
+코어 온톨로지를 Obsidian vault로 생성해 그래프로 둘러본다. 회사 노트는 섹터/세그먼트/
+고객/지역 wikilink + **재무 시계열 표(파생비율 영업이익률·부채비율·ROE + Dataview 인라인 필드)**
+를 포함한다.
 
 ```bash
-uv run themek vault build            # vault/ 에 생성 (멱등 — 재실행 시 최신 DB 반영)
+uv run themek vault build            # vault/ 에 생성 (멱등 — 재실행 시 최신 코어 반영)
 ```
 
-- `vault/companies/` 회사 노트(DB 1:1) · `segments/`·`regions/`·`sectors/` 개념 노드 · `customers/` 미연결 고객(설명문 포함 전부 노드화, `kind` 분류)
-- `vault/_qa-report.md` 데이터 품질 이슈 자동 집계(지역 중복·매출합 이상·미연결·누락)
+- `vault/companies/` 회사 노트(코어 1:1) — frontmatter + 관계 wikilink + 재무 시계열
 - Obsidian에서 "폴더를 vault로 열기" → Graph View로 노드 망 시각화
 
-백필로 적재가 늘면 `themek vault build`만 재실행하면 새 노드가 자동 반영된다.
+백필/재무 적재가 늘면 `themek vault build`만 재실행하면 코어가 자동 반영된다.
 
 ### E5 추출 품질 평가 (Plan #6)
 
