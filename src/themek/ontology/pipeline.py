@@ -56,3 +56,59 @@ class PipelineResult:
     structure: object | None = None
     financials: dict | None = None
     export: dict | None = None
+
+
+from pathlib import Path  # noqa: E402
+
+
+def run_pipeline(
+    session: Session, client, *, cache,
+    skip_sync: bool, skip_structure: bool, skip_financials: bool, skip_export: bool,
+    since, until, universe, rate_budget, extractor,
+    out_vault, out_graph,
+) -> PipelineResult:
+    """4단계(sync→structure→financials→export) 오케스트레이션. skip 플래그 존중."""
+    from themek.dart.corp_lookup import sync_corp_master
+    from themek.dart.incremental import run_incremental
+    from themek.ontology.projection.vault import build_vault
+    from themek.ontology.projection.graph_export import export_graph
+
+    result = PipelineResult()
+
+    # 1. sync
+    if skip_sync:
+        result.skipped.append("sync")
+    else:
+        result.sync = sync_corp_master(client, cache)
+        result.ran.append("sync")
+
+    # 2. structure (incremental, 자동 기간)
+    if skip_structure:
+        result.skipped.append("structure")
+    else:
+        result.structure = run_incremental(
+            client=client, cache=cache, session=session, universe=universe,
+            rate_budget=rate_budget, extractor=extractor, since=since, until=until)
+        result.ran.append("structure")
+
+    # 3. financials (연도 자동 도출)
+    if skip_financials:
+        result.skipped.append("financials")
+    else:
+        years = derive_financial_years(session)
+        stats = ingest_financials_all(session, client, years=years)
+        stats["years"] = years
+        result.financials = stats
+        result.ran.append("financials")
+
+    # 4. export (vault + graph)
+    if skip_export:
+        result.skipped.append("export")
+    else:
+        v = build_vault(session, Path(out_vault))
+        g = export_graph(session, Path(out_graph))
+        result.export = {"companies": v["companies"], "nodes": g["nodes"],
+                         "edges": g["edges"]}
+        result.ran.append("export")
+
+    return result
