@@ -206,7 +206,11 @@ git add src/themek/ontology/pipeline.py tests/ontology/test_pipeline.py
 git commit -m "feat(pipeline): derive_financial_years + ingest_financials_all + PipelineResult"
 ```
 
-✅ **Success Gate:** `uv run pytest tests/ontology/test_pipeline.py -q` → 4 passed. `derive_financial_years`가 4자리 연도만 distinct·정렬(null·비연도 제외), `ingest_financials_all`이 company×years×4코드 순회·회사별 실패 관용.
+✅ **Success Gate (측정 가능):**
+1. `uv run pytest tests/ontology/test_pipeline.py -q` → `4 passed`, 0 failed.
+2. `test_derive_financial_years_distinct_4digit_sorted` 통과 = null·"2024Q1" 제외하고 정확히 `["2023","2024"]` 반환.
+3. `test_ingest_financials_all_iterates_companies_years_reprtcodes` 통과 = CFS 호출 `8`회(회사2×코드4), `stats["companies"]==2`, `stats["facts"]>0`, `stats["failed"]==[]`.
+4. `test_ingest_financials_all_collects_failures` 통과 = `len(stats["failed"])>=1` 이고 `facts==0`.
 
 ---
 
@@ -362,7 +366,11 @@ git add src/themek/ontology/pipeline.py tests/ontology/test_pipeline.py
 git commit -m "feat(pipeline): run_pipeline — 4-stage orchestration with skip flags"
 ```
 
-✅ **Success Gate:** `uv run pytest tests/ontology/test_pipeline.py -q` → 7 passed. skip 플래그대로 `ran`/`skipped` 분기, financials가 도출 연도 사용, export가 vault/graph 산출, 전부 skip 시 `ran==[]`.
+✅ **Success Gate (측정 가능):**
+1. `uv run pytest tests/ontology/test_pipeline.py -q` → `7 passed`, 0 failed.
+2. `test_run_pipeline_skips_sync_and_structure` 통과 = `result.skipped ⊇ {sync,structure}`, `result.ran ⊇ {financials,export}`, `result.financials["facts"]>0`, `vault/companies/삼성전자.md` 및 `graph/nodes.json` 존재, `result.export["nodes"]>0`.
+3. `test_run_pipeline_financials_skipped_when_no_years` 통과 = 엣지 0건일 때 `financials["facts"]==0` 이고 `financials["years"]==[]`.
+4. `test_run_pipeline_all_skipped` 통과 = `result.ran==[]` 이고 `set(result.skipped)=={sync,structure,financials,export}`.
 
 ---
 
@@ -519,7 +527,11 @@ git add src/themek/cli.py tests/ontology/test_cli_pipeline.py
 git commit -m "feat(cli): themek pipeline run — integrated DART pipeline"
 ```
 
-✅ **Success Gate:** `uv run pytest tests/ontology/test_cli_pipeline.py -q` → 1 passed. `uv run pytest -q` 실패 0. `themek pipeline run --skip-sync --skip-structure --skip-financials` exit 0 + vault/graph 산출 + `pipeline done: ran=['export']` 출력.
+✅ **Success Gate (측정 가능):**
+1. `uv run pytest tests/ontology/test_cli_pipeline.py -q` → `1 passed`, 0 failed.
+2. `uv run pytest -q` → 전체 실패 `0`.
+3. `uv run themek pipeline run --skip-sync --skip-structure --skip-financials --out-vault /tmp/pv --out-graph /tmp/pg` → exit `0`, stdout에 `[export]` 와 `pipeline done: ran=['export']` 포함, `/tmp/pv/companies/*.md`≥1·`/tmp/pg/nodes.json` 존재.
+4. `uv run themek pipeline run --help` → exit 0, `--skip-sync`·`--skip-structure`·`--skip-financials`·`--skip-export` 4개 플래그 모두 노출.
 
 ---
 
