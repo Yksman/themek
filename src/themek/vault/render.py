@@ -198,7 +198,7 @@ def render_index(graph: VaultGraph, issues: list[Issue]) -> tuple[str, str]:
              f"- 고객사(미연결 포함): {len(graph.customers)}",
              f"- 지역: {len(graph.regions)} · 섹터: {len(graph.sectors)}",
              f"- 검출 이슈: {len(issues)}",
-             f"\n관련: [[_qa-report]]\n",
+             "\n관련: [[_qa-report]]\n",
              "\n## 회사 목록\n",
              "| 회사 | 섹터 | 기간 | 세그먼트 | 이슈 |",
              "|------|------|------|----------|------|"]

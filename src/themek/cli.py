@@ -34,6 +34,7 @@ from themek.eval.e5 import (
 from themek.krx.client import KrxClient
 from themek.krx.sync import sync_listed_stocks, fetch_listed_universe
 from themek.dart.incremental import run_incremental
+from themek.vault.builder import build_vault
 
 app = typer.Typer(help="themek — 한국 테마주 ontology CLI")
 query_app = typer.Typer(help="Run competency queries")
@@ -44,6 +45,8 @@ dart_app = typer.Typer(help="DART OpenAPI 명령")
 app.add_typer(dart_app, name="dart")
 krx_app = typer.Typer(help="KRX 상장사 sync 명령")
 app.add_typer(krx_app, name="krx")
+vault_app = typer.Typer(help="Obsidian vault 생성 명령")
+app.add_typer(vault_app, name="vault")
 
 DEFAULT_LEARNED_PATTERNS_PATH = "data/dart/learned_header_patterns.json"
 DEFAULT_PROPOSALS_PATH = "data/dart/pattern_proposals.json"
@@ -936,6 +939,27 @@ def krx_sync_listed_cmd(
                     inserted += 1
             sess.commit()
         typer.echo(f"auto-enrolled {inserted} new BackfillTarget rows")
+
+
+@vault_app.command("build")
+def vault_build_cmd(
+    out: str = typer.Option("vault", "--out", help="vault 출력 디렉토리"),
+    db: Optional[str] = typer.Option(None, "--db", help="DB DSN override"),
+):
+    """현재 DB의 DART 온톨로지를 Obsidian vault로 멱등 생성."""
+    if db:
+        from sqlalchemy import create_engine
+        engine = create_engine(db, future=True)
+        session = make_session_factory(engine)()
+    else:
+        session = _session()
+    with session as s:
+        stats = build_vault(s, Path(out))
+    typer.echo(
+        f"vault built: {stats['companies']} companies, "
+        f"{stats['segments']} segments, {stats['regions']} regions, "
+        f"{stats['customers']} customers, {stats['issues']} issues → {out}/"
+    )
 
 
 if __name__ == "__main__":
