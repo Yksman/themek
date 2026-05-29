@@ -8,6 +8,8 @@ import re
 import subprocess
 import time
 from dataclasses import dataclass
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 from themek.config import get_settings
 
@@ -42,6 +44,23 @@ class CallResult:
     cost_usd: float
     duration_ms: int
     raw_payload: dict
+
+
+def _log_failure(proc, *, escalation, prompt_len, attempt):
+    settings = get_settings()
+    log_dir = Path(settings.themek_log_dir)
+    log_dir.mkdir(parents=True, exist_ok=True)
+    rec = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "returncode": proc.returncode,
+        "stderr": (proc.stderr or "")[:1024],
+        "stdout": (proc.stdout or "")[:1024],
+        "escalation": escalation,
+        "prompt_len": prompt_len,
+        "attempt": attempt,
+    }
+    with (log_dir / "claude_cli_failures.jsonl").open("a", encoding="utf-8") as f:
+        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
 def _is_transient_failure(proc) -> bool:
@@ -105,6 +124,8 @@ def call_claude(
 
         if proc.returncode == 0:
             break
+
+        _log_failure(proc, escalation=escalation, prompt_len=len(prompt), attempt=attempt)
 
         if not _is_transient_failure(proc):
             # explicit error message — raise immediately, no retry

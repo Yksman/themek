@@ -187,3 +187,36 @@ def test_call_claude_exhausted_retries_raises_rate_limit(mocker, monkeypatch):
     with pytest.raises(ClaudeRateLimitError, match="after 2 attempts"):
         call_claude("p")
     assert fake.call_count == 2
+
+
+def test_call_claude_logs_failure_to_jsonl(mocker, monkeypatch, tmp_path):
+    """exit != 0 시 data/log/claude_cli_failures.jsonl 에 1줄 append."""
+    monkeypatch.setenv("CLAUDE_CLI_SHORT_RETRY_ATTEMPTS", "1")
+    monkeypatch.setenv("THEMEK_LOG_DIR", str(tmp_path))
+    mocker.patch("themek.llm.claude_cli.subprocess.run").return_value = mocker.Mock(
+        returncode=1, stdout="", stderr="some error",
+    )
+    from themek.llm.claude_cli import call_claude, ClaudeCallError
+    with pytest.raises(ClaudeCallError):
+        call_claude("p", escalation="regex")
+    log = tmp_path / "claude_cli_failures.jsonl"
+    assert log.exists()
+    import json
+    line = log.read_text().strip()
+    rec = json.loads(line)
+    assert rec["returncode"] == 1
+    assert rec["stderr"] == "some error"
+    assert rec["escalation"] == "regex"
+    assert "timestamp" in rec
+
+
+def test_call_claude_does_not_log_on_success(mocker, monkeypatch, tmp_path):
+    """exit 0 시 log 파일 미생성."""
+    monkeypatch.setenv("THEMEK_LOG_DIR", str(tmp_path))
+    mocker.patch("themek.llm.claude_cli.subprocess.run").return_value = mocker.Mock(
+        returncode=0, stdout='{"result":"ok","usage":{}}', stderr="",
+    )
+    from themek.llm.claude_cli import call_claude
+    call_claude("p")
+    log = tmp_path / "claude_cli_failures.jsonl"
+    assert not log.exists()

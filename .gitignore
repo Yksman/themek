@@ -52,3 +52,12 @@ Thumbs.db
 /scripts/recon_dart_xml.py
 /scripts/recon_dart_section.py
 /scripts/
+
+# Plan #5 — Multi-Corp Backfill
+/scripts/recon_backfill.py
+/scripts/themek_backfill.sh
+/scripts/verify_backfill_smoke.py
+/data/log/
+data/log/claude_cli_failures.jsonl
+/data/dart/budget_state.json
+/data/universe/
