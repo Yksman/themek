@@ -38,19 +38,25 @@ class DartClient:
         return r.content
 
     def list_periodic_reports(
-        self, *, corp_code: str, bgn_de: str, end_de: str
+        self,
+        *,
+        bgn_de: str,
+        end_de: str,
+        corp_code: "str | None" = None,
+        page_no: int = 1,
+        page_count: int = 100,
     ) -> dict:
-        r = self._client.get(
-            f"{self._base}/list.json",
-            params={
-                "crtfc_key": self._key,
-                "corp_code": corp_code,
-                "bgn_de": bgn_de,
-                "end_de": end_de,
-                "pblntf_ty": "A",
-                "page_count": 100,
-            },
-        )
+        params = {
+            "crtfc_key": self._key,
+            "bgn_de": bgn_de,
+            "end_de": end_de,
+            "pblntf_ty": "A",
+            "page_count": page_count,
+            "page_no": page_no,
+        }
+        if corp_code:
+            params["corp_code"] = corp_code
+        r = self._client.get(f"{self._base}/list.json", params=params)
         self._raise_on_error(r)
         payload = r.json()
         if payload.get("status") not in ("000", "013"):
@@ -67,6 +73,28 @@ class DartClient:
         )
         self._raise_on_error(r)
         return r.content
+
+    def fetch_financials(
+        self, *, corp_code: str, bsns_year: str, reprt_code: str, fs_div: str,
+    ) -> list[dict]:
+        """단일회사 전체 재무제표(fnlttSinglAcntAll.json).
+
+        status '013'(데이터 없음)은 빈 리스트로 정상 처리.
+        """
+        params = {
+            "crtfc_key": self._key, "corp_code": corp_code,
+            "bsns_year": bsns_year, "reprt_code": reprt_code, "fs_div": fs_div,
+        }
+        r = self._client.get(f"{self._base}/fnlttSinglAcntAll.json", params=params)
+        self._raise_on_error(r)
+        payload = r.json()
+        status = payload.get("status")
+        if status == "013":
+            return []
+        if status != "000":
+            raise DartApiError(
+                f"fnlttSinglAcntAll status={status} msg={payload.get('message')}")
+        return payload.get("list", [])
 
     def _raise_on_error(self, r: httpx.Response) -> None:
         if r.status_code in (401, 403):

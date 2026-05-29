@@ -1,0 +1,30 @@
+{
+  "status": "000",
+  "message": "정상",
+  "list": [
+    {"rcept_no": "20250311000001", "bsns_year": "2024", "sj_div": "IS",
+     "account_id": "ifrs-full_Revenue", "account_nm": "매출액",
+     "thstrm_amount": "3007700000000", "frmtrm_amount": "2589400000000",
+     "bfefrmtrm_amount": "3022300000000", "fs_div": "CFS"},
+    {"rcept_no": "20250311000001", "bsns_year": "2024", "sj_div": "IS",
+     "account_id": "dart_OperatingIncomeLoss", "account_nm": "영업이익",
+     "thstrm_amount": "326700000000", "frmtrm_amount": "65700000000",
+     "bfefrmtrm_amount": "433700000000", "fs_div": "CFS"},
+    {"rcept_no": "20250311000001", "bsns_year": "2024", "sj_div": "IS",
+     "account_id": "ifrs-full_ProfitLoss", "account_nm": "당기순이익",
+     "thstrm_amount": "340000000000", "frmtrm_amount": "154000000000",
+     "bfefrmtrm_amount": "556500000000", "fs_div": "CFS"},
+    {"rcept_no": "20250311000001", "bsns_year": "2024", "sj_div": "BS",
+     "account_id": "ifrs-full_Assets", "account_nm": "자산총계",
+     "thstrm_amount": "5145000000000", "frmtrm_amount": "4559000000000",
+     "bfefrmtrm_amount": "4266000000000", "fs_div": "CFS"},
+    {"rcept_no": "20250311000001", "bsns_year": "2024", "sj_div": "BS",
+     "account_id": "ifrs-full_Liabilities", "account_nm": "부채총계",
+     "thstrm_amount": "1121000000000", "frmtrm_amount": "922000000000",
+     "bfefrmtrm_amount": "936000000000", "fs_div": "CFS"},
+    {"rcept_no": "20250311000001", "bsns_year": "2024", "sj_div": "BS",
+     "account_id": "ifrs-full_Equity", "account_nm": "자본총계",
+     "thstrm_amount": "4024000000000", "frmtrm_amount": "3637000000000",
+     "bfefrmtrm_amount": "3330000000000", "fs_div": "CFS"}
+  ]
+}
