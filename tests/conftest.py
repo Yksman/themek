@@ -69,3 +69,12 @@ def ontology_session(engine):
     except Exception:
         pass
     connection.close()
+
+
+@pytest.fixture
+def ontology_fresh_db(engine):
+    """CLI 온톨로지 테스트용: 코어 테이블 reset(커밋 가시)."""
+    import themek.ontology.core.models  # noqa: F401
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
+    yield

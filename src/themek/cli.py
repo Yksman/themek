@@ -35,6 +35,11 @@ from themek.krx.client import KrxClient
 from themek.krx.sync import sync_listed_stocks, fetch_listed_universe
 from themek.dart.incremental import run_incremental
 from themek.vault.builder import build_vault
+from sqlalchemy import select
+from themek.ontology.query.screen import screen as _screen
+from themek.ontology.ingest.financials import ingest_financials_for_company
+from themek.ontology.projection.graph_export import export_graph
+from themek.ontology.core.models import Node
 
 app = typer.Typer(help="themek — 한국 테마주 ontology CLI")
 query_app = typer.Typer(help="Run competency queries")
@@ -47,6 +52,10 @@ krx_app = typer.Typer(help="KRX 상장사 sync 명령")
 app.add_typer(krx_app, name="krx")
 vault_app = typer.Typer(help="Obsidian vault 생성 명령")
 app.add_typer(vault_app, name="vault")
+ingest_app = typer.Typer(help="온톨로지 적재 명령")
+app.add_typer(ingest_app, name="ingest")
+ontology_app = typer.Typer(help="온톨로지 export 명령")
+app.add_typer(ontology_app, name="ontology")
 
 DEFAULT_LEARNED_PATTERNS_PATH = "data/dart/learned_header_patterns.json"
 DEFAULT_PROPOSALS_PATH = "data/dart/pattern_proposals.json"
@@ -960,6 +969,68 @@ def vault_build_cmd(
         f"{stats['segments']} segments, {stats['regions']} regions, "
         f"{stats['customers']} customers, {stats['issues']} issues → {out}/"
     )
+
+
+@query_app.command("screen")
+def query_screen_cmd(
+    segment: str = typer.Option(..., "--segment", help="세그먼트 개념(별칭/라벨)"),
+    metric: str = typer.Option("operating_income", "--metric"),
+    positive_since: str = typer.Option(..., "--positive-since",
+                                       help="예: 2024H1"),
+    fs_div: str = typer.Option("CFS", "--fs-div"),
+):
+    """'주력 세그먼트 + 특정 기간부터 연속 흑자' 스크리닝."""
+    with _session() as s:
+        ids = _screen(s, segment=segment, metric=metric,
+                      positive_since=positive_since, fs_div=fs_div)
+        for cid in sorted(ids):
+            node = s.get(Node, cid)
+            typer.echo(f"{cid}\t{node.label if node else ''}")
+    typer.echo(f"matched: {len(ids)}")
+
+
+@ingest_app.command("financials")
+def ingest_financials_cmd(
+    years: str = typer.Option(..., "--years", help="예: 2022-2024 또는 2024"),
+    corp: Optional[str] = typer.Option(None, "--corp", help="단일 corp_code"),
+):
+    """DART 정형 재무를 코어에 적재 (회사별 4 reprt_code)."""
+    if "-" in years:
+        lo, hi = years.split("-", 1)
+        year_list = [str(y) for y in range(int(lo), int(hi) + 1)]
+    else:
+        year_list = [years]
+    client = DartClient(api_key=get_settings().dart_api_key)
+    reprt_codes = ["11011", "11012", "11013", "11014"]
+    total = 0
+    with _session() as s:
+        if corp:
+            corp_codes = [corp]
+        else:
+            corp_codes = [
+                n.attrs.get("dart_code")
+                for n in s.execute(
+                    select(Node).where(Node.kind == "company")
+                ).scalars().all()
+                if n.attrs.get("dart_code")
+            ]
+        for code in corp_codes:
+            for yr in year_list:
+                for rc in reprt_codes:
+                    total += ingest_financials_for_company(
+                        s, client, corp_code=code, bsns_year=yr, reprt_code=rc)
+        s.commit()
+    typer.echo(f"ingested {total} financial facts")
+
+
+@ontology_app.command("export-graph")
+def ontology_export_graph_cmd(
+    out: str = typer.Option("graph", "--out", help="graph export 디렉토리"),
+):
+    """코어를 nodes.json/edges.json으로 export."""
+    with _session() as s:
+        stats = export_graph(s, Path(out))
+    typer.echo(f"graph exported: {stats['nodes']} nodes, {stats['edges']} edges → {out}/")
 
 
 if __name__ == "__main__":
