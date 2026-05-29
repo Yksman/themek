@@ -67,3 +67,80 @@ def parse_financial_rows(rows: list[dict], *, bsns_year: str,
                 "fiscal_period": fiscal_period, "amount": amount,
             })
     return facts
+
+
+from sqlalchemy import select  # noqa: E402
+from sqlalchemy.orm import Session  # noqa: E402
+
+from themek.ontology.core.ids import period_id, metric_id  # noqa: E402
+from themek.ontology.core.models import FinancialFact, METRIC_KEYS  # noqa: E402
+from themek.ontology.core.resolve import upsert_node  # noqa: E402
+
+# reprt_code → fiscal_period 라벨
+_REPRT_PERIOD = {"11011": "FY", "11012": "H1", "11013": "Q1", "11014": "Q3"}
+_METRIC_LABEL = {
+    "revenue": "매출액", "operating_income": "영업이익", "net_income": "당기순이익",
+    "assets": "자산총계", "liabilities": "부채총계", "equity": "자본총계",
+}
+
+
+def _ensure_metric_nodes(session: Session) -> None:
+    for key in METRIC_KEYS:
+        upsert_node(session, metric_id(key), "metric", _METRIC_LABEL[key])
+
+
+def _ensure_period_node(session: Session, bsns_year: str,
+                        fiscal_period: str) -> None:
+    upsert_node(session, period_id(bsns_year, fiscal_period), "period",
+                f"{bsns_year} {fiscal_period}")
+
+
+def _upsert_fact(session: Session, company_id: str, fs_div: str, f: dict) -> None:
+    existing = session.execute(
+        select(FinancialFact).where(
+            FinancialFact.company_id == company_id,
+            FinancialFact.bsns_year == f["bsns_year"],
+            FinancialFact.fiscal_period == f["fiscal_period"],
+            FinancialFact.fs_div == fs_div,
+            FinancialFact.metric_key == f["metric_key"],
+        )
+    ).scalars().first()
+    if existing is None:
+        session.add(FinancialFact(
+            company_id=company_id, bsns_year=f["bsns_year"],
+            fiscal_period=f["fiscal_period"], fs_div=fs_div,
+            metric_key=f["metric_key"], amount=f["amount"], currency="KRW",
+            source_type="dart_api", source_ref=None, method="api", confidence=1.0))
+    else:
+        existing.amount = f["amount"]
+
+
+def ingest_financials_for_company(session: Session, client, *, corp_code: str,
+                                  bsns_year: str, reprt_code: str) -> int:
+    """회사 1건 재무 적재. CFS→OFS fallback. 적재한 fact 수 반환."""
+    from themek.ontology.core.ids import company_id as _cid
+    fiscal_period = _REPRT_PERIOD[reprt_code]
+    company_node_id = _cid(corp_code)
+
+    rows = client.fetch_financials(corp_code=corp_code, bsns_year=bsns_year,
+                                   reprt_code=reprt_code, fs_div="CFS")
+    fs_div = "CFS"
+    if not rows:
+        rows = client.fetch_financials(corp_code=corp_code, bsns_year=bsns_year,
+                                       reprt_code=reprt_code, fs_div="OFS")
+        fs_div = "OFS"
+    if not rows:
+        return 0
+
+    facts = parse_financial_rows(rows, bsns_year=bsns_year,
+                                 fiscal_period=fiscal_period)
+    if not facts:
+        return 0
+
+    _ensure_metric_nodes(session)
+    periods_seen = {(f["bsns_year"], f["fiscal_period"]) for f in facts}
+    for yr, fp in periods_seen:
+        _ensure_period_node(session, yr, fp)
+    for f in facts:
+        _upsert_fact(session, company_node_id, fs_div, f)
+    return len(facts)
