@@ -8,7 +8,7 @@ from __future__ import annotations
 from datetime import date
 from typing import Callable, Optional
 from sqlalchemy.orm import Session
-from themek.db.corp_models import BusinessReport
+from themek.db.corp_models import BusinessReport, Corporation
 from themek.llm.schemas import BusinessExtraction
 from themek.ontology.core.ids import company_id
 from themek.ontology.core.resolve import upsert_node
@@ -83,7 +83,10 @@ def ingest_business_report(
     session.flush()
 
     # 사업 구조 → graph-core nodes/edges. 회사 노드 보장 후 적재.
-    upsert_node(session, company_id(corporation_id), "company", corporation_id,
+    # 라벨은 corp_models.Corporation.name_ko(=corp master 캐시 보강) 우선, 없으면 dart_code.
+    corp = session.get(Corporation, corporation_id)
+    corp_label = corp.name_ko if corp and corp.name_ko else corporation_id
+    upsert_node(session, company_id(corporation_id), "company", corp_label,
                 {"dart_code": corporation_id})
     ingest_business_structure(
         session, corp_code=corporation_id, extraction=extraction,
