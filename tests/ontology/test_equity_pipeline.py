@@ -1,4 +1,4 @@
-from themek.ontology.core.models import Edge, Node
+from themek.ontology.core.models import Edge
 from themek.ontology.core.resolve import upsert_node
 from themek.ontology.pipeline import ingest_equity_all
 

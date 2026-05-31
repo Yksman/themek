@@ -1,4 +1,4 @@
-from themek.ontology.core.models import Node, Edge
+from themek.ontology.core.models import Edge
 from themek.ontology.core.resolve import upsert_node
 from themek.ontology.ingest.equity import ingest_other_corp_investments
 

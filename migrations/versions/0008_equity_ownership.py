@@ -4,58 +4,32 @@ Revision ID: 0008_equity_ownership
 Revises: 0007_expand_metrics
 Create Date: 2026-06-01 00:00:00.000000
 
-SQLite는 CHECK 제약을 in-place ALTER 못 함 → batch_alter_table로 테이블 재생성.
+이 마이그레이션은 DB 스키마를 변경하지 않는 **버전 체인 전진용 no-op**이다.
+
+근거:
+- `nodes.kind` / `edges.predicate`는 SQLAlchemy `Enum`(create_constraint=False)으로
+  정의되어 SQLite에선 CHECK 제약 없는 평범한 VARCHAR로 생성된다(`kind VARCHAR(8)`,
+  `predicate VARCHAR(16)`). 즉 enum 허용값 집합은 DB가 아니라 models.py의
+  `NODE_KINDS`/`PREDICATES` 튜플(Python 레벨)에서만 강제된다.
+- 신규 값 `"person"`(6자)·`"OWNS_STAKE_IN"`(13자)은 기존 컬럼 길이(8/16) 안에 들어가므로
+  ALTER가 필요 없다.
+- 따라서 `batch_alter_table`로 테이블을 재생성하면 0005의 표현식 기반 unique 인덱스
+  `ux_edge_spo`(`coalesce(period,'')`)가 reflect되지 못해 유실되는 부작용만 생긴다.
+  이를 피하기 위해 본 리비전은 의도적으로 아무 DDL도 실행하지 않는다.
 """
 from typing import Sequence, Union
-
-from alembic import op
-import sqlalchemy as sa
 
 revision: str = "0008_equity_ownership"
 down_revision: Union[str, Sequence[str], None] = "0007_expand_metrics"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
-_KIND_OLD = ("company", "stock", "sector", "region", "segment",
-             "customer", "period", "metric", "group")
-_KIND_NEW = _KIND_OLD + ("person",)
-_PRED_OLD = ("HAS_SEGMENT", "SELLS_TO", "EXPOSED_TO", "IN_SECTOR",
-             "ISSUES_STOCK", "BELONGS_TO_GROUP", "SUB_SECTOR_OF")
-_PRED_NEW = _PRED_OLD + ("OWNS_STAKE_IN",)
-
 
 def upgrade() -> None:
-    # nodes는 edges/financial_facts/concept_aliases의 FK 부모 → batch 재생성 시
-    # DROP TABLE nodes가 FK 강제에 걸린다. SQLite FK 강제는 마이그레이션 트랜잭션
-    # 밖에서 env.py가 끈다(render_as_batch + foreign_keys=OFF).
-    with op.batch_alter_table("nodes") as batch:
-        batch.alter_column(
-            "kind",
-            existing_type=sa.Enum(*_KIND_OLD, name="node_kind"),
-            type_=sa.Enum(*_KIND_NEW, name="node_kind"),
-            existing_nullable=False,
-        )
-    with op.batch_alter_table("edges") as batch:
-        batch.alter_column(
-            "predicate",
-            existing_type=sa.Enum(*_PRED_OLD, name="edge_predicate"),
-            type_=sa.Enum(*_PRED_NEW, name="edge_predicate"),
-            existing_nullable=False,
-        )
+    # no-op: enum 허용값은 models.py(NODE_KINDS/PREDICATES)에서 강제, DB 스키마 불변.
+    pass
 
 
 def downgrade() -> None:
-    with op.batch_alter_table("edges") as batch:
-        batch.alter_column(
-            "predicate",
-            existing_type=sa.Enum(*_PRED_NEW, name="edge_predicate"),
-            type_=sa.Enum(*_PRED_OLD, name="edge_predicate"),
-            existing_nullable=False,
-        )
-    with op.batch_alter_table("nodes") as batch:
-        batch.alter_column(
-            "kind",
-            existing_type=sa.Enum(*_KIND_NEW, name="node_kind"),
-            type_=sa.Enum(*_KIND_OLD, name="node_kind"),
-            existing_nullable=False,
-        )
+    # no-op
+    pass
