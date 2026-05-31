@@ -767,7 +767,8 @@ def vault_build_cmd(
         session = _session()
     with session as s:
         stats = build_vault(s, Path(out))
-    typer.echo(f"vault built: {stats['companies']} companies → {out}/")
+    typer.echo(f"vault built: {stats['companies']} companies, "
+               f"{stats.get('issues', 0)} integrity issues → {out}/")
 
 
 @query_app.command("screen")

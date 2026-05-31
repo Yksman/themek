@@ -20,6 +20,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from themek.ontology.core.models import Node, Edge, FinancialFact
+from themek.ontology.validate import check_integrity, Issue
 
 _UNSAFE = re.compile(r'[\\/:*?"<>|#^\[\]]')
 _WS = re.compile(r"\s+")
@@ -30,13 +31,51 @@ _KPI_ORDER = ["revenue", "operating_income", "net_income",
 _KPI_LABEL = {"revenue": "매출액", "operating_income": "영업이익",
               "net_income": "당기순이익", "assets": "자산총계",
               "liabilities": "부채총계", "equity": "자본총계"}
+_CF_ORDER = ["cf_operating", "cf_investing", "cf_financing"]
+_CF_LABEL = {"cf_operating": "영업활동현금흐름",
+             "cf_investing": "투자활동현금흐름",
+             "cf_financing": "재무활동현금흐름"}
+_INLINE_ORDER = _KPI_ORDER + _CF_ORDER + ["eps", "shares_outstanding"]
 _GENERATED_DIRS = ("companies", "segments", "customers", "regions", "sectors")
 _KIND_DIR = {"segment": "segments", "customer": "customers",
              "region": "regions", "sector": "sectors"}
+_SEVERITY_ORDER = ("error", "warn", "info")
+
+
+def _render_qa_report(issues: list[Issue]) -> str:
+    """무결성 이슈 → `_qa-report.md` 문자열 (순수 렌더, 부작용 없음)."""
+    by_sev = {sev: [i for i in issues if i.severity == sev]
+              for sev in _SEVERITY_ORDER}
+    counts = " · ".join(f"{sev}: {len(by_sev[sev])}" for sev in _SEVERITY_ORDER)
+    lines = ["---", 'type: "qa-report"', "tags: [qa-report]", "---",
+             "# 온톨로지 무결성 리포트\n",
+             f"\n- 총 이슈: {len(issues)}",
+             f"- {counts}\n"]
+    if not issues:
+        lines.append("\n무결성 이슈 없음 ✅\n")
+        return "\n".join(lines) + "\n"
+    for sev in _SEVERITY_ORDER:
+        group = by_sev[sev]
+        if not group:
+            continue
+        lines.append(f"\n## {sev} ({len(group)})\n")
+        lines.append("| code | subject | message |")
+        lines.append("|------|---------|---------|")
+        for i in group:
+            subj = i.subject or "—"
+            msg = (i.message or "").replace("|", r"\|")
+            lines.append(f"| {i.code} | {subj} | {msg} |")
+    return "\n".join(lines) + "\n"
 
 
 def _safe(name: str) -> str:
     return _WS.sub(" ", _UNSAFE.sub(" ", name)).strip()
+
+
+def _yaml_str(s: str) -> str:
+    """YAML 더블쿼트 스칼라로 escape(백슬래시·쿼트). 빈 문자열도 안전."""
+    esc = s.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{esc}"'
 
 
 def _note_name(label: str) -> str:
@@ -112,8 +151,35 @@ def _render_financials(fin: dict) -> list[str]:
     lines.append("| 부채비율 | " + " | ".join(_fmt(r[1]) for r in ratio_rows) + " |")
     lines.append("| ROE | " + " | ".join(_fmt(r[2]) for r in ratio_rows) + " |")
     lines.append("")
+
+    # 현금흐름 소표 (억원) — 단위가 다른 KPI 표와 분리
+    if any(k in fin[p] for p in periods for k in _CF_ORDER):
+        lines += ["\n## 현금흐름 (단위 억원)\n", header, sep]
+        for key in _CF_ORDER:
+            if not any(key in fin[p] for p in periods):
+                continue
+            cells = [(_eok(fin[p][key]) if key in fin[p] else "—") for p in periods]
+            lines.append(f"| {_CF_LABEL[key]} | " + " | ".join(cells) + " |")
+        lines.append("")
+
+    # EPS 소표 (원/주)
+    if any("eps" in fin[p] for p in periods):
+        lines += ["\n## 주당 지표\n", header, sep]
+        cells = [(f"{fin[p]['eps']:,.0f}원" if "eps" in fin[p] else "—")
+                 for p in periods]
+        lines.append("| EPS (원/주) | " + " | ".join(cells) + " |")
+        lines.append("")
+
+    # 발행주식수 소표 (주)
+    if any("shares_outstanding" in fin[p] for p in periods):
+        lines += ["\n## 발행주식수\n", header, sep]
+        cells = [(f"{fin[p]['shares_outstanding']:,.0f}주"
+                  if "shares_outstanding" in fin[p] else "—") for p in periods]
+        lines.append("| 발행주식수 | " + " | ".join(cells) + " |")
+        lines.append("")
+
     for (y, fp) in periods:
-        for key in _KPI_ORDER:
+        for key in _INLINE_ORDER:
             if key in fin[(y, fp)]:
                 lines.append(f"{key}_{y}{fp}:: {fin[(y, fp)][key]:.0f}")
     return lines
@@ -145,6 +211,15 @@ def build_vault(session: Session, out_dir: Path) -> dict:
         if sp.exists():
             sp.unlink()
 
+    # C9: 무결성 체크 1회 호출 → QA 리포트 emit (이후 frontmatter issue_count에서 공유)
+    issues = check_integrity(session)
+    (out_dir / "_qa-report.md").write_text(
+        _render_qa_report(issues), encoding="utf-8")
+    issues_by_company: dict[str, int] = {}
+    for i in issues:
+        if i.subject:
+            issues_by_company[i.subject] = issues_by_company.get(i.subject, 0) + 1
+
     node_label = dict(session.execute(select(Node.id, Node.label)).all())
     companies = session.execute(
         select(Node).where(Node.kind == "company").order_by(Node.label)
@@ -165,10 +240,30 @@ def build_vault(session: Session, out_dir: Path) -> dict:
         reg = _dedup_latest([e for e in edges if e.predicate == "EXPOSED_TO"])
         sector = next((e for e in edges if e.predicate == "IN_SECTOR"), None)
 
+        # C10: frontmatter 보강 — 종목/섹터/기간/카운트/이슈
+        stock_edge = next((e for e in edges if e.predicate == "ISSUES_STOCK"), None)
+        stock_node = (session.get(Node, stock_edge.object_id)
+                      if stock_edge else None)
+        ticker = stock_node.attrs.get("ticker", "") if stock_node else ""
+        market = stock_node.attrs.get("market", "") if stock_node else ""
+        sector_label = _lbl(sector.object_id) if sector else ""
+        fin = _company_financials(session, c.id)
+        periods = sorted(fin.keys(), key=lambda k: _period_sort_key(*k))
+        period_list = ", ".join(f"{y}{fp}" for y, fp in periods)
+
         parts = [
             "---", 'type: "company"',
             f'dart_code: "{c.attrs.get("dart_code", "")}"',
-            f'name: "{c.label}"', "tags: [company]", "---",
+            f"name: {_yaml_str(c.label)}",
+            f"ticker: {_yaml_str(ticker)}",
+            f"market: {_yaml_str(market)}",
+            f"sector: {_yaml_str(sector_label)}",
+            f"periods: [{period_list}]",
+            f"report_count: {len(periods)}",
+            f"segment_count: {len(seg)}",
+            f"customer_count: {len(cust)}",
+            f"issue_count: {issues_by_company.get(c.id, 0)}",
+            "tags: [company]", "---",
             f"# {c.label}\n",
         ]
         if sector:
@@ -195,7 +290,7 @@ def build_vault(session: Session, out_dir: Path) -> dict:
         if not reg:
             parts.append("- (없음)")
 
-        parts += _render_financials(_company_financials(session, c.id))
+        parts += _render_financials(fin)
         (out_dir / "companies" / f"{_note_name(c.label)}.md").write_text(
             "\n".join(parts) + "\n", encoding="utf-8")
 
@@ -235,4 +330,5 @@ def build_vault(session: Session, out_dir: Path) -> dict:
         idx.append(f"| {parts_link} | {sector_label} | {fyrs} |")
     (out_dir / "_index.md").write_text("\n".join(idx) + "\n", encoding="utf-8")
 
-    return {"companies": len(companies), "concepts": len(concept_nodes)}
+    return {"companies": len(companies), "concepts": len(concept_nodes),
+            "issues": len(issues)}
