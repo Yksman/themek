@@ -866,6 +866,28 @@ def ontology_link_cmd(
     typer.echo(f"linked {n_stock} ISSUES_STOCK, {n_sector} IN_SECTOR edges")
 
 
+@ontology_app.command("resolve")
+def ontology_resolve_cmd():
+    """별칭 시드 → customer→company 해소 → segment 병합 → 무결성 검사."""
+    from themek.ontology.ingest.seeds import seed_aliases
+    from themek.ontology.ingest.resolution import resolve_customers, merge_segments
+    from themek.ontology.validate import check_integrity
+    with _session() as s:
+        seeded = seed_aliases(s)
+        cust = resolve_customers(s)
+        seg = merge_segments(s)
+        errors = [i for i in check_integrity(s) if i.severity == "error"]
+        s.commit()
+    typer.echo(f"aliases seeded: {seeded}")
+    typer.echo(f"customers resolved: {cust['resolved']}, "
+               f"unresolved: {cust['unresolved']}, "
+               f"edges repointed: {cust['edges_repointed']}")
+    typer.echo(f"segments merged: {seg['merged']}")
+    typer.echo(f"integrity errors: {len(errors)}")
+    if errors:
+        raise typer.Exit(code=1)
+
+
 @pipeline_app.command("run")
 def pipeline_run_cmd(
     since: str = typer.Option("yesterday", "--since"),

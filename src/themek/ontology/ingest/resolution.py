@@ -20,7 +20,9 @@ def _repoint_edges(session: Session, *, old_object_id: str,
     moved = 0
     for e in edges:
         if raw_label is not None and "buyer_raw" not in e.qualifier:
-            q = dict(e.qualifier); q["buyer_raw"] = raw_label; e.qualifier = q
+            q = dict(e.qualifier)
+            q["buyer_raw"] = raw_label
+            e.qualifier = q
         existing = session.execute(
             select(Edge).where(
                 Edge.subject_id == e.subject_id,
@@ -32,7 +34,8 @@ def _repoint_edges(session: Session, *, old_object_id: str,
         ).scalars().first()
         if existing is not None and existing.id != e.id:
             if raw_label is not None and "buyer_raw" not in existing.qualifier:
-                q = dict(existing.qualifier); q["buyer_raw"] = raw_label
+                q = dict(existing.qualifier)
+                q["buyer_raw"] = raw_label
                 existing.qualifier = q
             session.delete(e)
         else:
@@ -63,7 +66,8 @@ def resolve_customers(session: Session) -> dict:
             target = corp_index[norm]
         # 그래프에 존재하는 company로만 해소
         if target is None or session.get(Node, target) is None:
-            attrs = dict(cust.attrs); attrs["resolved"] = False
+            attrs = dict(cust.attrs)
+            attrs["resolved"] = False
             cust.attrs = attrs
             unresolved += 1
             continue

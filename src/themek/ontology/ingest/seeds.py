@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from themek.ontology.core.ids import (
     company_id, stock_id, sector_id, region_id, segment_id)
-from themek.ontology.core.models import ConceptAlias
+from themek.ontology.core.models import ConceptAlias, Node
 from themek.ontology.core.resolve import (
     upsert_node, upsert_edge, normalize_corp_name, normalize_alias)
 
@@ -44,28 +44,36 @@ def seed_core(session: Session) -> None:
                     confidence=1.0)
 
 
-def _upsert_alias(session: Session, alias_norm: str, node_id: str) -> None:
+def _upsert_alias(session: Session, alias_norm: str, node_id: str) -> bool:
+    """target 노드가 그래프에 존재할 때만 alias upsert. 적재(또는 갱신) 시 True.
+
+    ConceptAlias.node_id는 nodes.id FK라 존재하지 않는 노드를 가리키면 FK 위반.
+    큐레이션 aliases.json이 미적재 corp/segment를 참조해도 안전하게 건너뛴다."""
+    if session.get(Node, node_id) is None:
+        return False
     row = session.get(ConceptAlias, alias_norm)
     if row is None:
         session.add(ConceptAlias(alias_norm=alias_norm, node_id=node_id,
                                  source="manual", confidence=1.0))
     else:
         row.node_id = node_id
+    return True
 
 
 def seed_aliases(session: Session, path: Path = _DEFAULT_ALIASES) -> int:
     """JSON 별칭을 ConceptAlias로 적재. customer 변형은 normalize_corp_name,
-    segment 동의어는 normalize_alias 키로 저장. upsert(멱등). 적재 수 반환."""
+    segment 동의어는 normalize_alias 키로 저장. upsert(멱등).
+    target 노드가 그래프에 없는 변형은 건너뛴다. 적재 수 반환."""
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     n = 0
     for entry in data.get("customers", []):
         target = company_id(entry["corp"])
         for variant in entry["variants"]:
-            _upsert_alias(session, normalize_corp_name(variant), target)
-            n += 1
+            if _upsert_alias(session, normalize_corp_name(variant), target):
+                n += 1
     for entry in data.get("segments", []):
         target = segment_id(entry["canonical"])
         for variant in entry["variants"]:
-            _upsert_alias(session, normalize_alias(variant), target)
-            n += 1
+            if _upsert_alias(session, normalize_alias(variant), target):
+                n += 1
     return n
