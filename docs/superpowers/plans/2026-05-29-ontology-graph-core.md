@@ -1,5 +1,8 @@
 # 온톨로지 graph-ready 코어 + 재무 pilot Implementation Plan
 
+> **상태: ✅ 구현 완료** — main 반영됨(2026-05-31 기준, 테스트 314개 통과). 아래 체크박스는 실행 추적용 기록이며 갱신되지 않았을 수 있습니다.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** DART 온톨로지를 graph-ready 관계형 코어(nodes/edges/financial_facts/concept_aliases)로 전면 재설계하고, 재무 KPI 시계열을 정형 API로 적재해 "특정 세그먼트가 주력이면서 특정 기간부터 연속 흑자인 기업" 같은 교차-회사 질의에 답한다.

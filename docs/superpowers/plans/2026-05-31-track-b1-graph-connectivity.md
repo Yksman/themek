@@ -1,5 +1,8 @@
 # Track B1 — Graph Connectivity + Legacy Cleanup Implementation Plan
 
+> **상태: ✅ 구현 완료** — main 반영됨(2026-05-31 기준, 테스트 314개 통과). 아래 체크박스는 실행 추적용 기록이며 갱신되지 않았을 수 있습니다.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 백필된 company 노드에 `ISSUES_STOCK`(기존 관계형 stocks에서 투영)와 `IN_SECTOR`(DART induty_code fetch) 엣지를 채우고, 죽은 관계형 온톨로지 테이블을 제거한다.

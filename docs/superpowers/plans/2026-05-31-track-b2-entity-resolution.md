@@ -1,5 +1,8 @@
 # Track B2 — Entity Resolution Implementation Plan
 
+> **상태: ✅ 구현 완료** — main 반영됨(2026-05-31 기준, 테스트 314개 통과). 아래 체크박스는 실행 추적용 기록이며 갱신되지 않았을 수 있습니다.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** customer raw 이름을 정규화 exact 매칭(+ 큐레이션 별칭)으로 상장 corporation에 해소해 `SELLS_TO`를 company 노드로 직결하고, segment 동의어를 canonical 노드로 병합한다.

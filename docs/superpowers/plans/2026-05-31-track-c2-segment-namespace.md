@@ -1,5 +1,8 @@
 # Track C2 — Segment Namespace (over-merge mitigation) Implementation Plan
 
+> **상태: ✅ 구현 완료** — main 반영됨(2026-05-31 기준, 테스트 314개 통과). 아래 체크박스는 실행 추적용 기록이며 갱신되지 않았을 수 있습니다.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** segment 노드를 회사 네임스페이스(`segment:{dart_code}:{slug}`) 기본으로 전환해, 서로 다른 회사의 동명 일반 세그먼트가 한 노드로 우발 병합되는 문제를 제거한다. 의도된 교차회사 canonical 병합은 alias 시드(`merge_segments`)로만 일어나도록 한다.

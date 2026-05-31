@@ -1,5 +1,8 @@
 # Track B3 — Financial Metric Expansion Implementation Plan
 
+> **상태: ✅ 구현 완료** — main 반영됨(2026-05-31 기준, 테스트 314개 통과). 아래 체크박스는 실행 추적용 기록이며 갱신되지 않았을 수 있습니다.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 재무 metric을 `eps`, `cf_operating`/`cf_investing`/`cf_financing`(현금흐름표), `shares_outstanding`(발행주식수)으로 확장한다.

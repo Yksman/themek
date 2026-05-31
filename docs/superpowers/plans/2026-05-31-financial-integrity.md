@@ -1,5 +1,8 @@
 # Financial Integrity (Track A) Implementation Plan
 
+> **상태: ✅ 구현 완료** — main 반영됨(2026-05-31 기준, 테스트 314개 통과). 아래 체크박스는 실행 추적용 기록이며 갱신되지 않았을 수 있습니다.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 분기 재무상태표(BS) 오염 버그를 고치고, 오염 데이터를 purge+재적재로 교정하며, 엣지 중복을 DB 제약으로 막고, 재발 방지용 경량 무결성 가드를 추가한다.

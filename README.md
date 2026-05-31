@@ -4,23 +4,28 @@
 
 ## Status
 
-**Walking Skeleton (#1) + Eval Harness (#6) + DART API Client (#3) + Parser Robust Extraction (#4) 구현 완료** — 2026-05-27.
+**수집 파이프라인(#1·#3·#4·#5·#6) + KRX sync + Graph Core 온톨로지 + Vault 투영 + 파이프라인 통합 + 재무 정합성(Track A) + 그래프 연결·해소·확장(Track B) + 탐색 가시성(Track C) 구현 완료** — 2026-05-31. (테스트 314개 전부 통과)
 
-E5 ("이 회사 뭐 만들어?") CQ가 **종목+연도만 입력하면** end-to-end로 동작하며, 사업보고서 형식 변형에 robust한 3-tier escalation 추출까지 갖춰진 상태:
-DART OpenAPI에서 corp_code 조회 → 사업보고서 자동 fetch → 본문 추출 (regex → LLM → full_text escalation, 학습 누적) → LLM ingest → query → eval.
-종목 1개 → N개 확장 backbone + parser self-improving loop 완성.
+E5 ("이 회사 뭐 만들어?") CQ가 **종목+연도만 입력하면** end-to-end로 동작하며, 다종목 backfill → graph-ready 관계형 코어(nodes/edges/financial_facts/concept_aliases) → Obsidian vault 투영까지 한 흐름으로 이어진다:
+DART corp_code 조회 → 사업보고서 자동 fetch → 본문 추출(regex → LLM → full_text escalation, 학습 누적) → LLM ingest → graph core 적재 → 엣지 연결/엔티티 해소 → 무결성 검사 → vault 투영 → query/eval.
 
 진행 history:
 - Plan #1 (Walking Skeleton, 17 task TDD) ✅ 2026-05-23
-- 이슈 #1 (conftest production DB 격리) ✅
-- 이슈 #2 (geographic region_code dedup) ✅
+- 이슈 #1 (conftest production DB 격리) ✅ · 이슈 #2 (geographic region_code dedup) ✅
 - Plan #6 (Eval Harness, 12 task TDD) ✅ 2026-05-25 — stub 1회 smoke baseline: 4 metric 모두 1.000 / MAE 0.00 %p
 - Plan #6 follow-up (CallResult + --runs aggregation + --save-runs) ✅ 2026-05-26 — 실 LLM baseline 측정 scaffolding
 - Plan #3 (DART API client, 11 task TDD + 실 API 정찰) ✅ 2026-05-25 — 종목 1 → N 확장 backbone, 실 API smoke 3종목 정상
 - Plan #4 (Parser Robust Extraction, 21 task TDD; Task 20 deferred) ✅ 2026-05-27 — 3-tier escalation + self-improving regex 학습 사이클
 - Plan #5 (Multi-Corp Backfill, 14 task TDD + production smoke 10 종목 × 2024:2025 검증) ✅ 2026-05-27 — Layer A initial backfill + Layer B daily incremental cron + RateBudget 38K/day cap + universe single-source-of-truth (`data/universe/active.txt`)
+- KRX Stock Sync + Auto-Universe ✅ 2026-05-27 — `themek krx` 상장사 sync (`krx/`)
+- Ontology Graph Core ✅ 2026-05-29 — graph-ready 관계형 코어(nodes/edges/financial_facts/concept_aliases) 전면 재설계 + 재무 KPI 시계열 적재 + append-only bi-temporal 엣지(unique 제약, migration 0005) + `themek ontology export-graph`
+- Vault Projection ✅ 2026-05-29 — `themek vault build`로 코어 → Obsidian vault(markdown + `[[wikilink]]`) 멱등 생성
+- Pipeline Orchestration ✅ 2026-05-29 — `themek pipeline`으로 sync → 사업구조 → 재무 → 산출물 통합 구동, 재무 적재 연도 자동 도출
+- Track A — Financial Integrity ✅ 2026-05-31 — 분기 BS 오염 버그 수정 + `rebuild_financials`(purge+재적재) + `check_integrity` 가드 (`themek financials rebuild`)
+- Track B — Essence ✅ 2026-05-31 — B1 연결성(`ISSUES_STOCK`+`IN_SECTOR`, KSIC 매핑, 죽은 테이블 제거) · B2 엔티티 해소(`resolve_customers`+`merge_segments`+alias 시드) · B3 metric 확장(eps/cf_*/shares_outstanding) → `themek ontology link` / `resolve`
+- Track C — Discovery Visibility ✅ 2026-05-31 — C1 vault 가시성(`_qa-report.md` emit + frontmatter 보강 + 신규 metric 렌더) · C2 segment 회사 네임스페이스화(`segment:{dart_code}:{slug}` + 재네임스페이스 백필)
 
-**다음 작업:** Plan #2 + #7 (social layer ontology + 텔레/블로그/팍스넷 ingestion) 또는 Plan #5.1 (정정보고서 query 최신 선택 검증 + LLM 비용 자동 cap + 시계열 query layer).
+**다음 작업:** Plan #2 + #7 (social layer ontology + 텔레/블로그/팍스넷 ingestion) — 현재까지는 DART(structural fact) 단일 소스. social interpretation layer 미착수.
 
 ## Vision
 

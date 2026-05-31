@@ -1,5 +1,8 @@
 # DART 통합 파이프라인 오케스트레이션 Implementation Plan
 
+> **상태: ✅ 구현 완료** — main 반영됨(2026-05-31 기준, 테스트 314개 통과). 아래 체크박스는 실행 추적용 기록이며 갱신되지 않았을 수 있습니다.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** `themek pipeline run` 한 명령으로 DART 파이프라인(sync → 사업구조 → 재무 → 산출물)을 통합 구동하고, 재무 적재 연도를 적재된 코어 데이터에서 자동 도출한다.
