@@ -24,8 +24,10 @@ def ingest_business_structure(session: Session, *, corp_code: str,
                     source_ref=source_ref, method="llm", confidence=confidence)
 
     for seg in extraction.segments:
-        oid = segment_id(seg.name_ko)
-        upsert_node(session, oid, "segment", seg.name_ko)
+        # 회사 네임스페이스 키로 동명 일반 세그먼트의 우발 병합 방지(C2)
+        oid = segment_id(seg.name_ko, company_key=corp_code)
+        upsert_node(session, oid, "segment", seg.name_ko,
+                    {"company": corp_code, "name": seg.name_ko})
         q = {} if seg.share_pct is None else {"share_pct": float(seg.share_pct)}
         _edge("HAS_SEGMENT", oid, q)
 

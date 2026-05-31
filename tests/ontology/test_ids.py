@@ -36,3 +36,20 @@ def test_long_concept_id_is_stable_and_hashed():
     assert a == customer_id(raw)          # 안정적
     assert len(a.split(":", 1)[1]) <= 48  # slug 상한
     assert customer_id(raw) != customer_id(raw + "x")  # 다른 원문 다른 id
+
+
+def test_segment_id_company_namespace():
+    # 하위호환: company_key 미지정 시 기존 전역 키 불변
+    assert segment_id("반도체") == "segment:반도체"
+    # 회사 네임스페이스
+    assert segment_id("반도체", company_key="00126380") == "segment:00126380:반도체"
+
+
+def test_segment_id_company_namespace_long_name():
+    long = "세계 유수의 Mobile 및 Computing 관련 전자 업체 일반 세그먼트 외 다수 부문"
+    assert len(long) > 48
+    sid = segment_id(long, company_key="x")
+    # 회사키 분기에서도 slug 해시 truncate 적용
+    assert len(sid.split(":")[-1]) <= 48
+    # 두 다른 long name → 다른 id (충돌 0)
+    assert sid != segment_id(long + " 추가부문", company_key="x")

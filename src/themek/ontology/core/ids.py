@@ -47,8 +47,14 @@ def period_id(bsns_year: str, fiscal_period: str) -> str:
     return f"period:{bsns_year}{fiscal_period}"
 
 
-def segment_id(name_ko: str) -> str:
-    return f"segment:{slug(name_ko)}"
+def segment_id(name_ko: str, company_key: str | None = None) -> str:
+    """세그먼트 노드 ID. company_key 지정 시 회사 네임스페이스
+    (`segment:{company_key}:{slug}`)로 동명 일반 세그먼트의 우발 병합을 방지.
+    미지정 시 기존 전역 키(`segment:{slug}`) — 하위호환."""
+    s = slug(name_ko)
+    if company_key:
+        return f"segment:{company_key}:{s}"
+    return f"segment:{s}"
 
 
 def customer_id(raw: str) -> str:
