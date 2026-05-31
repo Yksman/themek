@@ -74,3 +74,26 @@ def resolve_customers(session: Session) -> dict:
     session.flush()
     return {"resolved": resolved, "unresolved": unresolved,
             "edges_repointed": repointed}
+
+
+def merge_segments(session: Session) -> dict:
+    """별칭 시드에 따라 비-canonical segment 노드의 HAS_SEGMENT 엣지를 canonical로
+    재지정 + 고아 노드 제거. ConceptAlias(segment)는 normalize_alias 키 사용."""
+    from themek.ontology.core.resolve import normalize_alias
+    segments = session.execute(
+        select(Node).where(Node.kind == "segment")
+    ).scalars().all()
+    merged = 0
+    for seg in segments:
+        alias = session.get(ConceptAlias, normalize_alias(seg.label))
+        if alias is None or alias.node_id == seg.id:
+            continue
+        if not alias.node_id.startswith("segment:") \
+                or session.get(Node, alias.node_id) is None:
+            continue
+        _repoint_edges(session, old_object_id=seg.id,
+                       new_object_id=alias.node_id)
+        session.delete(seg)
+        merged += 1
+    session.flush()
+    return {"merged": merged}

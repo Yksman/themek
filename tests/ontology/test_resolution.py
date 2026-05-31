@@ -113,3 +113,30 @@ def test_resolve_customers_merges_on_conflict(ontology_session):
         Edge.object_id == company_id("00164742"))).scalars().all()
     assert len(edges) == 1
     assert s.get(Node, cust_id) is None
+
+
+from themek.ontology.ingest.resolution import merge_segments
+from themek.ontology.core.resolve import normalize_alias
+
+
+def test_merge_segments_repoints_to_canonical(ontology_session):
+    s = ontology_session
+    canon = segment_id("메모리반도체")
+    variant = segment_id("메모리")
+    upsert_node(s, company_id("c"), "company", "회사", {"dart_code": "c"})
+    upsert_node(s, canon, "segment", "메모리반도체")
+    upsert_node(s, variant, "segment", "메모리")
+    # 별칭: normalize_alias("메모리") → canonical
+    s.add(ConceptAlias(alias_norm=normalize_alias("메모리"), node_id=canon,
+                       source="manual", confidence=1.0))
+    s.commit()
+    upsert_edge(s, subject_id=company_id("c"), predicate="HAS_SEGMENT",
+                object_id=variant, period="2024", qualifier={"share_pct": 30.0},
+                source_type="llm", source_ref="r", method="llm", confidence=0.9)
+    s.commit()
+
+    res = merge_segments(s); s.commit()
+    assert res["merged"] == 1
+    e = s.execute(select(Edge).where(Edge.predicate == "HAS_SEGMENT")).scalar_one()
+    assert e.object_id == canon
+    assert s.get(Node, variant) is None
