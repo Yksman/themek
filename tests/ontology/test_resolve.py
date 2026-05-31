@@ -49,3 +49,18 @@ def test_resolve_concept_exact_then_alias(ontology_session):
     assert resolve_concept(s, "메모리반도체") == "segment:메모리반도체"
     # 미해소
     assert resolve_concept(s, "존재안함") is None
+
+
+from themek.ontology.core.resolve import normalize_corp_name
+
+
+def test_normalize_corp_name_strips_legal_forms():
+    assert normalize_corp_name("삼성전자(주)") == "삼성전자"
+    assert normalize_corp_name("(주)삼성전자") == "삼성전자"
+    assert normalize_corp_name("㈜삼성전자") == "삼성전자"
+    assert normalize_corp_name("주식회사 삼성전자") == "삼성전자"
+    assert normalize_corp_name("  Samsung  Electronics  Co., Ltd. ") \
+        == "samsung electronics"
+    assert normalize_corp_name("Apple Inc.") == "apple"
+    # 동일 정규화로 수렴
+    assert normalize_corp_name("현대자동차(주)") == normalize_corp_name("현대자동차")

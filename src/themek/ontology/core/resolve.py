@@ -16,6 +16,21 @@ def normalize_alias(s: str) -> str:
     return _WS.sub(" ", s.strip()).lower()
 
 
+_CORP_AFFIX = re.compile(
+    r"\(주\)|㈜|주식회사|\bco\.?,?\s*ltd\.?|\bltd\.?|\binc\.?|\bcorp\.?|"
+    r"\bcorporation\b|\bcompany\b",
+    re.IGNORECASE,
+)
+
+
+def normalize_corp_name(s: str) -> str:
+    """법인명 매칭용 정규화: 법인 형태 접두/접미 제거 + 소문자 + 공백 단일화."""
+    out = _CORP_AFFIX.sub(" ", s)
+    out = re.sub(r"[,.]", " ", out)
+    out = _WS.sub(" ", out).strip().lower()
+    return out
+
+
 def upsert_node(session: Session, id: str, kind: str, label: str,
                 attrs: dict | None = None) -> Node:
     """id 기준 멱등 upsert. 존재하면 label/attrs 갱신."""
