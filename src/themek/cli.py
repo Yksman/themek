@@ -848,6 +848,24 @@ def ontology_export_graph_cmd(
     typer.echo(f"graph exported: {stats['nodes']} nodes, {stats['edges']} edges → {out}/")
 
 
+@ontology_app.command("link")
+def ontology_link_cmd(
+    skip_sectors: bool = typer.Option(False, "--skip-sectors",
+                                      help="섹터 fetch 생략(ISSUES_STOCK만)"),
+):
+    """ISSUES_STOCK(관계형 투영) + IN_SECTOR(DART induty fetch) 엣지 생성."""
+    from themek.ontology.ingest.linkage import link_stocks
+    from themek.ontology.ingest.classification import link_sectors
+    with _session() as s:
+        n_stock = link_stocks(s)
+        n_sector = 0
+        if not skip_sectors:
+            client = DartClient(api_key=get_settings().dart_api_key)
+            n_sector = link_sectors(s, client)
+        s.commit()
+    typer.echo(f"linked {n_stock} ISSUES_STOCK, {n_sector} IN_SECTOR edges")
+
+
 @pipeline_app.command("run")
 def pipeline_run_cmd(
     since: str = typer.Option("yesterday", "--since"),
