@@ -35,3 +35,63 @@ def affiliation_from_stake(stake_pct: float | None) -> str:
     if stake_pct >= 20:
         return "관계회사"
     return "기타"
+
+
+from sqlalchemy.orm import Session  # noqa: E402
+
+from themek.ontology.core.ids import (  # noqa: E402
+    company_id, person_id, external_company_id)
+from themek.ontology.core.resolve import upsert_node, upsert_edge  # noqa: E402
+
+_IS_LARGEST = re.compile(r"본인|최대주주")
+
+
+def _to_pct(raw) -> float | None:
+    if raw is None:
+        return None
+    s = str(raw).replace(",", "").replace("%", "").strip()
+    if s in ("", "-"):
+        return None
+    try:
+        return float(s)
+    except ValueError:
+        return None
+
+
+def _to_int(raw) -> int | None:
+    f = _to_pct(raw)
+    return int(f) if f is not None else None
+
+
+def ingest_largest_shareholders(session: Session, *, corp_code: str,
+                                bsns_year: str, rows: list[dict],
+                                source_ref: str) -> int:
+    """최대주주현황 행 → holder(person|company:ext) ──OWNS_STAKE_IN──▶ 보고회사.
+    period=bsns_year(4자리). 멱등. 적재 엣지 수 반환."""
+    held = company_id(corp_code)
+    n = 0
+    for row in rows:
+        name = (row.get("nm") or "").strip()
+        if not name:
+            continue
+        relate = (row.get("relate") or "").strip()
+        kind = classify_shareholder(name, relate)
+        if kind == "person":
+            hid = person_id(name, corp_code)
+            upsert_node(session, hid, "person", name)
+        else:
+            hid = external_company_id(name)
+            upsert_node(session, hid, "company", name, {"external": True})
+        pct = _to_pct(row.get("trmend_posesn_stock_qota_rt"))
+        q = {
+            "stake_pct": pct,
+            "shares": _to_int(row.get("trmend_posesn_stock_co")),
+            "relation": relate or None,
+            "is_largest": bool(_IS_LARGEST.search(relate)),
+        }
+        upsert_edge(session, subject_id=hid, predicate="OWNS_STAKE_IN",
+                    object_id=held, period=bsns_year, qualifier=q,
+                    source_type="dart_api", source_ref=source_ref,
+                    method="api", confidence=1.0)
+        n += 1
+    return n
