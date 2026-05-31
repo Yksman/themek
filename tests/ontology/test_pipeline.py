@@ -153,7 +153,7 @@ def test_run_pipeline_skips_sync_and_structure(tmp_path, ontology_session):
     result = run_pipeline(
         s, client, cache=None,
         skip_sync=True, skip_structure=True,
-        skip_financials=False, skip_export=False,
+        skip_financials=False, skip_equity=True, skip_export=False,
         since=None, until=None, universe=set(), rate_budget=None, extractor=None,
         out_vault=tmp_path / "vault", out_graph=tmp_path / "graph",
     )
@@ -175,7 +175,7 @@ def test_run_pipeline_financials_skipped_when_no_years(tmp_path, ontology_sessio
     client = _FakeClient([])
     result = run_pipeline(
         s, client, cache=None, skip_sync=True, skip_structure=True,
-        skip_financials=False, skip_export=True,
+        skip_financials=False, skip_equity=True, skip_export=True,
         since=None, until=None, universe=set(), rate_budget=None, extractor=None,
         out_vault=tmp_path / "v", out_graph=tmp_path / "g",
     )
@@ -238,9 +238,11 @@ def test_run_pipeline_all_skipped(tmp_path, ontology_session):
     s = ontology_session
     result = run_pipeline(
         s, client=None, cache=None,
-        skip_sync=True, skip_structure=True, skip_financials=True, skip_export=True,
+        skip_sync=True, skip_structure=True, skip_financials=True,
+        skip_equity=True, skip_export=True,
         since=None, until=None, universe=set(), rate_budget=None, extractor=None,
         out_vault=tmp_path / "v", out_graph=tmp_path / "g",
     )
     assert result.ran == []
-    assert set(result.skipped) == {"sync", "structure", "financials", "export"}
+    assert set(result.skipped) == {"sync", "structure", "financials",
+                                   "equity", "export"}

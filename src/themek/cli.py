@@ -620,7 +620,7 @@ def dart_parser_stats_cmd():
     )
     lines = [
         f"fixtures: {len(fixtures)}",
-        f"learned patterns:",
+        "learned patterns:",
     ]
     for t in ("overview", "products", "revenue"):
         learned_count = sum(
@@ -917,6 +917,7 @@ def pipeline_run_cmd(
     skip_sync: bool = typer.Option(False, "--skip-sync"),
     skip_structure: bool = typer.Option(False, "--skip-structure"),
     skip_financials: bool = typer.Option(False, "--skip-financials"),
+    skip_equity: bool = typer.Option(False, "--skip-equity"),
     skip_export: bool = typer.Option(False, "--skip-export"),
 ):
     """DART 파이프라인 통합 구동: sync→structure→financials→export (재무 연도 자동)."""
@@ -935,7 +936,7 @@ def pipeline_run_cmd(
     universe: set[str] = set()
     rate_budget = None
     extractor = _stub_extractor_from_env()
-    if not (skip_sync and skip_structure and skip_financials):
+    if not (skip_sync and skip_structure and skip_financials and skip_equity):
         try:
             client, cache = _dart_client_and_cache()
         except DartAuthError as e:
@@ -965,7 +966,8 @@ def pipeline_run_cmd(
         result = run_pipeline(
             sess, client, cache=cache,
             skip_sync=skip_sync, skip_structure=skip_structure,
-            skip_financials=skip_financials, skip_export=skip_export,
+            skip_financials=skip_financials, skip_equity=skip_equity,
+            skip_export=skip_export,
             since=since_d, until=until_d, universe=universe,
             rate_budget=rate_budget, extractor=extractor,
             out_vault=out_vault, out_graph=out_graph,
@@ -983,6 +985,10 @@ def pipeline_run_cmd(
             f = result.financials
             typer.echo(f"[financials] years={f['years']} companies={f['companies']} "
                        f"facts={f['facts']} failed={len(f['failed'])}")
+        elif stage == "equity":
+            e = result.equity
+            typer.echo(f"[equity] companies={e['companies']} edges={e['edges']} "
+                       f"failed={len(e['failed'])}")
         elif stage == "export":
             e = result.export
             typer.echo(f"[export] vault {e['companies']} companies → {out_vault}/ ; "
