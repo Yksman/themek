@@ -29,7 +29,7 @@
 
 ### Commands
 
-- [ ] **1-1: 캐시 비우고 fresh ingest 수행** (이미 캐시 있으면 skip 가능)
+- [x] **1-1: 캐시 비우고 fresh ingest 수행** (이미 캐시 있으면 skip 가능)
 
 ```bash
 # 3종목 ingest (실 LLM 호출 — 종목당 30~60초)
@@ -41,7 +41,7 @@ for t in 005930 005380 277810; do
 done
 ```
 
-- [ ] **1-2: 각 종목의 escalation_level / output_chars 확인**
+- [x] **1-2: 각 종목의 escalation_level / output_chars 확인**
 
 ```bash
 grep "section_filter" data/eval/smoke/ingest_*.log
@@ -54,7 +54,7 @@ ingest_005380_2023.log:[section_filter] escalation=regex output_chars=187340 inv
 ingest_277810_2023.log:[section_filter] escalation=regex output_chars=22416 invalid=[]
 ```
 
-- [ ] **1-3: DB row + idempotency 확인**
+- [x] **1-3: DB row + idempotency 확인**
 
 ```bash
 # DB에 3 row 들어갔는지
@@ -103,7 +103,7 @@ done
 
 ### Commands
 
-- [ ] **2-1: 빈 GT 파일 1회 생성** (Step 2/3 공용, 점수는 안 보고 save-runs만 사용)
+- [x] **2-1: 빈 GT 파일 1회 생성** (Step 2/3 공용, 점수는 안 보고 save-runs만 사용)
 
 ```bash
 mkdir -p data/eval/ground_truth
@@ -115,7 +115,7 @@ cat > /tmp/empty_gt.json <<'EOF'
 EOF
 ```
 
-- [ ] **2-2: 삼성 1종목으로 N=5 run** (실 LLM 5회 — ~5분 대기)
+- [x] **2-2: 삼성 1종목으로 N=5 run** (실 LLM 5회 — ~5분 대기)
 
 ```bash
 # rcept_no는 Step 1에서 ingest한 결과의 캐시 경로에서 확인
@@ -133,7 +133,7 @@ uv run themek eval e5 \
 
 (점수는 n/a로 나오는 게 정상 — GT가 비어 있음. 우리가 보는 건 `parsed_extraction`)
 
-- [ ] **2-3: 합의 추출 helper script 작성** — `scripts/consensus_gt.py` 신규
+- [x] **2-3: 합의 추출 helper script 작성** — `scripts/consensus_gt.py` 신규
 
 ```python
 """5개 run의 parsed_extraction에서 모두 등장한 항목만 추출.
@@ -185,7 +185,7 @@ for name, vals in sorted(share_var.items()):
         print(f"  {name:30s}: mean={statistics.mean(vals):.2f} stdev={statistics.stdev(vals):.2f}  n={len(vals)}")
 ```
 
-- [ ] **2-4: 합의 분석 실행**
+- [x] **2-4: 합의 분석 실행**
 
 ```bash
 uv run python scripts/consensus_gt.py data/eval/runs/stability/005930_2023 5
@@ -226,6 +226,31 @@ share_pct stdev per segment:
 | cost > $0.20 | output_chars 큰데 모든 run에서 동일 | 정상 (input 길이가 변하지 않음). prompt 압축 검토는 후속 |
 
 **Gate**: 위 5개 중 4개 이상 통과 → Step 3. 미달 → 보강 plan 작성.
+
+### Step 2 결과 (2026-05-27, 삼성 005930 / 2023)
+
+| 지표 | 임계 | 실측 | 결과 |
+|------|------|------|------|
+| segment consensus/union | ≥ 0.80 | 1.000 (4/4) | PASS |
+| customer consensus/union | ≥ 0.70 | 1.000 (5/5) | PASS |
+| region consensus/union | ≥ 0.90 | 1.000 (5/5) | PASS |
+| share_pct mean stdev | ≤ 1.0 %p | 0.000 | PASS |
+| total cost (5 runs) | < $0.20 | $1.658 | FAIL |
+
+**판정**: 4/5 통과 → **SUCCESS** (Step 3 진입 가능).
+
+- segments: `['DS 부문', 'DX 부문', 'Harman', 'SDC']` — 5 run 모두 동일
+- customers: `['Apple', 'Best Buy', 'Deutsche Telekom', 'Qualcomm', 'Verizon']` — 5 run 모두 동일
+- regions: `['CN', 'EU', 'KR', 'ROW', 'US']` — 5 run 모두 동일
+- share_pct: DX 65.70 / DS 25.70 / SDC 12.00 / Harman 5.60 (각 stdev=0.00)
+
+**cost 초과 원인 분석 필요**: 5 run에 $1.66 (run당 $0.33, Step 1 임계 $0.10의 3.3배).
+plan의 failure-대응 표에 따르면 "cost > $0.20 (5 runs × 1 종목)"은 "정상 (input 길이가
+변하지 않음). prompt 압축 검토는 후속" — Step 3 진입은 막지 않으나 Plan #5 작성 시
+비용 모델 재산정 필요. 인스턴스화: Step 1에서 보고된 종목당 비용 측정과 비교 후속 추적.
+
+산출물: `data/eval/runs/stability/005930_2023/run_{1..5}.json` + `summary.json`,
+`scripts/consensus_gt.py` (~70 LoC, gate 평가 포함).
 
 ---
 
