@@ -865,6 +865,18 @@ def equity_ingest_cmd(
     typer.echo(f"ingested {total} ownership edges")
 
 
+@equity_app.command("verify")
+def equity_verify_cmd():
+    """지분구조 적재 검증(측정 게이트). 게이트 미달 시 exit code 1."""
+    from themek.ontology.verify_equity import verify_equity
+    with _session() as s:
+        rep = verify_equity(s)
+    for k, v in rep.items():
+        typer.echo(f"{k}: {v}")
+    if not rep["ok"]:
+        raise typer.Exit(code=1)
+
+
 @financials_app.command("rebuild")
 def financials_rebuild_cmd():
     """financial_facts purge 후 DART 재적재 + 무결성 검사 (BS 오염 교정)."""
