@@ -67,6 +67,25 @@ def ingest_financials_all(session: Session, client, *,
     return {"companies": processed, "facts": facts, "failed": failed}
 
 
+def rebuild_financials(session: Session, client) -> dict:
+    """financial_facts 전체 purge 후 회사별 실제 제출 연도로 재적재 + 무결성 검사.
+
+    1.1 BS 오염 교정용. _upsert_fact는 덮어쓰기만 하므로(삭제 안 함) purge가 선행해야
+    잘못 라벨된 기존 행이 제거된다. 멱등(재실행 안전).
+    """
+    from themek.ontology.core.models import FinancialFact
+    from themek.ontology.validate import check_integrity
+
+    deleted = session.query(FinancialFact).delete()
+    session.flush()
+    stats = ingest_financials_all(session, client)
+    session.flush()
+    issues = check_integrity(session)
+    errors = [i for i in issues if i.severity == "error"]
+    return {"deleted": deleted, "facts": stats["facts"],
+            "failed": stats["failed"], "issues": issues, "errors": errors}
+
+
 @dataclass
 class PipelineResult:
     ran: list[str] = field(default_factory=list)

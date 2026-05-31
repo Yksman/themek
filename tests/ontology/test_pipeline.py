@@ -161,6 +161,51 @@ def test_run_pipeline_financials_skipped_when_no_years(tmp_path, ontology_sessio
     assert result.financials.get("years") == []
 
 
+def test_rebuild_financials_purges_and_reingests(ontology_session):
+    from themek.ontology.core.models import Node, Edge, FinancialFact
+    from themek.ontology.core.resolve import upsert_node
+    from themek.ontology.pipeline import rebuild_financials
+
+    s = ontology_session
+    upsert_node(s, "company:00126380", "company", "삼성전자",
+                {"dart_code": "00126380"})
+    # company_report_years가 2024를 반환하도록 엣지 1건(period=2024)
+    s.add(Node(id="segment:x", kind="segment", label="x"))
+    s.add(Edge(subject_id="company:00126380", predicate="HAS_SEGMENT",
+               object_id="segment:x", period="2024", qualifier={},
+               source_type="llm", method="llm", confidence=0.9))
+    # 오염된(stale) 기존 fact — purge로 사라져야 함
+    s.add(FinancialFact(company_id="company:00126380", bsns_year="1999",
+                        fiscal_period="FY", fs_div="CFS", metric_key="assets",
+                        amount=1, currency="KRW", source_type="dart_api",
+                        method="api", confidence=1.0))
+    s.commit()
+
+    class _FakeClient:
+        def fetch_financials(self, *, corp_code, bsns_year, reprt_code, fs_div):
+            if fs_div != "CFS":
+                return []
+            return [{"account_id": "ifrs-full_Revenue", "account_nm": "매출액",
+                     "sj_div": "IS", "thstrm_amount": "500",
+                     "frmtrm_amount": "400", "bfefrmtrm_amount": "300"},
+                    {"account_id": "ifrs-full_Assets", "account_nm": "자산총계",
+                     "sj_div": "BS", "thstrm_amount": "900",
+                     "frmtrm_amount": "800", "bfefrmtrm_amount": "700"}]
+
+    res = rebuild_financials(s, _FakeClient())
+    s.commit()
+
+    assert res["deleted"] == 1                      # stale fact 제거
+    assert res["facts"] > 0                          # 재적재됨
+    # stale(1999) fact 사라짐
+    assert s.query(FinancialFact).filter_by(bsns_year="1999").count() == 0
+    # stock(assets)은 당기만 → 2024만 존재
+    assets_years = {f.bsns_year for f in
+                    s.query(FinancialFact).filter_by(metric_key="assets").all()}
+    assert assets_years == {"2024"}
+    assert isinstance(res["issues"], list)
+
+
 def test_run_pipeline_all_skipped(tmp_path, ontology_session):
     s = ontology_session
     result = run_pipeline(

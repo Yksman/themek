@@ -49,6 +49,8 @@ ontology_app = typer.Typer(help="온톨로지 export 명령")
 app.add_typer(ontology_app, name="ontology")
 pipeline_app = typer.Typer(help="DART 통합 파이프라인")
 app.add_typer(pipeline_app, name="pipeline")
+financials_app = typer.Typer(help="재무 정합성 명령")
+app.add_typer(financials_app, name="financials")
 
 DEFAULT_LEARNED_PATTERNS_PATH = "data/dart/learned_header_patterns.json"
 DEFAULT_PROPOSALS_PATH = "data/dart/pattern_proposals.json"
@@ -818,6 +820,22 @@ def ingest_financials_cmd(
                         s, client, corp_code=code, bsns_year=yr, reprt_code=rc)
         s.commit()
     typer.echo(f"ingested {total} financial facts")
+
+
+@financials_app.command("rebuild")
+def financials_rebuild_cmd():
+    """financial_facts purge 후 DART 재적재 + 무결성 검사 (BS 오염 교정)."""
+    from themek.ontology.pipeline import rebuild_financials
+    client = DartClient(api_key=get_settings().dart_api_key)
+    with _session() as s:
+        res = rebuild_financials(s, client)
+        s.commit()
+    for i in res["issues"]:
+        typer.echo(f"[{i.severity}] {i.code}: {i.message}")
+    typer.echo(f"deleted {res['deleted']} facts, ingested {res['facts']}, "
+               f"{len(res['errors'])} integrity error(s)")
+    if res["errors"]:
+        raise typer.Exit(code=1)
 
 
 @ontology_app.command("export-graph")
