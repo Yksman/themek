@@ -1,13 +1,11 @@
 ---
 type: "segment"
-name_ko: "Harman"
-company_count: 1
-tags: ["segment"]
+name: "Harman"
+tags: [segment]
 ---
-
 # Harman
 
 
-## 이 세그먼트를 가진 회사
+## 이 segment를 가리키는 회사 (1)
 
-- [[삼성전자]]
+- [[삼성전자]] (세그먼트) — 5.6%

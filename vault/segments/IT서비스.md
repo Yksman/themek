@@ -1,13 +1,11 @@
 ---
 type: "segment"
-name_ko: "IT서비스"
-company_count: 1
-tags: ["segment"]
+name: "IT서비스"
+tags: [segment]
 ---
-
 # IT서비스
 
 
-## 이 세그먼트를 가진 회사
+## 이 segment를 가리키는 회사 (1)
 
-- [[CJ CGV]]
+- [[CJ CGV]] (세그먼트) — 37.5%

@@ -1,13 +1,11 @@
 ---
 type: "segment"
-name_ko: "CL사업부문"
-company_count: 1
-tags: ["segment"]
+name: "CL사업부문"
+tags: [segment]
 ---
-
 # CL사업부문
 
 
-## 이 세그먼트를 가진 회사
+## 이 segment를 가리키는 회사 (1)
 
-- [[CJ대한통운]]
+- [[CJ대한통운]] (세그먼트) — 27.5%

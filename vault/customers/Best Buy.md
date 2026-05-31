@@ -1,18 +1,11 @@
 ---
 type: "customer"
-resolved: false
-kind: "entity"
-raw: "Best Buy"
-named_by: ["삼성전자"]
-tags: ["unresolved", "unresolved/entity"]
+name: "Best Buy"
+tags: [customer]
 ---
-
 # Best Buy
 
 
-> 미연결 고객사 (entity)
+## 이 customer를 가리키는 회사 (1)
 
-
-## 이 고객사를 지목한 회사
-
-- [[삼성전자]]
+- [[삼성전자]] (고객)

@@ -1,18 +1,11 @@
 ---
 type: "customer"
-resolved: false
-kind: "entity"
-raw: "CJ제일제당㈜"
-named_by: ["CJ씨푸드"]
-tags: ["unresolved", "unresolved/entity"]
+name: "CJ제일제당㈜"
+tags: [customer]
 ---
-
 # CJ제일제당㈜
 
 
-> 미연결 고객사 (entity)
+## 이 customer를 가리키는 회사 (1)
 
-
-## 이 고객사를 지목한 회사
-
-- [[CJ씨푸드]]
+- [[CJ씨푸드]] (고객)

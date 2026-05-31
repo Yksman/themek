@@ -1,13 +1,11 @@
 ---
 type: "segment"
-name_ko: "BIO"
-company_count: 1
-tags: ["segment"]
+name: "BIO"
+tags: [segment]
 ---
-
 # BIO
 
 
-## 이 세그먼트를 가진 회사
+## 이 segment를 가리키는 회사 (1)
 
-- [[CJ제일제당]]
+- [[CJ제일제당]] (세그먼트) — 15%

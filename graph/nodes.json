@@ -1,10 +1,162 @@
 [
   {
+    "id": "company:00108746",
+    "kind": "company",
+    "label": "DKME",
+    "attrs": {
+      "dart_code": "00108746"
+    }
+  },
+  {
+    "id": "company:00109693",
+    "kind": "company",
+    "label": "DL",
+    "attrs": {
+      "dart_code": "00109693"
+    }
+  },
+  {
+    "id": "company:00113410",
+    "kind": "company",
+    "label": "CJ대한통운",
+    "attrs": {
+      "dart_code": "00113410"
+    }
+  },
+  {
+    "id": "company:00115694",
+    "kind": "company",
+    "label": "DB증권",
+    "attrs": {
+      "dart_code": "00115694"
+    }
+  },
+  {
+    "id": "company:00117726",
+    "kind": "company",
+    "label": "DYP",
+    "attrs": {
+      "dart_code": "00117726"
+    }
+  },
+  {
+    "id": "company:00118345",
+    "kind": "company",
+    "label": "디아이동일",
+    "attrs": {
+      "dart_code": "00118345"
+    }
+  },
+  {
+    "id": "company:00120030",
+    "kind": "company",
+    "label": "GS건설",
+    "attrs": {
+      "dart_code": "00120030"
+    }
+  },
+  {
+    "id": "company:00122579",
+    "kind": "company",
+    "label": "BYC",
+    "attrs": {
+      "dart_code": "00122579"
+    }
+  },
+  {
+    "id": "company:00126089",
+    "kind": "company",
+    "label": "DH오토넥스",
+    "attrs": {
+      "dart_code": "00126089"
+    }
+  },
+  {
     "id": "company:00126380",
     "kind": "company",
     "label": "삼성전자",
     "attrs": {
       "dart_code": "00126380"
+    }
+  },
+  {
+    "id": "company:00129013",
+    "kind": "company",
+    "label": "CJ씨푸드",
+    "attrs": {
+      "dart_code": "00129013"
+    }
+  },
+  {
+    "id": "company:00138190",
+    "kind": "company",
+    "label": "GS글로벌",
+    "attrs": {
+      "dart_code": "00138190"
+    }
+  },
+  {
+    "id": "company:00148540",
+    "kind": "company",
+    "label": "CJ",
+    "attrs": {
+      "dart_code": "00148540"
+    }
+  },
+  {
+    "id": "company:00148984",
+    "kind": "company",
+    "label": "시알홀딩스",
+    "attrs": {
+      "dart_code": "00148984"
+    }
+  },
+  {
+    "id": "company:00149026",
+    "kind": "company",
+    "label": "CS홀딩스",
+    "attrs": {
+      "dart_code": "00149026"
+    }
+  },
+  {
+    "id": "company:00159102",
+    "kind": "company",
+    "label": "DB손해보험",
+    "attrs": {
+      "dart_code": "00159102"
+    }
+  },
+  {
+    "id": "company:00160843",
+    "kind": "company",
+    "label": "DB하이텍",
+    "attrs": {
+      "dart_code": "00160843"
+    }
+  },
+  {
+    "id": "company:00161383",
+    "kind": "company",
+    "label": "한미반도체",
+    "attrs": {
+      "dart_code": "00161383"
+    }
+  },
+  {
+    "id": "company:00163345",
+    "kind": "company",
+    "label": "DB",
+    "attrs": {
+      "dart_code": "00163345"
+    }
+  },
+  {
+    "id": "company:00164636",
+    "kind": "company",
+    "label": "HDC",
+    "attrs": {
+      "dart_code": "00164636"
     }
   },
   {
@@ -16,12 +168,1162 @@
     }
   },
   {
+    "id": "company:00164779",
+    "kind": "company",
+    "label": "SK하이닉스",
+    "attrs": {
+      "dart_code": "00164779"
+    }
+  },
+  {
+    "id": "company:00164830",
+    "kind": "company",
+    "label": "HD한국조선해양",
+    "attrs": {
+      "dart_code": "00164830"
+    }
+  },
+  {
+    "id": "company:00165583",
+    "kind": "company",
+    "label": "E1",
+    "attrs": {
+      "dart_code": "00165583"
+    }
+  },
+  {
+    "id": "company:00258801",
+    "kind": "company",
+    "label": "카카오",
+    "attrs": {
+      "dart_code": "00258801"
+    }
+  },
+  {
+    "id": "company:00266961",
+    "kind": "company",
+    "label": "NAVER",
+    "attrs": {
+      "dart_code": "00266961"
+    }
+  },
+  {
+    "id": "company:00303873",
+    "kind": "company",
+    "label": "CJ CGV",
+    "attrs": {
+      "dart_code": "00303873"
+    }
+  },
+  {
+    "id": "company:00350312",
+    "kind": "company",
+    "label": "HDC랩스",
+    "attrs": {
+      "dart_code": "00350312"
+    }
+  },
+  {
+    "id": "company:00356361",
+    "kind": "company",
+    "label": "LG화학",
+    "attrs": {
+      "dart_code": "00356361"
+    }
+  },
+  {
+    "id": "company:00357935",
+    "kind": "company",
+    "label": "HDC현대EP",
+    "attrs": {
+      "dart_code": "00357935"
+    }
+  },
+  {
+    "id": "company:00365387",
+    "kind": "company",
+    "label": "AJ네트웍스",
+    "attrs": {
+      "dart_code": "00365387"
+    }
+  },
+  {
+    "id": "company:00635134",
+    "kind": "company",
+    "label": "CJ제일제당",
+    "attrs": {
+      "dart_code": "00635134"
+    }
+  },
+  {
+    "id": "company:00858364",
+    "kind": "company",
+    "label": "BNK금융지주",
+    "attrs": {
+      "dart_code": "00858364"
+    }
+  },
+  {
+    "id": "company:01160363",
+    "kind": "company",
+    "label": "에코프로비엠",
+    "attrs": {
+      "dart_code": "01160363"
+    }
+  },
+  {
+    "id": "company:01205842",
+    "kind": "company",
+    "label": "HD건설기계",
+    "attrs": {
+      "dart_code": "01205842"
+    }
+  },
+  {
     "id": "company:01261644",
     "kind": "company",
     "label": "레인보우로보틱스",
     "attrs": {
       "dart_code": "01261644"
     }
+  },
+  {
+    "id": "company:01263022",
+    "kind": "company",
+    "label": "BGF리테일",
+    "attrs": {
+      "dart_code": "01263022"
+    }
+  },
+  {
+    "id": "company:01568413",
+    "kind": "company",
+    "label": "F&F",
+    "attrs": {
+      "dart_code": "01568413"
+    }
+  },
+  {
+    "id": "company:01882845",
+    "kind": "company",
+    "label": "GS피앤엘",
+    "attrs": {
+      "dart_code": "01882845"
+    }
+  },
+  {
+    "id": "customer:2차전지업체",
+    "kind": "customer",
+    "label": "2차전지업체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:amkor",
+    "kind": "customer",
+    "label": "AmKor",
+    "attrs": {}
+  },
+  {
+    "id": "customer:amkor코리아",
+    "kind": "customer",
+    "label": "Amkor코리아",
+    "attrs": {}
+  },
+  {
+    "id": "customer:apple",
+    "kind": "customer",
+    "label": "Apple",
+    "attrs": {}
+  },
+  {
+    "id": "customer:aramco-사우디아라비아",
+    "kind": "customer",
+    "label": "Aramco(사우디아라비아)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:ase",
+    "kind": "customer",
+    "label": "ASE",
+    "attrs": {}
+  },
+  {
+    "id": "customer:ase코리아",
+    "kind": "customer",
+    "label": "ASE코리아",
+    "attrs": {}
+  },
+  {
+    "id": "customer:audi",
+    "kind": "customer",
+    "label": "Audi",
+    "attrs": {}
+  },
+  {
+    "id": "customer:best-buy",
+    "kind": "customer",
+    "label": "Best Buy",
+    "attrs": {}
+  },
+  {
+    "id": "customer:bmw",
+    "kind": "customer",
+    "label": "BMW",
+    "attrs": {}
+  },
+  {
+    "id": "customer:braskem",
+    "kind": "customer",
+    "label": "Braskem",
+    "attrs": {}
+  },
+  {
+    "id": "customer:byd",
+    "kind": "customer",
+    "label": "BYD",
+    "attrs": {}
+  },
+  {
+    "id": "customer:cj제일제당",
+    "kind": "customer",
+    "label": "CJ제일제당㈜",
+    "attrs": {}
+  },
+  {
+    "id": "customer:db손해보험-주-및-종속기업",
+    "kind": "customer",
+    "label": "DB손해보험(주) 및 종속기업",
+    "attrs": {}
+  },
+  {
+    "id": "customer:deutsche-telekom",
+    "kind": "customer",
+    "label": "Deutsche Telekom",
+    "attrs": {}
+  },
+  {
+    "id": "customer:ford",
+    "kind": "customer",
+    "label": "FORD",
+    "attrs": {}
+  },
+  {
+    "id": "customer:geely",
+    "kind": "customer",
+    "label": "GEELY",
+    "attrs": {}
+  },
+  {
+    "id": "customer:gm",
+    "kind": "customer",
+    "label": "GM",
+    "attrs": {}
+  },
+  {
+    "id": "customer:honda",
+    "kind": "customer",
+    "label": "Honda",
+    "attrs": {}
+  },
+  {
+    "id": "customer:huatian-technology",
+    "kind": "customer",
+    "label": "Huatian Technology",
+    "attrs": {}
+  },
+  {
+    "id": "customer:infineon",
+    "kind": "customer",
+    "label": "Infineon",
+    "attrs": {}
+  },
+  {
+    "id": "customer:jcet",
+    "kind": "customer",
+    "label": "JCET",
+    "attrs": {}
+  },
+  {
+    "id": "customer:jcet스태츠칩팩코리아",
+    "kind": "customer",
+    "label": "JCET스태츠칩팩코리아",
+    "attrs": {}
+  },
+  {
+    "id": "customer:kb국민은행",
+    "kind": "customer",
+    "label": "KB국민은행",
+    "attrs": {}
+  },
+  {
+    "id": "customer:land-transport-authority-싱가포르",
+    "kind": "customer",
+    "label": "Land Transport Authority(싱가포르)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:lgd-파주-p8-p9-p10-베트남-h3-등-종속회사-주-동일씨앤이-수주처",
+    "kind": "customer",
+    "label": "LGD (파주 P8/P9/P10, 베트남 H3 등 - 종속회사 (주)동일씨앤이 수주처)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:lg이노텍",
+    "kind": "customer",
+    "label": "LG이노텍",
+    "attrs": {}
+  },
+  {
+    "id": "customer:lg전자",
+    "kind": "customer",
+    "label": "LG전자",
+    "attrs": {}
+  },
+  {
+    "id": "customer:luxshare",
+    "kind": "customer",
+    "label": "Luxshare",
+    "attrs": {}
+  },
+  {
+    "id": "customer:opwp",
+    "kind": "customer",
+    "label": "OPWP",
+    "attrs": {}
+  },
+  {
+    "id": "customer:polestar",
+    "kind": "customer",
+    "label": "Polestar",
+    "attrs": {}
+  },
+  {
+    "id": "customer:pti",
+    "kind": "customer",
+    "label": "PTI",
+    "attrs": {}
+  },
+  {
+    "id": "customer:qualcomm",
+    "kind": "customer",
+    "label": "Qualcomm",
+    "attrs": {}
+  },
+  {
+    "id": "customer:sfa반도체",
+    "kind": "customer",
+    "label": "SFA반도체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:si-파트너사-36개사",
+    "kind": "customer",
+    "label": "SI 파트너사 (36개사)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:skyworks",
+    "kind": "customer",
+    "label": "Skyworks",
+    "attrs": {}
+  },
+  {
+    "id": "customer:sk온",
+    "kind": "customer",
+    "label": "SK온",
+    "attrs": {}
+  },
+  {
+    "id": "customer:sk하이닉스",
+    "kind": "customer",
+    "label": "SK하이닉스",
+    "attrs": {}
+  },
+  {
+    "id": "customer:sk하이닉스-충칭",
+    "kind": "customer",
+    "label": "SK하이닉스(충칭)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:spark-nel-pty-ltd-호주",
+    "kind": "customer",
+    "label": "Spark NEL Pty Ltd(호주)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:spil",
+    "kind": "customer",
+    "label": "SPIL",
+    "attrs": {}
+  },
+  {
+    "id": "customer:st-micro",
+    "kind": "customer",
+    "label": "ST Micro",
+    "attrs": {}
+  },
+  {
+    "id": "customer:stellantis",
+    "kind": "customer",
+    "label": "Stellantis",
+    "attrs": {}
+  },
+  {
+    "id": "customer:tfme",
+    "kind": "customer",
+    "label": "TFME",
+    "attrs": {}
+  },
+  {
+    "id": "customer:tmm",
+    "kind": "customer",
+    "label": "TMM",
+    "attrs": {}
+  },
+  {
+    "id": "customer:toshiba",
+    "kind": "customer",
+    "label": "TOSHIBA",
+    "attrs": {}
+  },
+  {
+    "id": "customer:toyota",
+    "kind": "customer",
+    "label": "Toyota",
+    "attrs": {}
+  },
+  {
+    "id": "customer:verizon",
+    "kind": "customer",
+    "label": "Verizon",
+    "attrs": {}
+  },
+  {
+    "id": "customer:volkswagen",
+    "kind": "customer",
+    "label": "Volkswagen",
+    "attrs": {}
+  },
+  {
+    "id": "customer:volvo",
+    "kind": "customer",
+    "label": "Volvo",
+    "attrs": {}
+  },
+  {
+    "id": "customer:가전제품-생산업체",
+    "kind": "customer",
+    "label": "가전제품 생산업체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:각국의-end-user-최종-고객사",
+    "kind": "customer",
+    "label": "각국의 End User(최종 고객사)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:고객1",
+    "kind": "customer",
+    "label": "고객1",
+    "attrs": {}
+  },
+  {
+    "id": "customer:고객2",
+    "kind": "customer",
+    "label": "고객2",
+    "attrs": {}
+  },
+  {
+    "id": "customer:고객3",
+    "kind": "customer",
+    "label": "고객3",
+    "attrs": {}
+  },
+  {
+    "id": "customer:국내-및-해외-전략고객",
+    "kind": "customer",
+    "label": "국내 및 해외 전략고객",
+    "attrs": {}
+  },
+  {
+    "id": "customer:국내-실수요자-내수",
+    "kind": "customer",
+    "label": "국내 실수요자 (내수)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:국내외-유수의-엔지니어링-업체",
+    "kind": "customer",
+    "label": "국내외 유수의 엔지니어링 업체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:기아",
+    "kind": "customer",
+    "label": "기아",
+    "attrs": {}
+  },
+  {
+    "id": "customer:기아자동차",
+    "kind": "customer",
+    "label": "기아자동차",
+    "attrs": {}
+  },
+  {
+    "id": "customer:네패스",
+    "kind": "customer",
+    "label": "네패스",
+    "attrs": {}
+  },
+  {
+    "id": "customer:농업-관련-업체",
+    "kind": "customer",
+    "label": "농업 관련 업체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:대리점",
+    "kind": "customer",
+    "label": "대리점",
+    "attrs": {}
+  },
+  {
+    "id": "customer:대형-epc-engineering-procurement-construction-사",
+    "kind": "customer",
+    "label": "대형 EPC(Engineering Procurement Construction)사",
+    "attrs": {}
+  },
+  {
+    "id": "customer:대형-고객",
+    "kind": "customer",
+    "label": "대형 고객",
+    "attrs": {}
+  },
+  {
+    "id": "customer:동북아엘엔지허브터미널",
+    "kind": "customer",
+    "label": "동북아엘엔지허브터미널㈜",
+    "attrs": {}
+  },
+  {
+    "id": "customer:동풍열달기아",
+    "kind": "customer",
+    "label": "동풍열달기아",
+    "attrs": {}
+  },
+  {
+    "id": "customer:디에이치-오토리드",
+    "kind": "customer",
+    "label": "디에이치 오토리드",
+    "attrs": {}
+  },
+  {
+    "id": "customer:르노코리아",
+    "kind": "customer",
+    "label": "르노코리아",
+    "attrs": {}
+  },
+  {
+    "id": "customer:모비스",
+    "kind": "customer",
+    "label": "모비스",
+    "attrs": {}
+  },
+  {
+    "id": "customer:미국-소재-주립대학-구내식당",
+    "kind": "customer",
+    "label": "미국 소재 주립대학 구내식당",
+    "attrs": {}
+  },
+  {
+    "id": "customer:민자사업자",
+    "kind": "customer",
+    "label": "민자사업자",
+    "attrs": {}
+  },
+  {
+    "id": "customer:법무법인-율촌-등-파르나스-타워-임차인",
+    "kind": "customer",
+    "label": "법무법인 율촌 등 (파르나스 타워 임차인)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:병의원-및-의약품-농업-유통-관련-업체",
+    "kind": "customer",
+    "label": "병의원 및 의약품/농업 유통 관련 업체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:봉제수출업자-섬유소재-local-판매",
+    "kind": "customer",
+    "label": "봉제수출업자 (섬유소재 LOCAL 판매)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:부산동서고속화도로",
+    "kind": "customer",
+    "label": "부산동서고속화도로㈜",
+    "attrs": {}
+  },
+  {
+    "id": "customer:북경현대",
+    "kind": "customer",
+    "label": "북경현대",
+    "attrs": {}
+  },
+  {
+    "id": "customer:불특정-다수인-등",
+    "kind": "customer",
+    "label": "불특정 다수인 등",
+    "attrs": {}
+  },
+  {
+    "id": "customer:산업체",
+    "kind": "customer",
+    "label": "산업체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:삼성",
+    "kind": "customer",
+    "label": "삼성",
+    "attrs": {}
+  },
+  {
+    "id": "customer:삼성-lg전자-전기전자",
+    "kind": "customer",
+    "label": "삼성/LG전자 (전기전자)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:삼성sdi",
+    "kind": "customer",
+    "label": "삼성SDI",
+    "attrs": {}
+  },
+  {
+    "id": "customer:삼성에스디아이",
+    "kind": "customer",
+    "label": "삼성에스디아이",
+    "attrs": {}
+  },
+  {
+    "id": "customer:삼성전기",
+    "kind": "customer",
+    "label": "삼성전기",
+    "attrs": {}
+  },
+  {
+    "id": "customer:삼성전자",
+    "kind": "customer",
+    "label": "삼성전자",
+    "attrs": {}
+  },
+  {
+    "id": "customer:삼성전자-주식회사",
+    "kind": "customer",
+    "label": "삼성전자 주식회사",
+    "attrs": {}
+  },
+  {
+    "id": "customer:서울-춘천고속도로주식회사",
+    "kind": "customer",
+    "label": "서울-춘천고속도로주식회사",
+    "attrs": {}
+  },
+  {
+    "id": "customer:세계-유수의-mobile-및-computing-관련-전자-업체-dram-공급처",
+    "kind": "customer",
+    "label": "세계 유수의 Mobile 및 Computing 관련 전자 업체 (DRAM 공급처)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:세계적인-모바일-디바이스-및-it-제품-제조업체-ssd-메모리카드-생산-업-4bcf68",
+    "kind": "customer",
+    "label": "세계적인 모바일 디바이스 및 IT 제품 제조업체, SSD·메모리카드 생산 업체 (NAND Flash 수요처)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:송마-디엠씨",
+    "kind": "customer",
+    "label": "송마 디엠씨",
+    "attrs": {}
+  },
+  {
+    "id": "customer:시그네틱스",
+    "kind": "customer",
+    "label": "시그네틱스",
+    "attrs": {}
+  },
+  {
+    "id": "customer:식품제조업체-등-ck-제품-계약처",
+    "kind": "customer",
+    "label": "식품제조업체 등 CK 제품 계약처",
+    "attrs": {}
+  },
+  {
+    "id": "customer:신반포4지구-재건축정비사업조합",
+    "kind": "customer",
+    "label": "신반포4지구 재건축정비사업조합",
+    "attrs": {}
+  },
+  {
+    "id": "customer:씨제이대한통운",
+    "kind": "customer",
+    "label": "씨제이대한통운",
+    "attrs": {}
+  },
+  {
+    "id": "customer:씨제이올리브네트웍스",
+    "kind": "customer",
+    "label": "씨제이올리브네트웍스",
+    "attrs": {}
+  },
+  {
+    "id": "customer:안동병원",
+    "kind": "customer",
+    "label": "안동병원",
+    "attrs": {}
+  },
+  {
+    "id": "customer:에스케이에코플랜트",
+    "kind": "customer",
+    "label": "에스케이에코플랜트㈜",
+    "attrs": {}
+  },
+  {
+    "id": "customer:에이치디씨현대산업개발-주",
+    "kind": "customer",
+    "label": "에이치디씨현대산업개발(주)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:엘지화학",
+    "kind": "customer",
+    "label": "㈜엘지화학",
+    "attrs": {}
+  },
+  {
+    "id": "customer:여천ncc",
+    "kind": "customer",
+    "label": "여천NCC㈜",
+    "attrs": {}
+  },
+  {
+    "id": "customer:연결회사-매출액의-10-이상을-차지하는-외부고객-없음",
+    "kind": "customer",
+    "label": "연결회사 매출액의 10% 이상을 차지하는 외부고객 없음",
+    "attrs": {}
+  },
+  {
+    "id": "customer:외부-고객사-제3자-물류-위탁",
+    "kind": "customer",
+    "label": "외부 고객사 (제3자 물류 위탁)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:위니아-외",
+    "kind": "customer",
+    "label": "위니아 외",
+    "attrs": {}
+  },
+  {
+    "id": "customer:이문3재정비촉진구역-주택재개발정비사업조합",
+    "kind": "customer",
+    "label": "이문3재정비촉진구역 주택재개발정비사업조합",
+    "attrs": {}
+  },
+  {
+    "id": "customer:이편세-상해-무역유한공사",
+    "kind": "customer",
+    "label": "이편세(상해)무역유한공사",
+    "attrs": {}
+  },
+  {
+    "id": "customer:인텔-intel-서버용-ddr5-데이터센터-메모리-인증-제공",
+    "kind": "customer",
+    "label": "인텔(Intel) - 서버용 DDR5 데이터센터 메모리 인증 제공",
+    "attrs": {}
+  },
+  {
+    "id": "customer:일진하이솔루스",
+    "kind": "customer",
+    "label": "일진하이솔루스",
+    "attrs": {}
+  },
+  {
+    "id": "customer:자동차-관련-업체",
+    "kind": "customer",
+    "label": "자동차 관련 업체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:자동차용-소재-tier-직거래처",
+    "kind": "customer",
+    "label": "자동차용 소재 Tier 직거래처",
+    "attrs": {}
+  },
+  {
+    "id": "customer:정보통신업체",
+    "kind": "customer",
+    "label": "정보통신업체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:정유사",
+    "kind": "customer",
+    "label": "정유사",
+    "attrs": {}
+  },
+  {
+    "id": "customer:제일건설",
+    "kind": "customer",
+    "label": "제일건설",
+    "attrs": {}
+  },
+  {
+    "id": "customer:조달청",
+    "kind": "customer",
+    "label": "조달청",
+    "attrs": {}
+  },
+  {
+    "id": "customer:종합상사-알루미늄-local-판매",
+    "kind": "customer",
+    "label": "종합상사 (알루미늄 LOCAL 판매)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:주-비지에프리테일-cu-가맹점",
+    "kind": "customer",
+    "label": "(주)비지에프리테일 (CU 가맹점)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:주-씨제이이엔엠-스튜디오드래곤-드라마-공급처",
+    "kind": "customer",
+    "label": "(주)씨제이이엔엠 (스튜디오드래곤 드라마 공급처)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:주-포스코이앤씨",
+    "kind": "customer",
+    "label": "(주)포스코이앤씨",
+    "attrs": {}
+  },
+  {
+    "id": "customer:지에스건설-주",
+    "kind": "customer",
+    "label": "지에스건설(주)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:지자체",
+    "kind": "customer",
+    "label": "지자체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:철도공사",
+    "kind": "customer",
+    "label": "철도공사",
+    "attrs": {}
+  },
+  {
+    "id": "customer:철산주공8-9단지주택재건축정비사업조합",
+    "kind": "customer",
+    "label": "철산주공8,9단지주택재건축정비사업조합",
+    "attrs": {}
+  },
+  {
+    "id": "customer:초정밀-지향-마운트-해외-대리점-16개국-39개",
+    "kind": "customer",
+    "label": "초정밀 지향 마운트 해외 대리점 (16개국 39개)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:케이씨씨건설",
+    "kind": "customer",
+    "label": "㈜케이씨씨건설",
+    "attrs": {}
+  },
+  {
+    "id": "customer:코리아써키트",
+    "kind": "customer",
+    "label": "코리아써키트",
+    "attrs": {}
+  },
+  {
+    "id": "customer:코모스",
+    "kind": "customer",
+    "label": "코모스",
+    "attrs": {}
+  },
+  {
+    "id": "customer:쿠팡풀필먼트-유한회사",
+    "kind": "customer",
+    "label": "쿠팡풀필먼트 유한회사",
+    "attrs": {}
+  },
+  {
+    "id": "customer:포레시아",
+    "kind": "customer",
+    "label": "포레시아",
+    "attrs": {}
+  },
+  {
+    "id": "customer:풍림산업-주",
+    "kind": "customer",
+    "label": "풍림산업(주)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:프랜차이즈-업체-커피-청량음료-아이스크림-치킨",
+    "kind": "customer",
+    "label": "프랜차이즈 업체 (커피·청량음료·아이스크림·치킨)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:한국앤컴패니-한국타이어앤테크놀로지",
+    "kind": "customer",
+    "label": "한국앤컴패니, 한국타이어앤테크놀로지",
+    "attrs": {}
+  },
+  {
+    "id": "customer:한국전력거래소-kpx",
+    "kind": "customer",
+    "label": "한국전력거래소(KPX)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:한국한와흥업",
+    "kind": "customer",
+    "label": "한국한와흥업㈜",
+    "attrs": {}
+  },
+  {
+    "id": "customer:한화생명보험-주",
+    "kind": "customer",
+    "label": "한화생명보험(주)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:합성수지-플라스틱-가공업체",
+    "kind": "customer",
+    "label": "합성수지, 플라스틱 가공업체",
+    "attrs": {}
+  },
+  {
+    "id": "customer:해외-실수요자-직수출-buying-agent-경유",
+    "kind": "customer",
+    "label": "해외 실수요자 (직수출 / BUYING AGENT 경유)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:현대-기아차",
+    "kind": "customer",
+    "label": "현대/기아차",
+    "attrs": {}
+  },
+  {
+    "id": "customer:현대-기아차-자동차-산업-복합pp-ep-매출-의존도-높음",
+    "kind": "customer",
+    "label": "현대/기아차 (자동차 산업, 복합PP/EP 매출 의존도 높음)",
+    "attrs": {}
+  },
+  {
+    "id": "customer:현대기아자동차",
+    "kind": "customer",
+    "label": "현대기아자동차",
+    "attrs": {}
+  },
+  {
+    "id": "customer:현대모비스",
+    "kind": "customer",
+    "label": "현대모비스",
+    "attrs": {}
+  },
+  {
+    "id": "customer:현대모비스-gm",
+    "kind": "customer",
+    "label": "현대모비스, GM",
+    "attrs": {}
+  },
+  {
+    "id": "customer:현대자동차",
+    "kind": "customer",
+    "label": "현대자동차",
+    "attrs": {}
+  },
+  {
+    "id": "customer:현지-마스터-프랜차이즈-파트너사-몽골-말레이시아-카자흐스탄-미국-하와이",
+    "kind": "customer",
+    "label": "현지 마스터 프랜차이즈 파트너사 (몽골, 말레이시아, 카자흐스탄, 미국 하와이)",
+    "attrs": {}
+  },
+  {
+    "id": "metric:assets",
+    "kind": "metric",
+    "label": "자산총계",
+    "attrs": {}
+  },
+  {
+    "id": "metric:equity",
+    "kind": "metric",
+    "label": "자본총계",
+    "attrs": {}
+  },
+  {
+    "id": "metric:liabilities",
+    "kind": "metric",
+    "label": "부채총계",
+    "attrs": {}
+  },
+  {
+    "id": "metric:net_income",
+    "kind": "metric",
+    "label": "당기순이익",
+    "attrs": {}
+  },
+  {
+    "id": "metric:operating_income",
+    "kind": "metric",
+    "label": "영업이익",
+    "attrs": {}
+  },
+  {
+    "id": "metric:revenue",
+    "kind": "metric",
+    "label": "매출액",
+    "attrs": {}
+  },
+  {
+    "id": "period:2020FY",
+    "kind": "period",
+    "label": "2020 FY",
+    "attrs": {}
+  },
+  {
+    "id": "period:2021FY",
+    "kind": "period",
+    "label": "2021 FY",
+    "attrs": {}
+  },
+  {
+    "id": "period:2021H1",
+    "kind": "period",
+    "label": "2021 H1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2021Q1",
+    "kind": "period",
+    "label": "2021 Q1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2021Q3",
+    "kind": "period",
+    "label": "2021 Q3",
+    "attrs": {}
+  },
+  {
+    "id": "period:2022FY",
+    "kind": "period",
+    "label": "2022 FY",
+    "attrs": {}
+  },
+  {
+    "id": "period:2022H1",
+    "kind": "period",
+    "label": "2022 H1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2022Q1",
+    "kind": "period",
+    "label": "2022 Q1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2022Q3",
+    "kind": "period",
+    "label": "2022 Q3",
+    "attrs": {}
+  },
+  {
+    "id": "period:2023FY",
+    "kind": "period",
+    "label": "2023 FY",
+    "attrs": {}
+  },
+  {
+    "id": "period:2023H1",
+    "kind": "period",
+    "label": "2023 H1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2023Q1",
+    "kind": "period",
+    "label": "2023 Q1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2023Q3",
+    "kind": "period",
+    "label": "2023 Q3",
+    "attrs": {}
+  },
+  {
+    "id": "period:2024FY",
+    "kind": "period",
+    "label": "2024 FY",
+    "attrs": {}
+  },
+  {
+    "id": "period:2024H1",
+    "kind": "period",
+    "label": "2024 H1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2024Q1",
+    "kind": "period",
+    "label": "2024 Q1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2024Q3",
+    "kind": "period",
+    "label": "2024 Q3",
+    "attrs": {}
+  },
+  {
+    "id": "period:2025FY",
+    "kind": "period",
+    "label": "2025 FY",
+    "attrs": {}
+  },
+  {
+    "id": "period:2025H1",
+    "kind": "period",
+    "label": "2025 H1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2025Q1",
+    "kind": "period",
+    "label": "2025 Q1",
+    "attrs": {}
+  },
+  {
+    "id": "period:2025Q3",
+    "kind": "period",
+    "label": "2025 Q3",
+    "attrs": {}
   },
   {
     "id": "region:CN",
@@ -75,6 +1377,828 @@
     "id": "sector:G2570",
     "kind": "sector",
     "label": "자동차 및 부품",
+    "attrs": {}
+  },
+  {
+    "id": "segment:b-business-technology-부문",
+    "kind": "segment",
+    "label": "B(Business Technology)부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:bio",
+    "kind": "segment",
+    "label": "BIO",
+    "attrs": {}
+  },
+  {
+    "id": "segment:cl사업부문",
+    "kind": "segment",
+    "label": "CL사업부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:conversion-kit-등",
+    "kind": "segment",
+    "label": "Conversion Kit 등",
+    "attrs": {}
+  },
+  {
+    "id": "segment:ds-부문",
+    "kind": "segment",
+    "label": "DS 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:dx-부문",
+    "kind": "segment",
+    "label": "DX 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:harman",
+    "kind": "segment",
+    "label": "Harman",
+    "attrs": {}
+  },
+  {
+    "id": "segment:inima",
+    "kind": "segment",
+    "label": "Inima",
+    "attrs": {}
+  },
+  {
+    "id": "segment:it부문",
+    "kind": "segment",
+    "label": "IT부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:it서비스",
+    "kind": "segment",
+    "label": "IT서비스",
+    "attrs": {}
+  },
+  {
+    "id": "segment:lg에너지솔루션",
+    "kind": "segment",
+    "label": "LG에너지솔루션",
+    "attrs": {}
+  },
+  {
+    "id": "segment:lpg-bombe",
+    "kind": "segment",
+    "label": "LPG BOMBE",
+    "attrs": {}
+  },
+  {
+    "id": "segment:lpg-부문",
+    "kind": "segment",
+    "label": "LPG 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:po부문",
+    "kind": "segment",
+    "label": "PO부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:prefab",
+    "kind": "segment",
+    "label": "Prefab",
+    "attrs": {}
+  },
+  {
+    "id": "segment:ps부문",
+    "kind": "segment",
+    "label": "PS부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:s",
+    "kind": "segment",
+    "label": "S",
+    "attrs": {}
+  },
+  {
+    "id": "segment:sdc",
+    "kind": "segment",
+    "label": "SDC",
+    "attrs": {}
+  },
+  {
+    "id": "segment:wm",
+    "kind": "segment",
+    "label": "WM",
+    "attrs": {}
+  },
+  {
+    "id": "segment:가구도소매",
+    "kind": "segment",
+    "label": "가구도소매",
+    "attrs": {}
+  },
+  {
+    "id": "segment:가전부품",
+    "kind": "segment",
+    "label": "가전부품",
+    "attrs": {}
+  },
+  {
+    "id": "segment:개발-신사업",
+    "kind": "segment",
+    "label": "개발ㆍ신사업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:건설",
+    "kind": "segment",
+    "label": "건설",
+    "attrs": {}
+  },
+  {
+    "id": "segment:건설기계",
+    "kind": "segment",
+    "label": "건설기계",
+    "attrs": {}
+  },
+  {
+    "id": "segment:건설부문-주택사업",
+    "kind": "segment",
+    "label": "건설부문(주택사업)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:건설부문-토목사업",
+    "kind": "segment",
+    "label": "건설부문(토목사업)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:건설부문-플랜트사업",
+    "kind": "segment",
+    "label": "건설부문(플랜트사업)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:건설사업부문",
+    "kind": "segment",
+    "label": "건설사업부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:건설솔루션",
+    "kind": "segment",
+    "label": "건설솔루션",
+    "attrs": {}
+  },
+  {
+    "id": "segment:건자재부문",
+    "kind": "segment",
+    "label": "건자재부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:건축-주택사업본부",
+    "kind": "segment",
+    "label": "건축ㆍ주택사업본부",
+    "attrs": {}
+  },
+  {
+    "id": "segment:골프장-부동산",
+    "kind": "segment",
+    "label": "골프장,부동산",
+    "attrs": {}
+  },
+  {
+    "id": "segment:골프장업",
+    "kind": "segment",
+    "label": "골프장업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:공통-및-기타",
+    "kind": "segment",
+    "label": "공통 및 기타",
+    "attrs": {}
+  },
+  {
+    "id": "segment:공통-및-기타부문",
+    "kind": "segment",
+    "label": "공통 및 기타부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:광고",
+    "kind": "segment",
+    "label": "광고",
+    "attrs": {}
+  },
+  {
+    "id": "segment:광고-택배-전자상거래",
+    "kind": "segment",
+    "label": "광고/택배/전자상거래",
+    "attrs": {}
+  },
+  {
+    "id": "segment:그랜드호텔",
+    "kind": "segment",
+    "label": "그랜드호텔",
+    "attrs": {}
+  },
+  {
+    "id": "segment:그린에너지",
+    "kind": "segment",
+    "label": "그린에너지",
+    "attrs": {}
+  },
+  {
+    "id": "segment:글로벌사업부문",
+    "kind": "segment",
+    "label": "글로벌사업부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:금융투자업",
+    "kind": "segment",
+    "label": "금융투자업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:기계부품제조업",
+    "kind": "segment",
+    "label": "기계부품제조업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:기술특별관-및-콘텐츠-플랫폼-사업",
+    "kind": "segment",
+    "label": "기술특별관 및 콘텐츠 플랫폼 사업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:기업금융",
+    "kind": "segment",
+    "label": "기업금융",
+    "attrs": {}
+  },
+  {
+    "id": "segment:기타",
+    "kind": "segment",
+    "label": "기타",
+    "attrs": {}
+  },
+  {
+    "id": "segment:기타-부문",
+    "kind": "segment",
+    "label": "기타 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:기타부문",
+    "kind": "segment",
+    "label": "기타부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:기타부문-인재개발원",
+    "kind": "segment",
+    "label": "기타부문(인재개발원)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:기타사업군",
+    "kind": "segment",
+    "label": "기타사업군",
+    "attrs": {}
+  },
+  {
+    "id": "segment:김",
+    "kind": "segment",
+    "label": "김",
+    "attrs": {}
+  },
+  {
+    "id": "segment:나인트리호텔",
+    "kind": "segment",
+    "label": "나인트리호텔",
+    "attrs": {}
+  },
+  {
+    "id": "segment:내화물제조업",
+    "kind": "segment",
+    "label": "내화물제조업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:라이프솔루션-홈서비스",
+    "kind": "segment",
+    "label": "라이프솔루션(홈서비스)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:로지스부문",
+    "kind": "segment",
+    "label": "로지스부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:리얼티-부동산종합관리",
+    "kind": "segment",
+    "label": "리얼티(부동산종합관리)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:멀티플렉스-운영",
+    "kind": "segment",
+    "label": "멀티플렉스 운영",
+    "attrs": {}
+  },
+  {
+    "id": "segment:무역-유통-부문",
+    "kind": "segment",
+    "label": "무역/유통 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:물류",
+    "kind": "segment",
+    "label": "물류",
+    "attrs": {}
+  },
+  {
+    "id": "segment:물류-부문",
+    "kind": "segment",
+    "label": "물류 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:물류-신유통",
+    "kind": "segment",
+    "label": "물류·신유통",
+    "attrs": {}
+  },
+  {
+    "id": "segment:반도체",
+    "kind": "segment",
+    "label": "반도체",
+    "attrs": {}
+  },
+  {
+    "id": "segment:반도체-부문",
+    "kind": "segment",
+    "label": "반도체 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:반도체장비",
+    "kind": "segment",
+    "label": "반도체장비",
+    "attrs": {}
+  },
+  {
+    "id": "segment:발전",
+    "kind": "segment",
+    "label": "발전",
+    "attrs": {}
+  },
+  {
+    "id": "segment:버큠탱크",
+    "kind": "segment",
+    "label": "버큠탱크",
+    "attrs": {}
+  },
+  {
+    "id": "segment:부동산업",
+    "kind": "segment",
+    "label": "부동산업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:부품-외",
+    "kind": "segment",
+    "label": "부품 외",
+    "attrs": {}
+  },
+  {
+    "id": "segment:브랜드사업부문",
+    "kind": "segment",
+    "label": "브랜드사업부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:산업장비부문",
+    "kind": "segment",
+    "label": "산업장비부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:산업차량",
+    "kind": "segment",
+    "label": "산업차량",
+    "attrs": {}
+  },
+  {
+    "id": "segment:상사부문",
+    "kind": "segment",
+    "label": "상사부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:생명공학",
+    "kind": "segment",
+    "label": "생명공학",
+    "attrs": {}
+  },
+  {
+    "id": "segment:생명과학-사업부문",
+    "kind": "segment",
+    "label": "생명과학 사업부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:서치플랫폼",
+    "kind": "segment",
+    "label": "서치플랫폼",
+    "attrs": {}
+  },
+  {
+    "id": "segment:석유화학-사업부문",
+    "kind": "segment",
+    "label": "석유화학 사업부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:섬유부문",
+    "kind": "segment",
+    "label": "섬유부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:섬유소재",
+    "kind": "segment",
+    "label": "섬유소재",
+    "attrs": {}
+  },
+  {
+    "id": "segment:소재",
+    "kind": "segment",
+    "label": "소재",
+    "attrs": {}
+  },
+  {
+    "id": "segment:수산",
+    "kind": "segment",
+    "label": "수산",
+    "attrs": {}
+  },
+  {
+    "id": "segment:시스템-공급-및-개발업",
+    "kind": "segment",
+    "label": "시스템 공급 및 개발업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:식품",
+    "kind": "segment",
+    "label": "식품",
+    "attrs": {}
+  },
+  {
+    "id": "segment:식품-식품서비스",
+    "kind": "segment",
+    "label": "식품·식품서비스",
+    "attrs": {}
+  },
+  {
+    "id": "segment:식품-제조-유통",
+    "kind": "segment",
+    "label": "식품 제조/유통",
+    "attrs": {}
+  },
+  {
+    "id": "segment:신사업-및-기타-부문",
+    "kind": "segment",
+    "label": "신사업 및 기타 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:신용조사-및-추심대행업",
+    "kind": "segment",
+    "label": "신용조사 및 추심대행업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:악기",
+    "kind": "segment",
+    "label": "악기",
+    "attrs": {}
+  },
+  {
+    "id": "segment:알루미늄",
+    "kind": "segment",
+    "label": "알루미늄",
+    "attrs": {}
+  },
+  {
+    "id": "segment:양극재-양극활물질",
+    "kind": "segment",
+    "label": "양극재(양극활물질)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:에너지부문",
+    "kind": "segment",
+    "label": "에너지부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:엔진기계",
+    "kind": "segment",
+    "label": "엔진기계",
+    "attrs": {}
+  },
+  {
+    "id": "segment:엔터테인먼트-미디어",
+    "kind": "segment",
+    "label": "엔터테인먼트·미디어",
+    "attrs": {}
+  },
+  {
+    "id": "segment:여신전문금융업",
+    "kind": "segment",
+    "label": "여신전문금융업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:용접재료부문",
+    "kind": "segment",
+    "label": "용접재료부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:웨스틴호텔",
+    "kind": "segment",
+    "label": "웨스틴호텔",
+    "attrs": {}
+  },
+  {
+    "id": "segment:유통",
+    "kind": "segment",
+    "label": "유통",
+    "attrs": {}
+  },
+  {
+    "id": "segment:은행업",
+    "kind": "segment",
+    "label": "은행업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:이족보행로봇-및-사족보행로봇",
+    "kind": "segment",
+    "label": "이족보행로봇 및 사족보행로봇",
+    "attrs": {}
+  },
+  {
+    "id": "segment:인프라사업본부",
+    "kind": "segment",
+    "label": "인프라사업본부",
+    "attrs": {}
+  },
+  {
+    "id": "segment:임대",
+    "kind": "segment",
+    "label": "임대",
+    "attrs": {}
+  },
+  {
+    "id": "segment:자동차보험-일반손해보험",
+    "kind": "segment",
+    "label": "자동차보험(일반손해보험)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:자동차부품",
+    "kind": "segment",
+    "label": "자동차부품",
+    "attrs": {}
+  },
+  {
+    "id": "segment:자산운용",
+    "kind": "segment",
+    "label": "자산운용",
+    "attrs": {}
+  },
+  {
+    "id": "segment:장기보험-장기손해보험",
+    "kind": "segment",
+    "label": "장기보험(장기손해보험)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:재보험",
+    "kind": "segment",
+    "label": "재보험",
+    "attrs": {}
+  },
+  {
+    "id": "segment:저축은행업",
+    "kind": "segment",
+    "label": "저축은행업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:제조-부문",
+    "kind": "segment",
+    "label": "제조 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:제조부문-유화-소재사업",
+    "kind": "segment",
+    "label": "제조부문(유화·소재사업)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:제조부문-자동차부품",
+    "kind": "segment",
+    "label": "제조부문(자동차부품)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:제주호텔",
+    "kind": "segment",
+    "label": "제주호텔",
+    "attrs": {}
+  },
+  {
+    "id": "segment:조선",
+    "kind": "segment",
+    "label": "조선",
+    "attrs": {}
+  },
+  {
+    "id": "segment:지주",
+    "kind": "segment",
+    "label": "지주",
+    "attrs": {}
+  },
+  {
+    "id": "segment:지주부문",
+    "kind": "segment",
+    "label": "지주부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:차량부문",
+    "kind": "segment",
+    "label": "차량부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:창고-및-유통부문",
+    "kind": "segment",
+    "label": "창고 및 유통부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:창업투자업",
+    "kind": "segment",
+    "label": "창업투자업",
+    "attrs": {}
+  },
+  {
+    "id": "segment:첨단소재-사업부문",
+    "kind": "segment",
+    "label": "첨단소재 사업부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:초정밀지향마운트시스템",
+    "kind": "segment",
+    "label": "초정밀지향마운트시스템",
+    "attrs": {}
+  },
+  {
+    "id": "segment:커머스",
+    "kind": "segment",
+    "label": "커머스",
+    "attrs": {}
+  },
+  {
+    "id": "segment:콘텐츠",
+    "kind": "segment",
+    "label": "콘텐츠",
+    "attrs": {}
+  },
+  {
+    "id": "segment:콘텐츠-부문",
+    "kind": "segment",
+    "label": "콘텐츠 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:클라우드",
+    "kind": "segment",
+    "label": "클라우드",
+    "attrs": {}
+  },
+  {
+    "id": "segment:택배사업부문",
+    "kind": "segment",
+    "label": "택배사업부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:투자-및-기타부문",
+    "kind": "segment",
+    "label": "투자 및 기타부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:파르나스타워",
+    "kind": "segment",
+    "label": "파르나스타워",
+    "attrs": {}
+  },
+  {
+    "id": "segment:패션부문",
+    "kind": "segment",
+    "label": "패션부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:편의점",
+    "kind": "segment",
+    "label": "편의점",
+    "attrs": {}
+  },
+  {
+    "id": "segment:플랜트-및-환경부문",
+    "kind": "segment",
+    "label": "플랜트 및 환경부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:플랜트사업본부",
+    "kind": "segment",
+    "label": "플랜트사업본부",
+    "attrs": {}
+  },
+  {
+    "id": "segment:플랫폼-부문",
+    "kind": "segment",
+    "label": "플랫폼 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:핀테크",
+    "kind": "segment",
+    "label": "핀테크",
+    "attrs": {}
+  },
+  {
+    "id": "segment:합금철",
+    "kind": "segment",
+    "label": "합금철",
+    "attrs": {}
+  },
+  {
+    "id": "segment:해양플랜트",
+    "kind": "segment",
+    "label": "해양플랜트",
+    "attrs": {}
+  },
+  {
+    "id": "segment:해외보험-일반손해보험",
+    "kind": "segment",
+    "label": "해외보험(일반손해보험)",
+    "attrs": {}
+  },
+  {
+    "id": "segment:햅틱모터",
+    "kind": "segment",
+    "label": "햅틱모터",
+    "attrs": {}
+  },
+  {
+    "id": "segment:협동로봇",
+    "kind": "segment",
+    "label": "협동로봇",
+    "attrs": {}
+  },
+  {
+    "id": "segment:화공기기-부문",
+    "kind": "segment",
+    "label": "화공기기 부문",
+    "attrs": {}
+  },
+  {
+    "id": "segment:화장품",
+    "kind": "segment",
+    "label": "화장품",
     "attrs": {}
   },
   {

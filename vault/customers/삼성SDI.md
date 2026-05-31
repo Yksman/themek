@@ -1,19 +1,11 @@
 ---
 type: "customer"
-resolved: false
-kind: "entity"
-raw: "삼성SDI"
-named_by: ["씨유테크", "에코프로비엠"]
-tags: ["unresolved", "unresolved/entity"]
+name: "삼성SDI"
+tags: [customer]
 ---
-
 # 삼성SDI
 
 
-> 미연결 고객사 (entity)
+## 이 customer를 가리키는 회사 (1)
 
-
-## 이 고객사를 지목한 회사
-
-- [[씨유테크]]
-- [[에코프로비엠]]
+- [[에코프로비엠]] (고객)

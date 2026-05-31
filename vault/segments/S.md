@@ -1,13 +1,11 @@
 ---
 type: "segment"
-name_ko: "S"
-company_count: 1
-tags: ["segment"]
+name: "S"
+tags: [segment]
 ---
-
 # S
 
 
-## 이 세그먼트를 가진 회사
+## 이 segment를 가리키는 회사 (1)
 
-- [[다우기술]]
+- [[DB증권]] (세그먼트) — 78.9%
