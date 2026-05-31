@@ -12,6 +12,8 @@
 
 **선행:** C1(vault visibility) 완료 권장 — 재네임스페이스 후 vault 재생성으로 백링크 분리 확인.
 
+> **측정 규약:** 모든 gate는 복붙 실행 가능한 명령 + 정량 기대값으로 기술한다. 가상 "육안 확인"은 gate가 아니다(검증 단계는 grep/assert로 대체). 멱등·정합은 카운트 불변/`check_integrity` error 0으로 측정.
+
 ---
 
 ## File Structure
@@ -19,86 +21,84 @@
 - `src/themek/ontology/core/ids.py` — **수정**: `segment_id(name_ko, company_key=None)`.
 - `src/themek/ontology/ingest/business_structure.py` — **수정**: `HAS_SEGMENT`에 `company_key=dart_code` + segment attrs.
 - `scripts/renamespace_segments.py` — **신규**: 일회성 멱등 재네임스페이스.
-- `src/themek/ontology/projection/vault.py` — **확인**: 회사별 분리 노드에서도 백링크/링크 정상(노드 label 표시명 유지 → 변경 최소).
 - 테스트: `tests/ontology/test_ids.py`(확장), `tests/ontology/test_business_structure.py`(확장), `tests/test_renamespace_segments.py`(신규).
 
 ---
 
 ## Task 1: segment_id 회사 네임스페이스 옵션
 
-**Success gate (측정 가능):**
-- `segment_id("반도체")` == `segment:반도체`(기존 불변, 하위호환).
-- `segment_id("반도체", company_key="00126380")` == `segment:00126380:반도체`.
-- 장문 slug 해시 truncate 동작 유지.
-- 테스트 통과.
+**Success gate (전부 자동 검증):**
+1. `.venv/bin/pytest tests/ontology/test_ids.py -q` → exit 0, 신규 테스트 ≥ 1개 통과.
+2. `segment_id("반도체") == "segment:반도체"`(기존 불변 — 하위호환 assert).
+3. `segment_id("반도체", company_key="00126380") == "segment:00126380:반도체"`(정확 일치 assert).
+4. 장문(>48자) name → 회사키 분기에서도 slug 해시 truncate 적용: `len(segment_id(long, company_key="x").split(":")[-1]) <= 48` **그리고** 두 다른 long name → 다른 id(충돌 0).
+5. 기존 `test_ids.py` 회귀 통과(다른 `*_id` 함수 불변).
 
-**Files:**
-- Modify: `src/themek/ontology/core/ids.py`
-- Test: `tests/ontology/test_ids.py`
+**Files:** Modify `src/themek/ontology/core/ids.py` · Test `tests/ontology/test_ids.py`
 
-- [ ] **Step 1: 실패 테스트 작성** — 두 시그니처 + 장문.
-- [ ] **Step 2: 구현** — `company_key` 분기.
-- [ ] **Step 3: 검증** — 테스트 통과.
+- [ ] **Step 1: 실패 테스트 작성** — gate 2~4 어서션.
+- [ ] **Step 2: 구현** — `company_key` 분기(`f"segment:{company_key}:{slug(name_ko)}"`).
+- [ ] **Step 3: 검증** — `.venv/bin/pytest tests/ontology/test_ids.py -q` exit 0.
 
 ---
 
 ## Task 2: business_structure가 회사 키로 segment 적재
 
-**Success gate (측정 가능):**
-- 동명 세그먼트를 가진 두 회사 ingest → **별개** segment 노드 2개(`segment:{dartA}:...`, `segment:{dartB}:...`).
-- segment 노드 `attrs == {"company": dart_code, "name": name_ko}`.
-- 멱등 재실행 시 노드/엣지 수 불변.
-- 기존 business_structure 테스트 회귀 통과(키 형식 변경 반영).
+**Success gate (전부 자동 검증):**
+1. `.venv/bin/pytest tests/ontology/test_business_structure.py -q` → exit 0, 신규 테스트 ≥ 1개 통과.
+2. 동명 세그먼트("기타")를 가진 회사 A(dartA)·B(dartB)를 각각 ingest → segment 노드 정확히 **2개**(`session.query(Node).filter(kind=="segment").count() == 2`), id가 `segment:{dartA}:기타` / `segment:{dartB}:기타`(둘 다 존재 assert).
+3. 각 segment 노드 `attrs == {"company": dart_code, "name": "기타"}`(dict 일치 assert).
+4. 동일 회사 A를 **2회** ingest → segment 노드 수·`HAS_SEGMENT` 엣지 수 불변(멱등: 1회차 카운트 == 2회차 카운트).
+5. 기존 `test_business_structure.py` 회귀: 기대 segment id를 회사키 형식으로 갱신 후 전 통과(회귀 0).
 
-**Files:**
-- Modify: `src/themek/ontology/ingest/business_structure.py`
-- Test: `tests/ontology/test_business_structure.py`
+**Files:** Modify `src/themek/ontology/ingest/business_structure.py` · Test `tests/ontology/test_business_structure.py`
 
-- [ ] **Step 1: 실패 테스트 작성** — 두 회사 동명 세그먼트 → 별 노드. attrs 검증.
-- [ ] **Step 2: 구현** — `segment_id(name, company_key=dart_code)` + attrs. 기존 테스트의 기대 키 갱신.
-- [ ] **Step 3: 검증** — 테스트 통과.
+- [ ] **Step 1: 실패 테스트 작성** — gate 2~4 어서션(두 회사 동명 → 별 노드, attrs, 멱등).
+- [ ] **Step 2: 구현** — `segment_id(name, company_key=dart_code)` + `attrs={"company":dart_code,"name":name}`. 기존 테스트 기대 키 갱신.
+- [ ] **Step 3: 검증** — `.venv/bin/pytest tests/ontology/test_business_structure.py -q` exit 0.
 
 ---
 
 ## Task 3: renamespace_segments 백필 스크립트 (일회성·멱등)
 
-**Success gate (측정 가능):**
-- 기존 전역 `segment:{slug}` 노드를 가리키는 각 `HAS_SEGMENT` 엣지를 `segment:{subject_dart_code}:{slug}` 노드로 재지정(노드 upsert + `_repoint_edges` 재사용).
-- 재지정 후 참조 없는 전역 segment 노드 제거(단, alias canonical 타깃은 보존).
-- 멱등: 2회 실행 시 2회차 변경 0.
-- 재실행 후 `check_integrity(session)` → error 0(중복 엣지·고아 없음).
-- 동명 두 회사 → 백필 후 별 노드.
+**Success gate (전부 자동 검증):**
+1. `.venv/bin/pytest tests/test_renamespace_segments.py -q` → exit 0, 신규 테스트 ≥ 3개(`test_renamespace_splits`, `test_renamespace_idempotent`, `test_renamespace_integrity_clean`) 통과.
+2. **분리:** 전역 `segment:기타` 1개를 회사 A·B가 공유(HAS_SEGMENT 2엣지) → 백필 후 `segment:{dartA}:기타`·`segment:{dartB}:기타` 2노드 존재, 각 회사 엣지가 자기 회사키 노드를 가리킴(object_id 일치 assert).
+3. **고아 제거:** 백필 후 참조 0인 전역 `segment:기타` 노드 부재(`session.get(Node, "segment:기타") is None`) — 단, alias canonical 타깃으로 등록된 전역 노드는 보존(별 테스트).
+4. **멱등:** 백필 2회 실행 → 2회차 반환 `repointed == 0` **그리고** 노드/엣지 총수 불변.
+5. **정합:** 백필 후 `check_integrity(session)` 결과에 `severity == "error"` 0건(`[i for i in issues if i.severity=="error"] == []`).
 
-**Files:**
-- Create: `scripts/renamespace_segments.py`
-- Test: `tests/test_renamespace_segments.py`
+**Files:** Create `scripts/renamespace_segments.py` · Test `tests/test_renamespace_segments.py`
 
-- [ ] **Step 1: 실패 테스트 작성** — 전역 노드 + 2개 회사 HAS_SEGMENT 합성 → 백필 → 별 노드·고아 제거·멱등·check_integrity 무에러.
-- [ ] **Step 2: 구현** — company 노드별 dart_code 조회, HAS_SEGMENT 순회, 회사키 노드 upsert(label·attrs 보존), `_repoint_edges`, 고아 전역 노드 정리. `__main__` 진입점(세션 오픈 + 요약 출력).
-- [ ] **Step 3: 검증** — 테스트 통과 + 실 DB 백필 실행(백업 후) → `merge_segments` 재실행 → `check_integrity` 무에러.
+- [ ] **Step 1: 실패 테스트 작성** — gate 2~5 어서션(공유 전역 노드 + 2회사 + alias-보존 케이스 + 멱등 + check_integrity).
+- [ ] **Step 2: 구현** — company별 dart_code 조회, HAS_SEGMENT 순회, 회사키 노드 upsert(label·attrs 보존), `_repoint_edges` 재사용, 참조 0 전역 노드 정리(alias 타깃 제외). `__main__` 진입점(세션 + 요약 dict 출력).
+- [ ] **Step 3: 검증** — pytest exit 0. 실 DB: `cp themek.db themek.db.pre-c2.bak && .venv/bin/python scripts/renamespace_segments.py` → exit 0, 출력 dict 확인.
 
 ---
 
-## Task 4: 재투영 + 검증
+## Task 4: 재투영 + 정합 검증
 
-**Success gate (측정 가능):**
-- `themek ontology vault` 재생성 → 동명 세그먼트 노트가 회사별로 분리, 백링크 오염 없음.
-- 의도된 alias 병합(예: "메모리"/"메모리 반도체" → canonical)은 그대로 동작.
-- 전체 테스트 통과.
+**Success gate (전부 자동 검증):**
+1. 실 DB 백필 → `merge_segments` 재실행 → `.venv/bin/python -c "from ...validate import check_integrity; ...; assert not [i for i in check_integrity(s) if i.severity=='error']"` exit 0(error 0).
+2. `.venv/bin/python -m themek ontology vault --out vault` → exit 0.
+3. **분리 확인(측정):** 사전 충돌 사례 1건 선택(동명 세그먼트를 가진 두 회사) → 백필 후 `vault/segments/` 에 회사별 분리 노트 존재 또는 한 노트의 백링크 수가 사전 대비 감소(`grep -c "회사" vault/segments/<note>.md` before/after 비교, after < before).
+4. **의도된 병합 유지:** alias 시드된 canonical 세그먼트(예: 메모리/메모리반도체) 노트의 백링크에 의도된 회사들이 그대로 존재(grep 매치 ≥ 시드 회사 수).
+5. `.venv/bin/pytest -q` → exit 0(회귀 0).
 
-- [ ] **Step 1:** DB 백업 → `renamespace_segments` → `merge_segments` → `check_integrity`.
-- [ ] **Step 2:** vault 재생성 + 육안 확인(분리/병합 의도대로).
-- [ ] **Step 3:** 코드 커밋 + vault 재생성 산출물 커밋 분리.
+- [ ] **Step 1:** `cp themek.db themek.db.pre-c2.bak` → `scripts/renamespace_segments.py` → `themek ontology resolve`(merge_segments 포함) → check_integrity error 0 측정.
+- [ ] **Step 2:** vault 재생성 + gate 3·4 grep 측정.
+- [ ] **Step 3:** 코드 커밋(`feat(ontology): ...`) + vault 산출물 커밋(`data(vault): ...`) 분리.
 
 ---
 
-## Done criteria
+## Done criteria (전부 자동 검증)
 
-- [ ] 전체 테스트 통과(`.venv/bin/python -m pytest -q`).
-- [ ] 백필 멱등 + `check_integrity` error 0.
-- [ ] vault에서 동명 세그먼트 분리 확인, 의도된 병합 유지.
+- [ ] `.venv/bin/pytest -q` → exit 0(기존 + 신규 ≥ 5 통과, 회귀 0).
+- [ ] 백필 멱등: 2회차 `repointed == 0`.
+- [ ] 백필 후 `check_integrity` error 0건.
+- [ ] 충돌 사례 백링크 분리(after < before), 의도된 alias 병합 유지.
 
 ## 한계
 
-- 스크립트는 *기존* 전역 노드 가정 — 이후 ingest는 처음부터 회사 키 → 재실행 시 noop.
+- 스크립트는 *기존* 전역 노드 가정 — 이후 ingest는 처음부터 회사 키 → 재실행 시 noop(gate 4 멱등으로 보장).
 - 자동 의미 병합(임베딩) 비범위 — 교차회사 병합은 수동 alias 시드로만.
