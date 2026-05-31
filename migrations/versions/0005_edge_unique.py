@@ -1,7 +1,7 @@
 """add unique index on edges (subject, predicate, object, coalesce(period))
 
 Revision ID: 0005_edge_unique
-Revises: 0004_stock_lifecycle
+Revises: 0004a_core_tables
 Create Date: 2026-05-31 00:00:00.000000
 
 """
@@ -11,7 +11,7 @@ from alembic import op
 
 
 revision: str = "0005_edge_unique"
-down_revision: Union[str, Sequence[str], None] = "0004_stock_lifecycle"
+down_revision: Union[str, Sequence[str], None] = "0004a_core_tables"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
