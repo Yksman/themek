@@ -34,6 +34,8 @@ _METRIC_SJ = {
     "revenue": _PL, "operating_income": _PL, "net_income": _PL,
     "assets": _BS, "liabilities": _BS, "equity": _BS,
 }
+_FLOW = frozenset({"revenue", "operating_income", "net_income"})
+_STOCK = frozenset({"assets", "liabilities", "equity"})
 
 
 def _to_amount(raw) -> float | None:
@@ -62,9 +64,14 @@ def _metric_of(row: dict) -> str | None:
 
 def parse_financial_rows(rows: list[dict], *, bsns_year: str,
                          fiscal_period: str) -> list[dict]:
-    """행들을 [{company-agnostic fact dict}] 로 평탄화. 3개년 전개."""
+    """행들을 [{company-agnostic fact dict}] 로 평탄화.
+
+    flow 지표(매출/이익)는 당기/전기/전전기 3개년 전개 — 비교열이 '전기 동기'라 의미상 맞다.
+    stock 지표(자산/부채/자본)는 당기(thstrm)만 적재 — 분기보고서의 비교열(frmtrm)은
+    '직전 사업연도 말' 스냅샷이라 interim period로 라벨링하면 오염된다(연말값으로 덮어씀).
+    """
     yr = int(bsns_year)
-    year_field = {
+    flow_years = {
         "thstrm_amount": str(yr),
         "frmtrm_amount": str(yr - 1),
         "bfefrmtrm_amount": str(yr - 2),
@@ -74,14 +81,18 @@ def parse_financial_rows(rows: list[dict], *, bsns_year: str,
         metric = _metric_of(row)
         if metric is None:
             continue
-        for field, year_label in year_field.items():
+        if metric in _STOCK:
+            amount = _to_amount(row.get("thstrm_amount"))
+            if amount is not None:
+                facts.append({"metric_key": metric, "bsns_year": str(yr),
+                              "fiscal_period": fiscal_period, "amount": amount})
+            continue
+        for field, year_label in flow_years.items():
             amount = _to_amount(row.get(field))
             if amount is None:
                 continue
-            facts.append({
-                "metric_key": metric, "bsns_year": year_label,
-                "fiscal_period": fiscal_period, "amount": amount,
-            })
+            facts.append({"metric_key": metric, "bsns_year": year_label,
+                          "fiscal_period": fiscal_period, "amount": amount})
     return facts
 
 

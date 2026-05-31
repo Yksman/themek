@@ -7,18 +7,37 @@ from themek.ontology.ingest.financials import parse_financial_rows
 _CASSETTE = Path("tests/fixtures/dart_cassettes/fnlttSinglAcntAll_samsung_2024.json")
 
 
-def test_parse_maps_accounts_and_three_years():
+def test_parse_maps_accounts_flow_3yr_stock_1yr():
     rows = json.loads(_CASSETTE.read_text(encoding="utf-8"))["list"]
     facts = parse_financial_rows(rows, bsns_year="2024", fiscal_period="FY")
-    # 6개 metric × 3개년 = 18 fact
-    assert len(facts) == 18
+    # flow 3종 × 3개년(9) + stock 3종 × 당기만(3) = 12
+    assert len(facts) == 12
     rev_2024 = [f for f in facts if f["metric_key"] == "revenue"
                 and f["bsns_year"] == "2024"]
     assert len(rev_2024) == 1
     assert rev_2024[0]["amount"] == 3007700000000.0
-    # 전기/전전기 연도 라벨 = 2023/2022
-    years = {f["bsns_year"] for f in facts if f["metric_key"] == "revenue"}
-    assert years == {"2024", "2023", "2022"}
+    # flow(revenue)는 3개년 라벨 유지
+    assert {f["bsns_year"] for f in facts if f["metric_key"] == "revenue"} \
+        == {"2024", "2023", "2022"}
+    # stock(assets)는 당기(2024)만
+    assert {f["bsns_year"] for f in facts if f["metric_key"] == "assets"} == {"2024"}
+
+
+def test_parse_stock_metric_thstrm_only_in_interim():
+    """분기보고서의 비교열(frmtrm=직전 연말)은 적재하지 않는다 — stock은 당기만."""
+    rows = [
+        {"account_id": "ifrs-full_Assets", "account_nm": "자산총계", "sj_div": "BS",
+         "thstrm_amount": "100", "frmtrm_amount": "90", "bfefrmtrm_amount": "80"},
+        {"account_id": "ifrs-full_Revenue", "account_nm": "매출액", "sj_div": "IS",
+         "thstrm_amount": "50", "frmtrm_amount": "40", "bfefrmtrm_amount": "30"},
+    ]
+    facts = parse_financial_rows(rows, bsns_year="2024", fiscal_period="Q1")
+    assets = [f for f in facts if f["metric_key"] == "assets"]
+    assert len(assets) == 1 and assets[0]["bsns_year"] == "2024" \
+        and assets[0]["amount"] == 100.0
+    # flow는 3개년 그대로
+    rev = {f["bsns_year"]: f["amount"] for f in facts if f["metric_key"] == "revenue"}
+    assert rev == {"2024": 50.0, "2023": 40.0, "2022": 30.0}
 
 
 def test_parse_skips_unmapped_accounts():
