@@ -95,3 +95,31 @@ def ingest_largest_shareholders(session: Session, *, corp_code: str,
                     method="api", confidence=1.0)
         n += 1
     return n
+
+
+def ingest_other_corp_investments(session: Session, *, corp_code: str,
+                                  bsns_year: str, rows: list[dict],
+                                  source_ref: str) -> int:
+    """타법인출자현황 행 → 보고회사 ──OWNS_STAKE_IN──▶ 피출자(company:ext).
+    피출자는 항상 company:ext로 적재(resolve가 universe로 승격). 멱등. 엣지 수 반환."""
+    holder = company_id(corp_code)
+    n = 0
+    for row in rows:
+        name = (row.get("inv_prm") or "").strip()
+        if not name:
+            continue
+        oid = external_company_id(name)
+        upsert_node(session, oid, "company", name, {"external": True})
+        pct = _to_pct(row.get("trmend_blce_qota_rt"))
+        q = {
+            "stake_pct": pct,
+            "shares": _to_int(row.get("trmend_blce_qy")),
+            "affiliation_type": affiliation_from_stake(pct),
+            "purpose": (row.get("invstmnt_purps") or "").strip() or None,
+        }
+        upsert_edge(session, subject_id=holder, predicate="OWNS_STAKE_IN",
+                    object_id=oid, period=bsns_year, qualifier=q,
+                    source_type="dart_api", source_ref=source_ref,
+                    method="api", confidence=1.0)
+        n += 1
+    return n
