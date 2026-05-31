@@ -4057,7 +4057,7 @@
     "object_id": "metric:equity",
     "period": "2022FY",
     "qualifier": {
-      "amount": 9563462000000.0,
+      "amount": 354749604000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2022FY"
@@ -4071,7 +4071,7 @@
     "object_id": "metric:equity",
     "period": "2021FY",
     "qualifier": {
-      "amount": 8662234000000.0,
+      "amount": 304899931000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2021FY"
@@ -4085,7 +4085,7 @@
     "object_id": "metric:equity",
     "period": "2020FY",
     "qualifier": {
-      "amount": 271068211000000.0,
+      "amount": 275948016000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2020FY"
@@ -4183,7 +4183,7 @@
     "object_id": "metric:net_income",
     "period": "2022FY",
     "qualifier": {
-      "amount": 54730018000000.0,
+      "amount": 55654077000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022FY"
@@ -4197,7 +4197,7 @@
     "object_id": "metric:net_income",
     "period": "2021FY",
     "qualifier": {
-      "amount": 39243791000000.0,
+      "amount": 39907450000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2021FY"
@@ -4211,7 +4211,7 @@
     "object_id": "metric:net_income",
     "period": "2020FY",
     "qualifier": {
-      "amount": 316986000000.0,
+      "amount": 26407832000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2020FY"
@@ -4337,7 +4337,7 @@
     "object_id": "metric:net_income",
     "period": "2022H1",
     "qualifier": {
-      "amount": 22083609000000.0,
+      "amount": 11098805000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022H1"
@@ -4463,7 +4463,7 @@
     "object_id": "metric:net_income",
     "period": "2022Q1",
     "qualifier": {
-      "amount": 195534000000.0,
+      "amount": 11324628000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022Q1"
@@ -4589,7 +4589,7 @@
     "object_id": "metric:net_income",
     "period": "2022Q3",
     "qualifier": {
-      "amount": 31227509000000.0,
+      "amount": 9389198000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022Q3"
@@ -4617,7 +4617,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 10444090000000.0,
+      "amount": 363677865000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -4659,7 +4659,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 14473401000000.0,
+      "amount": 15487100000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -4715,7 +4715,7 @@
     "object_id": "metric:equity",
     "period": "2023H1",
     "qualifier": {
-      "amount": 897514000000.0,
+      "amount": 358975626000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023H1"
@@ -4757,7 +4757,7 @@
     "object_id": "metric:net_income",
     "period": "2023H1",
     "qualifier": {
-      "amount": 349901000000.0,
+      "amount": 1723571000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023H1"
@@ -4799,7 +4799,7 @@
     "object_id": "metric:equity",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 897514000000.0,
+      "amount": 359799416000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q1"
@@ -4841,7 +4841,7 @@
     "object_id": "metric:net_income",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 173348000000.0,
+      "amount": 1574600000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023Q1"
@@ -4869,7 +4869,7 @@
     "object_id": "metric:equity",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 4403893000000.0,
+      "amount": 363892643000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q3"
@@ -4911,7 +4911,7 @@
     "object_id": "metric:net_income",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 8449574000000.0,
+      "amount": 5844171000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023Q3"
@@ -4981,7 +4981,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 9312129000000.0,
+      "amount": 101809440000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -4995,7 +4995,7 @@
     "object_id": "metric:equity",
     "period": "2022FY",
     "qualifier": {
-      "amount": 8547258000000.0,
+      "amount": 90896545000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2022FY"
@@ -5009,7 +5009,7 @@
     "object_id": "metric:equity",
     "period": "2021FY",
     "qualifier": {
-      "amount": 7629667000000.0,
+      "amount": 82615789000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2021FY"
@@ -5107,7 +5107,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 310584000000.0,
+      "amount": 12272301000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -5121,7 +5121,7 @@
     "object_id": "metric:net_income",
     "period": "2022FY",
     "qualifier": {
-      "amount": 619250000000.0,
+      "amount": 7983614000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022FY"
@@ -5135,7 +5135,7 @@
     "object_id": "metric:net_income",
     "period": "2021FY",
     "qualifier": {
-      "amount": 750721000000.0,
+      "amount": 5693077000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2021FY"
@@ -5247,7 +5247,7 @@
     "object_id": "metric:equity",
     "period": "2023H1",
     "qualifier": {
-      "amount": 84385362000000.0,
+      "amount": 97431373000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023H1"
@@ -5359,7 +5359,7 @@
     "object_id": "metric:equity",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 8671669000000.0,
+      "amount": 93919532000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q1"
@@ -5443,7 +5443,7 @@
     "object_id": "metric:equity",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 240087000000.0,
+      "amount": 101314867000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q3"
@@ -5569,7 +5569,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 9699929000.0,
+      "amount": 130656200153.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -5583,7 +5583,7 @@
     "object_id": "metric:equity",
     "period": "2022FY",
     "qualifier": {
-      "amount": 8420609500.0,
+      "amount": 61507271655.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2022FY"
@@ -5597,7 +5597,7 @@
     "object_id": "metric:equity",
     "period": "2021FY",
     "qualifier": {
-      "amount": 8267059000.0,
+      "amount": 47887486275.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2021FY"
@@ -5695,7 +5695,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -842680471.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -5709,7 +5709,7 @@
     "object_id": "metric:net_income",
     "period": "2022FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 5774170711.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022FY"
@@ -5723,7 +5723,7 @@
     "object_id": "metric:net_income",
     "period": "2021FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -7844932867.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2021FY"
@@ -5835,7 +5835,7 @@
     "object_id": "metric:equity",
     "period": "2023H1",
     "qualifier": {
-      "amount": 9625473000.0,
+      "amount": 134753735216.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023H1"
@@ -5880,20 +5880,6 @@
       "amount": 164234859.0,
       "fs_div": "CFS",
       "metric": "operating_income",
-      "period_node": "period:2023H1"
-    },
-    "source_type": "dart_api",
-    "confidence": 1.0
-  },
-  {
-    "subject_id": "company:01261644",
-    "predicate": "REPORTS",
-    "object_id": "metric:net_income",
-    "period": "2023H1",
-    "qualifier": {
-      "amount": 5465681702.0,
-      "fs_div": "CFS",
-      "metric": "net_income",
       "period_node": "period:2023H1"
     },
     "source_type": "dart_api",
@@ -5961,7 +5947,7 @@
     "object_id": "metric:equity",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 9625473000.0,
+      "amount": 139673548255.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q1"
@@ -6014,20 +6000,6 @@
   {
     "subject_id": "company:01261644",
     "predicate": "REPORTS",
-    "object_id": "metric:net_income",
-    "period": "2023Q1",
-    "qualifier": {
-      "amount": 11041455149.0,
-      "fs_div": "CFS",
-      "metric": "net_income",
-      "period_node": "period:2023Q1"
-    },
-    "source_type": "dart_api",
-    "confidence": 1.0
-  },
-  {
-    "subject_id": "company:01261644",
-    "predicate": "REPORTS",
     "object_id": "metric:assets",
     "period": "2023Q3",
     "qualifier": {
@@ -6059,7 +6031,7 @@
     "object_id": "metric:equity",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 9625473000.0,
+      "amount": 147759887858.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q3"
@@ -6138,20 +6110,6 @@
     "confidence": 1.0
   },
   {
-    "subject_id": "company:01261644",
-    "predicate": "REPORTS",
-    "object_id": "metric:net_income",
-    "period": "2023Q3",
-    "qualifier": {
-      "amount": 0.0,
-      "fs_div": "CFS",
-      "metric": "net_income",
-      "period_node": "period:2023Q3"
-    },
-    "source_type": "dart_api",
-    "confidence": 1.0
-  },
-  {
     "subject_id": "company:00149026",
     "predicate": "REPORTS",
     "object_id": "metric:assets",
@@ -6199,7 +6157,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": -475951978.0,
+      "amount": 393726081741.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -6213,7 +6171,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 118906698.0,
+      "amount": 377496622222.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -6227,7 +6185,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": -1022412487.0,
+      "amount": 347206891081.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -6325,7 +6283,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 17279551238.0,
+      "amount": 20996079784.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -6339,7 +6297,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 31019979580.0,
+      "amount": 37853224906.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -6353,7 +6311,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 16580558751.0,
+      "amount": 22145557927.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -6437,7 +6395,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 43447343371.0,
+      "amount": 381868575038.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -6507,7 +6465,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 6986483891.0,
+      "amount": 1107481043.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -6563,7 +6521,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 43447343371.0,
+      "amount": 383139530927.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -6633,7 +6591,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 5822135646.0,
+      "amount": 6922117521.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -6689,7 +6647,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 43447343371.0,
+      "amount": 389690909774.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -6759,7 +6717,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 12907230728.0,
+      "amount": 7218723673.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -6829,7 +6787,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 100586966500.0,
+      "amount": 450243222434.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -6843,7 +6801,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 100586966500.0,
+      "amount": 394276238337.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -6857,7 +6815,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 100586966500.0,
+      "amount": 395210860548.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -6955,7 +6913,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 49160309181.0,
+      "amount": 49444247001.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -6969,7 +6927,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 92310411220.0,
+      "amount": 92786487012.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -6983,7 +6941,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 20275745380.0,
+      "amount": 20304876781.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -7067,7 +7025,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 431394718935.0,
+      "amount": 432109848318.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -7137,7 +7095,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 14878823083.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -7193,7 +7151,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 414839291917.0,
+      "amount": 415555408001.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -7263,7 +7221,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 21249730969.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -7319,7 +7277,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 467487427773.0,
+      "amount": 468348408640.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -7389,7 +7347,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 26719841231.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -7459,7 +7417,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 53504285000000.0,
+      "amount": 53503752000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -7473,7 +7431,7 @@
     "object_id": "metric:equity",
     "period": "2022FY",
     "qualifier": {
-      "amount": 63266355000000.0,
+      "amount": 63290542000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2022FY"
@@ -7487,7 +7445,7 @@
     "object_id": "metric:equity",
     "period": "2021FY",
     "qualifier": {
-      "amount": 62157072000000.0,
+      "amount": 62191058000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2021FY"
@@ -7585,7 +7543,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": -9112428000000.0,
+      "amount": -9137547000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -7599,7 +7557,7 @@
     "object_id": "metric:net_income",
     "period": "2022FY",
     "qualifier": {
-      "amount": 2229560000000.0,
+      "amount": 2241669000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022FY"
@@ -7613,7 +7571,7 @@
     "object_id": "metric:net_income",
     "period": "2021FY",
     "qualifier": {
-      "amount": 9602316000000.0,
+      "amount": 9616188000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2021FY"
@@ -7725,7 +7683,7 @@
     "object_id": "metric:equity",
     "period": "2023H1",
     "qualifier": {
-      "amount": 1026867000000.0,
+      "amount": 57459050000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023H1"
@@ -7851,7 +7809,7 @@
     "object_id": "metric:equity",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 23321000000.0,
+      "amount": 61008534000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q1"
@@ -7907,7 +7865,7 @@
     "object_id": "metric:net_income",
     "period": "2023Q1",
     "qualifier": {
-      "amount": -2580409000000.0,
+      "amount": -2585491000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023Q1"
@@ -7949,7 +7907,7 @@
     "object_id": "metric:equity",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 3657652000000.0,
+      "amount": 55231560000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q3"
@@ -8019,7 +7977,7 @@
     "object_id": "metric:net_income",
     "period": "2023Q3",
     "qualifier": {
-      "amount": -7755323000000.0,
+      "amount": -2184699000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023Q3"
@@ -8089,7 +8047,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 24544359050688.0,
+      "amount": 24237998815553.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -8103,7 +8061,7 @@
     "object_id": "metric:equity",
     "period": "2022FY",
     "qualifier": {
-      "amount": 23645687007296.0,
+      "amount": 23450322480451.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2022FY"
@@ -8117,7 +8075,7 @@
     "object_id": "metric:equity",
     "period": "2021FY",
     "qualifier": {
-      "amount": 23080407824978.0,
+      "amount": 24027376349275.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2021FY"
@@ -8215,7 +8173,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 1012321527624.0,
+      "amount": 985017762493.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -8229,7 +8187,7 @@
     "object_id": "metric:net_income",
     "period": "2022FY",
     "qualifier": {
-      "amount": 760260876247.0,
+      "amount": 673180300087.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022FY"
@@ -8243,7 +8201,7 @@
     "object_id": "metric:net_income",
     "period": "2021FY",
     "qualifier": {
-      "amount": 16489849771129.0,
+      "amount": 16477625559645.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2021FY"
@@ -8355,7 +8313,7 @@
     "object_id": "metric:equity",
     "period": "2023H1",
     "qualifier": {
-      "amount": 986018526322.0,
+      "amount": 23521949958078.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023H1"
@@ -8481,7 +8439,7 @@
     "object_id": "metric:equity",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 23697505166279.0,
+      "amount": 24123911619350.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q1"
@@ -8579,7 +8537,7 @@
     "object_id": "metric:equity",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 16481339500.0,
+      "amount": 23805118286442.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q3"
@@ -8649,7 +8607,7 @@
     "object_id": "metric:net_income",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 698487429936.0,
+      "amount": 356206766749.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023Q3"
@@ -8719,7 +8677,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 8839891458553.0,
+      "amount": 13858599224126.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -8733,7 +8691,7 @@
     "object_id": "metric:equity",
     "period": "2022FY",
     "qualifier": {
-      "amount": 8116371778929.0,
+      "amount": 13515717384943.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2022FY"
@@ -8747,7 +8705,7 @@
     "object_id": "metric:equity",
     "period": "2021FY",
     "qualifier": {
-      "amount": 7781647832605.0,
+      "amount": 13568333645679.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2021FY"
@@ -8845,7 +8803,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": -1012550566010.0,
+      "amount": -1816669011014.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -8859,7 +8817,7 @@
     "object_id": "metric:net_income",
     "period": "2022FY",
     "qualifier": {
-      "amount": 1358019478520.0,
+      "amount": 1067029037423.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022FY"
@@ -8873,7 +8831,7 @@
     "object_id": "metric:net_income",
     "period": "2021FY",
     "qualifier": {
-      "amount": 1387314031334.0,
+      "amount": 1640484195406.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2021FY"
@@ -8985,7 +8943,7 @@
     "object_id": "metric:equity",
     "period": "2023H1",
     "qualifier": {
-      "amount": 3843179406.0,
+      "amount": 15446812026258.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023H1"
@@ -9041,7 +8999,7 @@
     "object_id": "metric:net_income",
     "period": "2023H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 56026339557.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023H1"
@@ -9111,7 +9069,7 @@
     "object_id": "metric:equity",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 42040567248.0,
+      "amount": 15302267362137.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q1"
@@ -9167,7 +9125,7 @@
     "object_id": "metric:net_income",
     "period": "2023Q1",
     "qualifier": {
-      "amount": -13691776684.0,
+      "amount": 63827793863.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023Q1"
@@ -9209,7 +9167,7 @@
     "object_id": "metric:equity",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 8869390178555.0,
+      "amount": 15660696103271.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q3"
@@ -9293,7 +9251,7 @@
     "object_id": "metric:net_income",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 49492746094.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023Q3"
@@ -9349,7 +9307,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 598038000000.0,
+      "amount": 40938185000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -9363,7 +9321,7 @@
     "object_id": "metric:equity",
     "period": "2022FY",
     "qualifier": {
-      "amount": 366916000000.0,
+      "amount": 37481127000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2022FY"
@@ -9377,7 +9335,7 @@
     "object_id": "metric:equity",
     "period": "2021FY",
     "qualifier": {
-      "amount": 551354000000.0,
+      "amount": 23209988000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2021FY"
@@ -9475,7 +9433,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 1337812000000.0,
+      "amount": 2053425000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -9489,7 +9447,7 @@
     "object_id": "metric:net_income",
     "period": "2022FY",
     "qualifier": {
-      "amount": 1845363000000.0,
+      "amount": 2195518000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022FY"
@@ -9503,7 +9461,7 @@
     "object_id": "metric:net_income",
     "period": "2021FY",
     "qualifier": {
-      "amount": 3669787000000.0,
+      "amount": 3953904000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2021FY"
@@ -9615,7 +9573,7 @@
     "object_id": "metric:equity",
     "period": "2023H1",
     "qualifier": {
-      "amount": -19569000000.0,
+      "amount": 39607560000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023H1"
@@ -9741,7 +9699,7 @@
     "object_id": "metric:equity",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 391406000000.0,
+      "amount": 38404071000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q1"
@@ -9839,7 +9797,7 @@
     "object_id": "metric:equity",
     "period": "2023Q3",
     "qualifier": {
-      "amount": -19569000000.0,
+      "amount": 41365206000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q3"
@@ -10091,7 +10049,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": -8734809082.0,
+      "amount": 54685871623.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -10105,7 +10063,7 @@
     "object_id": "metric:net_income",
     "period": "2022FY",
     "qualifier": {
-      "amount": 232344693490.0,
+      "amount": 272653525172.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2022FY"
@@ -10119,7 +10077,7 @@
     "object_id": "metric:net_income",
     "period": "2021FY",
     "qualifier": {
-      "amount": 100835673353.0,
+      "amount": 97789788764.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2021FY"
@@ -10231,7 +10189,7 @@
     "object_id": "metric:equity",
     "period": "2023H1",
     "qualifier": {
-      "amount": 1469246286570.0,
+      "amount": 1670004515725.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023H1"
@@ -10357,7 +10315,7 @@
     "object_id": "metric:equity",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 877452591737.0,
+      "amount": 1560432172300.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q1"
@@ -10595,7 +10553,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 56382072938.0,
+      "amount": 571898625127.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -10609,7 +10567,7 @@
     "object_id": "metric:equity",
     "period": "2022FY",
     "qualifier": {
-      "amount": 50917901810.0,
+      "amount": 390096755786.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2022FY"
@@ -10623,7 +10581,7 @@
     "object_id": "metric:equity",
     "period": "2021FY",
     "qualifier": {
-      "amount": 50917901810.0,
+      "amount": 346812042277.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2021FY"
@@ -10861,7 +10819,7 @@
     "object_id": "metric:equity",
     "period": "2023H1",
     "qualifier": {
-      "amount": 56382072938.0,
+      "amount": 542603358183.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023H1"
@@ -10987,7 +10945,7 @@
     "object_id": "metric:equity",
     "period": "2023Q1",
     "qualifier": {
-      "amount": 12716420500.0,
+      "amount": 503993845562.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q1"
@@ -11085,7 +11043,7 @@
     "object_id": "metric:equity",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 56382072938.0,
+      "amount": 557289550816.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023Q3"
@@ -11155,7 +11113,7 @@
     "object_id": "metric:net_income",
     "period": "2023Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 14668122061.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023Q3"
@@ -11225,7 +11183,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": -30064542000.0,
+      "amount": 457119800000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -11239,7 +11197,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": -32295248000.0,
+      "amount": 443723178000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -11253,7 +11211,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": -31421318000.0,
+      "amount": 419651810000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -11351,7 +11309,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 28327120000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -11365,7 +11323,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 21600801000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -11379,7 +11337,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 16472355000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -11463,7 +11421,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 60421697000.0,
+      "amount": 431474961000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -11533,7 +11491,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 5061116000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -11589,7 +11547,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 71665003394.0,
+      "amount": 436281726597.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -11659,7 +11617,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 5183305353.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -11715,7 +11673,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 64491560000.0,
+      "amount": 450509756000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -11785,7 +11743,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 13266294000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -11855,7 +11813,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": -7112025039.0,
+      "amount": 1313057157689.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -11869,7 +11827,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": -8171206084.0,
+      "amount": 1184132956540.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -11883,7 +11841,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 840223676.0,
+      "amount": 1074453047721.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -12093,7 +12051,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 321649418221.0,
+      "amount": 1178907548385.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -12163,7 +12121,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 52805591090.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -12219,7 +12177,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 321649418221.0,
+      "amount": 1127360883226.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -12289,7 +12247,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 13360723881.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -12345,7 +12303,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 321649418221.0,
+      "amount": 1256461888596.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -12415,7 +12373,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 79308355424.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -12485,7 +12443,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 790400461575.0,
+      "amount": 11241835322588.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -12499,7 +12457,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 770628548005.0,
+      "amount": 11147574546601.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -12513,7 +12471,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 785126254675.0,
+      "amount": 10673702081303.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -12569,7 +12527,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 836157244944.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -12583,7 +12541,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 749976302023.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -12597,7 +12555,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 678904864314.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -12681,7 +12639,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 750689062925.0,
+      "amount": 11058639808647.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -12737,7 +12695,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 314483253515.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -12793,7 +12751,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 791175774075.0,
+      "amount": 10958194615926.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -12849,7 +12807,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 171831732721.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -12905,7 +12863,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 754004086845.0,
+      "amount": 11173229845498.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -12961,7 +12919,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 299535094793.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -13031,7 +12989,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 3420000000.0,
+      "amount": 562493040763.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -13045,7 +13003,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 3420000000.0,
+      "amount": 549407749514.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -13059,7 +13017,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 3420000000.0,
+      "amount": 534920570167.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -13269,7 +13227,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 4471879858.0,
+      "amount": 550363334418.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -13339,7 +13297,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 1661125684.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -13395,7 +13353,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 4471879858.0,
+      "amount": 549243084258.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -13465,7 +13423,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 3201194704.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -13521,7 +13479,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 4471879858.0,
+      "amount": 555029321041.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -13591,7 +13549,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 6276794659.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -13661,7 +13619,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 992817516000.0,
+      "amount": 17017052447000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -13675,7 +13633,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 992817516000.0,
+      "amount": 17730414070000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -13689,7 +13647,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 992817516000.0,
+      "amount": 17892818574000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -13787,7 +13745,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 143329782000.0,
+      "amount": 142631457000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -13801,7 +13759,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 94269008000.0,
+      "amount": 136375840000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -13815,7 +13773,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 194790703000.0,
+      "amount": 524667990000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -13899,7 +13857,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 992817516000.0,
+      "amount": 16974437890000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -13969,7 +13927,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 233485888000.0,
+      "amount": 363269578000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -14025,7 +13983,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 992817516000.0,
+      "amount": 17722107028000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -14095,7 +14053,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 69556757000.0,
+      "amount": 136435994000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -14151,7 +14109,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 992817516000.0,
+      "amount": 17467040192000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -14221,7 +14179,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 377068805000.0,
+      "amount": 302204019000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -14291,7 +14249,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 1386791432864.0,
+      "amount": 650340429280.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -14305,7 +14263,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 1386763186809.0,
+      "amount": 576744707602.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -14319,7 +14277,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 964898046720.0,
+      "amount": 261241200463.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -14417,7 +14375,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": -143794624591.0,
+      "amount": -143369293871.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -14431,7 +14389,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": -171035292991.0,
+      "amount": -175469437302.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -14445,7 +14403,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": -96175196527.0,
+      "amount": -123353396404.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -14529,7 +14487,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 1386773714404.0,
+      "amount": 534456510293.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -14599,7 +14557,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -38212416618.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -14655,7 +14613,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": -1459716179898.0,
+      "amount": 543710211739.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -14725,7 +14683,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -38091392748.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -14781,7 +14739,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 1386785014239.0,
+      "amount": 504079906968.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -14851,7 +14809,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -28706631119.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -14921,7 +14879,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 2710065435857.0,
+      "amount": 4439637704423.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -14935,7 +14893,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 2726530438771.0,
+      "amount": 4225599854802.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -14949,7 +14907,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 2675757373400.0,
+      "amount": 4043096242871.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -15047,7 +15005,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 258742959823.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -15061,7 +15019,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 268320297629.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -15075,7 +15033,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 242876054885.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -15159,7 +15117,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 2711003516201.0,
+      "amount": 4257765716099.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -15229,7 +15187,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 58185410405.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -15285,7 +15243,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 2726880126289.0,
+      "amount": 4261629618102.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -15411,7 +15369,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 2710600225315.0,
+      "amount": 4366159622274.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -15551,7 +15509,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 18065386500.0,
+      "amount": 88416055935.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -15565,7 +15523,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 18065386500.0,
+      "amount": 83628617966.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -15579,7 +15537,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 18065386500.0,
+      "amount": 78050323902.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -15677,7 +15635,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 2827173450.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -15691,7 +15649,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 5019262467.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -15705,7 +15663,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 4435393624.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -15789,7 +15747,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 18065386500.0,
+      "amount": 83650056660.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -15859,7 +15817,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 295182813.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -15915,7 +15873,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 18065386500.0,
+      "amount": 83986561734.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -15985,7 +15943,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 230991938.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -16041,7 +15999,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 18065386500.0,
+      "amount": 84735643543.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -16111,7 +16069,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 10286676.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -16181,7 +16139,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 1540987319000.0,
+      "amount": 11551202624000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -16195,7 +16153,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 1540987319000.0,
+      "amount": 12226875900000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -16209,7 +16167,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 1540987319000.0,
+      "amount": 11779942250000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -16307,7 +16265,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -416955408000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -16321,7 +16279,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 345925769000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -16335,7 +16293,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 559462096000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -16419,7 +16377,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 1540987319000.0,
+      "amount": 11829822359000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -16489,7 +16447,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 209114950000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -16545,7 +16503,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 1540987319000.0,
+      "amount": 12244018029000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -16615,7 +16573,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 57388640000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -16671,7 +16629,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 1540987319000.0,
+      "amount": 12216717130000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -16741,7 +16699,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 119193056000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -16811,7 +16769,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 151167987000.0,
+      "amount": 808194985000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -16825,7 +16783,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 151167987000.0,
+      "amount": 858357775000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -16839,7 +16797,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 151166746000.0,
+      "amount": 826684107000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -16937,7 +16895,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -18803450000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -16951,7 +16909,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -1278597000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -16965,7 +16923,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 26857674000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -17049,7 +17007,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 151167987000.0,
+      "amount": 844254334000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -17119,7 +17077,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 5282386000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -17175,7 +17133,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 151167987000.0,
+      "amount": 835385085000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -17245,7 +17203,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -2767032000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -17301,7 +17259,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 151167987000.0,
+      "amount": 822485315000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -17371,7 +17329,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -45836000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -17441,7 +17399,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": -124205000000.0,
+      "amount": 10935289000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -17455,7 +17413,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": -152626000000.0,
+      "amount": 9391213000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -17469,7 +17427,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": -152626000000.0,
+      "amount": 10303743000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -17525,7 +17483,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 1790581000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -17539,7 +17497,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 1853217000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -17553,7 +17511,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 1742379000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -17637,7 +17595,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": -152785000000.0,
+      "amount": 8996998000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -17693,7 +17651,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 652305000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -17749,7 +17707,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": -152626300193.0,
+      "amount": 8150855299520.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -17805,7 +17763,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 431363891266.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -17861,7 +17819,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": -152786000000.0,
+      "amount": 10101539000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -17917,7 +17875,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 328107000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -17987,7 +17945,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": -15463185560.0,
+      "amount": 1263573239071.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -18001,7 +17959,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": -15419958860.0,
+      "amount": 1174049116712.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -18015,7 +17973,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": -11842082310.0,
+      "amount": 1173885264629.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -18071,7 +18029,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 14047493791.0,
+      "amount": 95458788281.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -18085,7 +18043,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 2832275714.0,
+      "amount": 52937573718.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -18099,7 +18057,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 6355800987.0,
+      "amount": 12526271139.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -18225,7 +18183,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": -15463073981.0,
+      "amount": 1214157810237.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -18281,7 +18239,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 26802720456.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -18351,7 +18309,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": -12732514610.0,
+      "amount": 1179635489107.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -18407,7 +18365,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 20561423968.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -18477,7 +18435,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": -15462848014.0,
+      "amount": 1253288651777.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -18533,7 +18491,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 35553095758.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -18617,7 +18575,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 127328276294.0,
+      "amount": 2243995457046.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -18631,7 +18589,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 127328276294.0,
+      "amount": 2000688804317.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -18645,7 +18603,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 127328276294.0,
+      "amount": 1740082437747.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -18743,7 +18701,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 252582440798.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -18757,7 +18715,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 229385888355.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -18771,7 +18729,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 264149250979.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -18855,7 +18813,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 127328276294.0,
+      "amount": 2021262260308.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -18925,7 +18883,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 105652801801.0,
+      "amount": 59996804136.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -18981,7 +18939,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 127328276294.0,
+      "amount": 1970113495997.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -19051,7 +19009,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 45900203431.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -19107,7 +19065,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 127328276294.0,
+      "amount": 2177146312532.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -19177,7 +19135,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 90736911177.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -19247,7 +19205,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 69615458589.0,
+      "amount": 32101054220.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -19261,7 +19219,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 69905726448.0,
+      "amount": 26920108848.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -19275,7 +19233,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 69922093448.0,
+      "amount": -125889737123.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -19415,7 +19373,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 4164368888.0,
+      "amount": 5755172432.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -19429,7 +19387,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 114090289055.0,
+      "amount": 113242185596.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -19443,7 +19401,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": -170766742300.0,
+      "amount": -175132678030.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -19485,7 +19443,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 69641891179.0,
+      "amount": 27952992781.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -19611,7 +19569,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 69842864388.0,
+      "amount": 27676845051.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -19737,7 +19695,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 41064594000.0,
+      "amount": 30338524892.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -19877,7 +19835,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": -12286294851.0,
+      "amount": 520481606131.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -19891,7 +19849,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": -13444145945.0,
+      "amount": 564332201147.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -19905,7 +19863,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 980302019.0,
+      "amount": 605534194418.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -20003,7 +19961,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -9968597538.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -20017,7 +19975,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 2502884010.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -20031,7 +19989,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 5995805541.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -20115,7 +20073,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 4494109422.0,
+      "amount": 526631940660.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -20185,7 +20143,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -5877656469.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -20241,7 +20199,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 547212687719.0,
+      "amount": 532943353358.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -20367,7 +20325,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": -12286294851.0,
+      "amount": 526338370721.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -20437,7 +20395,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 348006924.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -20507,7 +20465,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 7655913343.0,
+      "amount": 125204015865.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -20521,7 +20479,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 7655913343.0,
+      "amount": 126760950569.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -20535,7 +20493,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 7530663343.0,
+      "amount": 126211456990.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -20633,7 +20591,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": -2877568728.0,
+      "amount": -2877621783.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -20647,7 +20605,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 2375825831.0,
+      "amount": 2341094260.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -20745,7 +20703,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 126961586096.0,
+      "amount": 126961639326.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -20815,7 +20773,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": -93813387.0,
+      "amount": -719373452.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -20871,7 +20829,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 7655913343.0,
+      "amount": 130179957853.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -20941,7 +20899,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 3494600676.0,
+      "amount": 3492131782.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -20997,7 +20955,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 118490772000.0,
+      "amount": 130498694437.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -21067,7 +21025,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 3037857095.0,
+      "amount": 3131670359.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -21137,7 +21095,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 431297099051.0,
+      "amount": 4921075694028.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -21151,7 +21109,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 414712626654.0,
+      "amount": 4786090727143.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -21165,7 +21123,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 216290603200.0,
+      "amount": 4533401164317.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -21263,7 +21221,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": -88007769786.0,
+      "amount": -96298295176.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -21277,7 +21235,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 89366024952.0,
+      "amount": 94839002886.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -21291,7 +21249,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": -133445421109.0,
+      "amount": -120978168525.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -21375,7 +21333,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 98343692390.0,
+      "amount": 4522388301151.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -21445,7 +21403,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": -96662213129.0,
+      "amount": -84294998185.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -21501,7 +21459,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 138709995000.0,
+      "amount": 4779958185760.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -21571,7 +21529,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 4040039866.0,
+      "amount": -19466337945.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -21627,7 +21585,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 145062023472.0,
+      "amount": 4897241571664.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -21697,7 +21655,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 24976119357.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -21767,7 +21725,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": -4003909841.0,
+      "amount": 147210745252.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -21781,7 +21739,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": -4003909841.0,
+      "amount": 140708797281.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -21795,7 +21753,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": -4003909841.0,
+      "amount": 125141852327.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -21893,7 +21851,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 7791594161.0,
+      "amount": 8068727339.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -21907,7 +21865,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 8484750816.0,
+      "amount": 8691554665.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -21921,7 +21879,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 7631992757.0,
+      "amount": 7814446685.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -22005,7 +21963,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 126836379445.0,
+      "amount": 130205146712.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -22075,7 +22033,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": -2476037682.0,
+      "amount": -3402790601.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -22131,7 +22089,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 94046714674.0,
+      "amount": 140627648804.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -22257,7 +22215,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 135806155741.0,
+      "amount": 139251115210.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -22327,7 +22285,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 3352299959.0,
+      "amount": 5904529843.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -22397,7 +22355,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 34300000000.0,
+      "amount": 2609252670735.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -22411,7 +22369,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 34300000000.0,
+      "amount": 2533225598910.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -22425,7 +22383,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 34300000000.0,
+      "amount": 2032238352384.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -22523,7 +22481,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 114200487289.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -22537,7 +22495,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 75658532271.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -22551,7 +22509,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 211322190990.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -22635,7 +22593,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 34300000000.0,
+      "amount": 2241092309378.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -22705,7 +22663,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 28868480665.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -22761,7 +22719,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 34300000000.0,
+      "amount": 2222436976631.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -22887,7 +22845,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 34300000000.0,
+      "amount": 2292944440225.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -23027,7 +22985,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 248279663393.0,
+      "amount": 1878678882040.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -23041,7 +22999,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 265005893191.0,
+      "amount": 1577298222080.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -23055,7 +23013,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 298429852941.0,
+      "amount": 1317741413518.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -23265,7 +23223,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 264644687691.0,
+      "amount": 1647756130806.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -23335,7 +23293,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 62638678575.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -23391,7 +23349,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 264930755391.0,
+      "amount": 1593975882869.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -23461,7 +23419,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 82569404768.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -23517,7 +23475,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 261963694391.0,
+      "amount": 1750499658319.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -23587,7 +23545,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 100695020466.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -23657,7 +23615,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 730595000000.0,
+      "amount": 5523557000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -23671,7 +23629,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 673034000000.0,
+      "amount": 5087123000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -23685,7 +23643,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 570701000000.0,
+      "amount": 4885160000000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -23783,7 +23741,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 93518000000.0,
+      "amount": 93423000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -23797,7 +23755,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 245568000000.0,
+      "amount": 263924000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -23811,7 +23769,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": -481945000000.0,
+      "amount": -419501000000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -23895,7 +23853,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 923901257045.0,
+      "amount": 5117019391958.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -23965,7 +23923,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": -87060721066.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -24021,7 +23979,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": -42943176719.0,
+      "amount": 5139847841079.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -24147,7 +24105,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 12474839771.0,
+      "amount": 5279078977216.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -24287,7 +24245,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 9301466000.0,
+      "amount": 570406827000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -24301,7 +24259,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 16297020000.0,
+      "amount": 567087325000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -24315,7 +24273,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 1395940000.0,
+      "amount": 447988123000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -24413,7 +24371,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 19904027000.0,
+      "amount": 13874085000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -24427,7 +24385,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 54187863000.0,
+      "amount": 56067654000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -24441,7 +24399,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 27765141000.0,
+      "amount": 26078651000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -24525,7 +24483,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 202353457000.0,
+      "amount": 579013535000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -24595,7 +24553,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 19759772000.0,
+      "amount": 12531879000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -24651,7 +24609,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 190457187000.0,
+      "amount": 571677399000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -24721,7 +24679,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 7810060000.0,
+      "amount": 8821539000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -24777,7 +24735,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 203355561000.0,
+      "amount": 581974757000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -24847,7 +24805,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 20806285000.0,
+      "amount": -1674249000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -24903,7 +24861,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 818362266205.0,
+      "amount": 1258600788881.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -24917,7 +24875,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 818362266205.0,
+      "amount": 1236746410784.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -25071,7 +25029,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 818362266205.0,
+      "amount": 1243806468465.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -25141,7 +25099,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 6013604380.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -25197,7 +25155,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 818362266205.0,
+      "amount": 1238400612009.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -25267,7 +25225,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 8337536756.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -25323,7 +25281,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 818362266205.0,
+      "amount": 1256714774864.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -25393,7 +25351,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 12783692210.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -25463,7 +25421,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 644510880298.0,
+      "amount": 5428726196750.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -25477,7 +25435,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 644510880298.0,
+      "amount": 5098799362525.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -25491,7 +25449,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 644510880298.0,
+      "amount": 4914761121854.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -25701,7 +25659,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 644510880298.0,
+      "amount": 5228543472426.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -25771,7 +25729,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 131075445026.0,
+      "amount": 97758485942.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -25827,7 +25785,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 644510880298.0,
+      "amount": 5154006692732.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -25897,7 +25855,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 70379435946.0,
+      "amount": 109476675222.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -25953,7 +25911,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 644510880298.0,
+      "amount": 5344105074681.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -26023,7 +25981,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 204547572452.0,
+      "amount": 116884971950.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -26093,7 +26051,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 2447705980.0,
+      "amount": 266867252376.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -26107,7 +26065,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 399792243.0,
+      "amount": 267505128726.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -26121,7 +26079,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 796137611.0,
+      "amount": 258521102495.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -26331,7 +26289,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 413905777.0,
+      "amount": 260130901179.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -26401,7 +26359,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 6822117000.0,
+      "amount": 4188093264.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -26457,7 +26415,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 88984784179.0,
+      "amount": 258880038545.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -26527,7 +26485,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 2615615613.0,
+      "amount": 2620520328.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -26583,7 +26541,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": -28004091163.0,
+      "amount": 262685887106.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -26653,7 +26611,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 9366439131.0,
+      "amount": 2522712825.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -26723,7 +26681,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 25498384701.0,
+      "amount": 353413193303.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -26737,7 +26695,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 25498384701.0,
+      "amount": 332710058749.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -26751,7 +26709,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 25498384701.0,
+      "amount": 316877870594.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -26849,7 +26807,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 30235610832.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -26863,7 +26821,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 15897923103.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -26877,7 +26835,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 17299101366.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -26961,7 +26919,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 25498384701.0,
+      "amount": 335509370097.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -27031,7 +26989,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 6572825911.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -27087,7 +27045,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 25498384701.0,
+      "amount": 336079197374.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -27157,7 +27115,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 7091404521.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -27213,7 +27171,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 25498384701.0,
+      "amount": 347457960254.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -27283,7 +27241,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 11154614851.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -27353,7 +27311,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": -49688728000.0,
+      "amount": 1930295930000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -27367,7 +27325,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": -77792301000.0,
+      "amount": 1793830435000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -27381,7 +27339,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": -82060786000.0,
+      "amount": 1771073331000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -27479,7 +27437,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 87034895000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -27493,7 +27451,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 85966730000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -27507,7 +27465,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 127451683000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -27591,7 +27549,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 651936956000.0,
+      "amount": 1832123508000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -27661,7 +27619,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 620645000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -27717,7 +27675,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 646665850000.0,
+      "amount": 1828663656000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -27787,7 +27745,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 25651621000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -27843,7 +27801,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 675124966000.0,
+      "amount": 1903137478000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -27913,7 +27871,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 42252906000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
@@ -27983,7 +27941,7 @@
     "object_id": "metric:equity",
     "period": "2025FY",
     "qualifier": {
-      "amount": 3016775294000.0,
+      "amount": 16908352832000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025FY"
@@ -27997,7 +27955,7 @@
     "object_id": "metric:equity",
     "period": "2024FY",
     "qualifier": {
-      "amount": 2599782415000.0,
+      "amount": 14155813204000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2024FY"
@@ -28011,7 +27969,7 @@
     "object_id": "metric:equity",
     "period": "2023FY",
     "qualifier": {
-      "amount": 2459694580000.0,
+      "amount": 12370102932000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2023FY"
@@ -28109,7 +28067,7 @@
     "object_id": "metric:net_income",
     "period": "2025FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 2928395265000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025FY"
@@ -28123,7 +28081,7 @@
     "object_id": "metric:net_income",
     "period": "2024FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 1454580111000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2024FY"
@@ -28137,7 +28095,7 @@
     "object_id": "metric:net_income",
     "period": "2023FY",
     "qualifier": {
-      "amount": 0.0,
+      "amount": 144930284000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2023FY"
@@ -28221,7 +28179,7 @@
     "object_id": "metric:equity",
     "period": "2025H1",
     "qualifier": {
-      "amount": 1867347233000.0,
+      "amount": 15305272037000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025H1"
@@ -28291,7 +28249,7 @@
     "object_id": "metric:net_income",
     "period": "2025H1",
     "qualifier": {
-      "amount": 851835879000.0,
+      "amount": 447073045000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025H1"
@@ -28347,7 +28305,7 @@
     "object_id": "metric:equity",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 2599782220000.0,
+      "amount": 14471254883000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q1"
@@ -28417,7 +28375,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q1",
     "qualifier": {
-      "amount": 495397203000.0,
+      "amount": 611625281000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q1"
@@ -28473,7 +28431,7 @@
     "object_id": "metric:equity",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 1886836067000.0,
+      "amount": 15952279966000.0,
       "fs_div": "CFS",
       "metric": "equity",
       "period_node": "period:2025Q3"
@@ -28543,7 +28501,7 @@
     "object_id": "metric:net_income",
     "period": "2025Q3",
     "qualifier": {
-      "amount": 1485138997000.0,
+      "amount": 876697436000.0,
       "fs_div": "CFS",
       "metric": "net_income",
       "period_node": "period:2025Q3"
