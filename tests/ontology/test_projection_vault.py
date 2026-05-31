@@ -53,3 +53,35 @@ def test_build_vault_idempotent(tmp_path, ontology_session):
     first = (tmp_path / "companies" / "삼성전자.md").read_text(encoding="utf-8")
     build_vault(s, tmp_path)
     assert (tmp_path / "companies" / "삼성전자.md").read_text(encoding="utf-8") == first
+
+
+def test_build_vault_emits_concept_notes_and_no_dangling_links(tmp_path, ontology_session):
+    import re, pathlib
+    s = ontology_session
+    _seed(s)
+    # 긴 라벨 고객(파일명 truncate 경로) + 일반 고객
+    long_name = "세계 유수의 Mobile 및 Computing 관련 전자 업체 (DRAM 수요처) 외 다수 글로벌 거래선"
+    upsert_node(s, "customer:apple", "customer", "Apple")
+    upsert_node(s, "customer:long", "customer", long_name)
+    for oid in ("customer:apple", "customer:long"):
+        upsert_edge(s, subject_id="company:00126380", predicate="SELLS_TO",
+                    object_id=oid, period="2023", qualifier={}, source_type="llm",
+                    source_ref="r1", method="llm", confidence=0.9)
+    s.commit()
+    build_vault(s, tmp_path)
+    # 개념노트 생성
+    assert (tmp_path / "segments" / "메모리반도체.md").exists()
+    assert (tmp_path / "sectors" / "반도체.md").exists()
+    assert (tmp_path / "regions" / "미주.md").exists()
+    assert (tmp_path / "customers" / "Apple.md").exists()
+    assert (tmp_path / "_index.md").exists()
+    # 백링크: 세그먼트 노트가 회사를 역참조
+    assert "삼성전자" in (tmp_path / "segments" / "메모리반도체.md").read_text(encoding="utf-8")
+    # dangling 링크 0
+    files = {p.stem for p in tmp_path.rglob("*.md")}
+    links = set()
+    for p in tmp_path.rglob("*.md"):
+        for m in re.findall(r"\[\[([^\]|]+)(?:\|[^\]]+)?\]\]", p.read_text(encoding="utf-8")):
+            links.add(m.strip())
+    missing = sorted(l for l in links if l not in files and not l.startswith("_"))
+    assert missing == [], f"dangling links: {missing}"
