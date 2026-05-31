@@ -1,0 +1,12 @@
+{
+  "status": "000",
+  "message": "정상",
+  "list": [
+    {"corp_code": "00126380", "inv_prm": "삼성디스플레이(주)",
+     "invstmnt_purps": "경영참여(지배)", "trmend_blce_qy": "100000000",
+     "trmend_blce_qota_rt": "84.78", "trmend_blce_acntbk_amount": "1000000000000"},
+    {"corp_code": "00126380", "inv_prm": "삼성SDI(주)",
+     "invstmnt_purps": "일반투자", "trmend_blce_qy": "13000000",
+     "trmend_blce_qota_rt": "19.58", "trmend_blce_acntbk_amount": "500000000000"}
+  ]
+}
