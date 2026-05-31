@@ -188,3 +188,28 @@ def ingest_financials_for_company(session: Session, client, *, corp_code: str,
     for f in facts:
         _upsert_fact(session, company_node_id, fs_div, f)
     return len(facts)
+
+
+def ingest_shares_for_company(session: Session, client, *, corp_code: str,
+                              bsns_year: str, reprt_code: str) -> int:
+    """발행주식수(보통주 총수) → shares_outstanding fact. stock 지표(당기만). 멱등.
+
+    fs_div는 연결/별도 무관 개념이라 관습적으로 'CFS' 고정(unique 키 충족용).
+    """
+    from themek.ontology.core.ids import company_id as _cid
+    fiscal_period = _REPRT_PERIOD[reprt_code]
+    rows = client.fetch_shares(corp_code=corp_code, bsns_year=bsns_year,
+                               reprt_code=reprt_code)
+    common = next((r for r in rows
+                   if (r.get("se") or "").strip().startswith("보통")), None)
+    if common is None:
+        return 0
+    amount = _to_amount(common.get("istc_totqy"))
+    if amount is None:
+        return 0
+    _ensure_metric_nodes(session)
+    _ensure_period_node(session, bsns_year, fiscal_period)
+    _upsert_fact(session, _cid(corp_code), "CFS",
+                 {"metric_key": "shares_outstanding", "bsns_year": bsns_year,
+                  "fiscal_period": fiscal_period, "amount": amount})
+    return 1

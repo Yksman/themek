@@ -106,6 +106,18 @@ class DartClient:
             return {}
         return payload
 
+    def fetch_shares(self, *, corp_code: str, bsns_year: str,
+                     reprt_code: str) -> list[dict]:
+        """주식총수현황(stockTotqySttus.json). 비정상 status는 빈 리스트."""
+        params = {"crtfc_key": self._key, "corp_code": corp_code,
+                  "bsns_year": bsns_year, "reprt_code": reprt_code}
+        r = self._client.get(f"{self._base}/stockTotqySttus.json", params=params)
+        self._raise_on_error(r)
+        payload = r.json()
+        if payload.get("status") != "000":
+            return []
+        return payload.get("list", [])
+
     def _raise_on_error(self, r: httpx.Response) -> None:
         if r.status_code in (401, 403):
             raise DartAuthError(f"HTTP {r.status_code}: {r.text[:200]}")

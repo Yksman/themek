@@ -41,7 +41,8 @@ def ingest_financials_all(session: Session, client, *,
     (테스트·수동 override). fnlttSinglAcntAll 1콜=당기/전기/전전기 3개년이라 실제로는
     제출연도 기준 ±2년까지 자동 확보된다.
     """
-    from themek.ontology.ingest.financials import ingest_financials_for_company
+    from themek.ontology.ingest.financials import (
+        ingest_financials_for_company, ingest_shares_for_company)
 
     companies = session.execute(
         select(Node).where(Node.kind == "company")
@@ -60,6 +61,9 @@ def ingest_financials_all(session: Session, client, *,
             for rc in _REPRT_CODES:
                 try:
                     facts += ingest_financials_for_company(
+                        session, client, corp_code=dart_code,
+                        bsns_year=yr, reprt_code=rc)
+                    facts += ingest_shares_for_company(
                         session, client, corp_code=dart_code,
                         bsns_year=yr, reprt_code=rc)
                 except Exception as e:  # 회사별 관용

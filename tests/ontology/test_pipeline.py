@@ -44,6 +44,9 @@ class _FakeClient:
         self.calls.append((corp_code, bsns_year, reprt_code, fs_div))
         return self.rows if fs_div == "CFS" else []
 
+    def fetch_shares(self, *, corp_code, bsns_year, reprt_code):
+        return []
+
 
 def test_company_report_years_is_per_company(ontology_session):
     s = ontology_session
@@ -191,6 +194,9 @@ def test_rebuild_financials_purges_and_reingests(ontology_session):
                     {"account_id": "ifrs-full_Assets", "account_nm": "자산총계",
                      "sj_div": "BS", "thstrm_amount": "900",
                      "frmtrm_amount": "800", "bfefrmtrm_amount": "700"}]
+
+        def fetch_shares(self, *, corp_code, bsns_year, reprt_code):
+            return []
 
     res = rebuild_financials(s, _FakeClient())
     s.commit()
