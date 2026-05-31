@@ -59,27 +59,46 @@ def test_company_report_years_is_per_company(ontology_session):
     assert company_report_years(s, "company:none") == []
 
 
-def test_ingest_financials_all_uses_per_company_years_by_default(ontology_session):
+def test_ingest_financials_all_uses_per_company_years_plus_floor(ontology_session):
+    from datetime import date
     s = ontology_session
-    # A는 2023만, B는 2025만 제출 → 각자 자기 연도만 호출 (cross-product 아님)
+    # A는 2019(floor 밖)만, B는 2020(floor 밖)만 제출. 각자 제출연도 ∪ floor를 호출하되
+    # floor 밖 과거연도는 cross-product 되지 않는다(A의 2019를 B가 호출하면 안 됨).
     upsert_node(s, "company:00000001", "company", "에이", {"dart_code": "00000001"})
     upsert_node(s, "segment:sa", "segment", "sa")
     upsert_edge(s, subject_id="company:00000001", predicate="HAS_SEGMENT",
-                object_id="segment:sa", period="2023", qualifier={},
+                object_id="segment:sa", period="2019", qualifier={},
                 source_type="llm", source_ref="r", method="llm", confidence=0.9)
     upsert_node(s, "company:00000002", "company", "비", {"dart_code": "00000002"})
     upsert_node(s, "segment:sb", "segment", "sb")
     upsert_edge(s, subject_id="company:00000002", predicate="HAS_SEGMENT",
-                object_id="segment:sb", period="2025", qualifier={},
+                object_id="segment:sb", period="2020", qualifier={},
                 source_type="llm", source_ref="r", method="llm", confidence=0.9)
     s.commit()
     client = _FakeClient([])  # 빈 응답이어도 호출 인자만 검증
-    ingest_financials_all(s, client)  # years 미지정 → 회사별
+    # today=2026, floor_n=3 → floor={2024,2025,2026}
+    ingest_financials_all(s, client, today=date(2026, 5, 31), floor_n=3)
     years_by_corp = {}
     for corp, yr, rc, fs in client.calls:
         years_by_corp.setdefault(corp, set()).add(yr)
-    assert years_by_corp["00000001"] == {"2023"}   # A는 2023만
-    assert years_by_corp["00000002"] == {"2025"}   # B는 2025만 (2023 호출 안 함)
+    floor = {"2024", "2025", "2026"}
+    assert years_by_corp["00000001"] == floor | {"2019"}   # A: 제출연도 ∪ floor
+    assert years_by_corp["00000002"] == floor | {"2020"}   # B: 2019 호출 안 함
+    # floor 밖 과거연도는 회사별로 격리됨
+    assert "2020" not in years_by_corp["00000001"]
+    assert "2019" not in years_by_corp["00000002"]
+
+
+def test_ingest_financials_all_explicit_years_bypasses_floor(ontology_session):
+    from datetime import date
+    s = ontology_session
+    upsert_node(s, "company:00000001", "company", "에이", {"dart_code": "00000001"})
+    s.commit()
+    client = _FakeClient([])
+    # years 명시 → floor 무시, 그 연도만 호출
+    ingest_financials_all(s, client, years=["2024"], today=date(2026, 5, 31))
+    called_years = {yr for _c, yr, _rc, _fs in client.calls}
+    assert called_years == {"2024"}
 
 
 def test_ingest_financials_all_iterates_companies_years_reprtcodes(ontology_session):
@@ -198,7 +217,10 @@ def test_rebuild_financials_purges_and_reingests(ontology_session):
         def fetch_shares(self, *, corp_code, bsns_year, reprt_code):
             return []
 
-    res = rebuild_financials(s, _FakeClient())
+    from datetime import date
+    # today=2024 + floor_n=1 → floor={2024}, 엣지연도 2024와 동일 → 조회연도 {2024}.
+    # (floor 격리 검증은 별도 테스트; 여기선 BS 오염 교정 의도만 결정론적으로 유지)
+    res = rebuild_financials(s, _FakeClient(), today=date(2024, 6, 1), floor_n=1)
     s.commit()
 
     assert res["deleted"] == 1                      # stale fact 제거

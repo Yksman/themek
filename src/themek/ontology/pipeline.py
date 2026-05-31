@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
+from datetime import date
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -32,17 +33,35 @@ def company_report_years(session: Session, company_id: str) -> list[str]:
     return sorted({p for p in rows if p and _YEAR.match(p)})
 
 
+def recent_fiscal_years(today: "date", n: int = 3) -> list[str]:
+    """today 기준 최근 n개 회계연도(현재 역년 포함). 예: 2026 → ['2024','2025','2026'].
+
+    엣지(사업보고서 적재)와 무관하게 항상 시도하는 '최신화 floor'. 현재 역년을 포함해
+    당해 분기/반기보고서가 제출되는 즉시 잡히도록 한다(아직 미제출 연/분기는 DART가
+    status 013로 빈 응답 → 멱등·무해). 회사별 제출 연도 ∪ 이 floor 가 실제 조회 대상.
+    """
+    y = today.year
+    return sorted(str(y - i) for i in range(n))
+
+
 def ingest_financials_all(session: Session, client, *,
-                          years: list[str] | None = None) -> dict:
+                          years: list[str] | None = None,
+                          today: "date | None" = None,
+                          floor_n: int = 3) -> dict:
     """재무 적재.
 
-    기본은 **회사별 실제 제출 회계연도**(`company_report_years`)만 적재한다 — 2023만
-    제출한 회사엔 2023 계열만 호출. `years`를 명시하면 그 연도를 전 회사에 강제 적용
-    (테스트·수동 override). fnlttSinglAcntAll 1콜=당기/전기/전전기 3개년이라 실제로는
-    제출연도 기준 ±2년까지 자동 확보된다.
+    기본은 **회사별 실제 제출 회계연도(`company_report_years`) ∪ 최신화 floor**
+    (`recent_fiscal_years`)를 적재한다. floor 덕분에 사업보고서가 아직 적재되지 않은
+    최근 연도(당해 분기 포함)도 항상 조회 → 매일 돌리면 자가치유(self-healing)된다.
+    `years`를 명시하면 그 연도를 전 회사에 강제 적용하고 floor는 끈다(테스트·수동
+    override). fnlttSinglAcntAll 1콜=당기/전기/전전기 3개년이라 flow 지표는 추가로
+    조회연도 -2년까지 자동 확보된다(stock 지표는 조회 당해만 적재).
     """
     from themek.ontology.ingest.financials import (
         ingest_financials_for_company, ingest_shares_for_company)
+
+    floor = (set() if years is not None
+             else set(recent_fiscal_years(today or date.today(), floor_n)))
 
     companies = session.execute(
         select(Node).where(Node.kind == "company")
@@ -55,8 +74,8 @@ def ingest_financials_all(session: Session, client, *,
         if not dart_code:
             continue
         processed += 1
-        company_years = years if years is not None else company_report_years(
-            session, node.id)
+        company_years = (years if years is not None else sorted(
+            set(company_report_years(session, node.id)) | floor))
         for yr in company_years:
             for rc in _REPRT_CODES:
                 try:
@@ -71,8 +90,9 @@ def ingest_financials_all(session: Session, client, *,
     return {"companies": processed, "facts": facts, "failed": failed}
 
 
-def rebuild_financials(session: Session, client) -> dict:
-    """financial_facts 전체 purge 후 회사별 실제 제출 연도로 재적재 + 무결성 검사.
+def rebuild_financials(session: Session, client, *,
+                       today: "date | None" = None, floor_n: int = 3) -> dict:
+    """financial_facts 전체 purge 후 회사별 제출 연도 ∪ 최신화 floor로 재적재 + 무결성 검사.
 
     1.1 BS 오염 교정용. _upsert_fact는 덮어쓰기만 하므로(삭제 안 함) purge가 선행해야
     잘못 라벨된 기존 행이 제거된다. 멱등(재실행 안전).
@@ -82,7 +102,7 @@ def rebuild_financials(session: Session, client) -> dict:
 
     deleted = session.query(FinancialFact).delete()
     session.flush()
-    stats = ingest_financials_all(session, client)
+    stats = ingest_financials_all(session, client, today=today, floor_n=floor_n)
     session.flush()
     issues = check_integrity(session)
     errors = [i for i in issues if i.severity == "error"]

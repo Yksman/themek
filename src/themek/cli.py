@@ -522,12 +522,12 @@ def dart_incremental_cmd(
     since: str = typer.Option("yesterday", "--since"),
     until: str = typer.Option("today", "--until"),
     universe_source: str = typer.Option(
-        "file", "--universe-source",
-        help="file | stocks",
+        "stocks", "--universe-source",
+        help="stocks (기본, Stock 테이블 전체) | file",
     ),
-    universe_file: Path = typer.Option(
-        DEFAULT_UNIVERSE_FILE, "--universe-file",
-        help="active.txt 경로 (--universe-source=file 일 때만)",
+    universe_file: Optional[Path] = typer.Option(
+        None, "--universe-file",
+        help="corp_code 파일 경로. 지정 시 source 무관하게 이 파일을 universe로 사용.",
     ),
     include_delisted: bool = typer.Option(
         False, "--include-delisted",
@@ -557,13 +557,20 @@ def dart_incremental_cmd(
         typer.echo(f"Error: {e}", err=True)
         raise typer.Exit(code=2)
 
-    if universe_source == "stocks":
+    if universe_file is not None:
+        # 명시적 파일 override (특정 종목군만 처리). source보다 우선.
+        universe = set(load_universe(universe_file))
+    elif universe_source == "stocks":
         with _session() as sess:
             universe = set(load_universe_from_stocks(
                 sess, include_delisted=include_delisted,
             ))
     elif universe_source == "file":
-        universe = set(load_universe(universe_file))
+        typer.echo(
+            "Error: --universe-source file 사용 시 --universe-file 경로가 필요합니다.",
+            err=True,
+        )
+        raise typer.Exit(code=1)
     else:
         typer.echo(
             f"Error: --universe-source는 'file' 또는 'stocks' (got {universe_source!r})",
@@ -893,7 +900,18 @@ def ontology_resolve_cmd():
 def pipeline_run_cmd(
     since: str = typer.Option("yesterday", "--since"),
     until: str = typer.Option("today", "--until"),
-    universe_file: Path = typer.Option(DEFAULT_UNIVERSE_FILE, "--universe-file"),
+    universe_source: str = typer.Option(
+        "stocks", "--universe-source",
+        help="stocks (기본, Stock 테이블 전체) | file",
+    ),
+    universe_file: Optional[Path] = typer.Option(
+        None, "--universe-file",
+        help="corp_code 파일 경로. 지정 시 source 무관하게 이 파일을 universe로 사용.",
+    ),
+    include_delisted: bool = typer.Option(
+        False, "--include-delisted",
+        help="--universe-source=stocks 시 delisted 종목 포함",
+    ),
     out_vault: str = typer.Option("vault", "--out-vault"),
     out_graph: str = typer.Option("graph", "--out-graph"),
     skip_sync: bool = typer.Option(False, "--skip-sync"),
@@ -903,7 +921,7 @@ def pipeline_run_cmd(
 ):
     """DART 파이프라인 통합 구동: sync→structure→financials→export (재무 연도 자동)."""
     from datetime import timedelta
-    from themek.dart.universe import load_universe
+    from themek.dart.universe import load_universe, load_universe_from_stocks
     from themek.dart.rate_budget import RateBudget
 
     s = get_settings()
@@ -924,7 +942,22 @@ def pipeline_run_cmd(
             typer.echo(f"Error: {e}", err=True)
             raise typer.Exit(code=2)
     if not skip_structure:
-        universe = set(load_universe(universe_file))
+        if universe_file is not None:
+            universe = set(load_universe(universe_file))
+        elif universe_source == "stocks":
+            with _session() as sess:
+                universe = set(load_universe_from_stocks(
+                    sess, include_delisted=include_delisted))
+        elif universe_source == "file":
+            typer.echo(
+                "Error: --universe-source file 사용 시 --universe-file 경로가 필요합니다.",
+                err=True)
+            raise typer.Exit(code=1)
+        else:
+            typer.echo(
+                f"Error: --universe-source는 'file' 또는 'stocks' (got {universe_source!r})",
+                err=True)
+            raise typer.Exit(code=1)
         rate_budget = RateBudget(daily_cap=38000,
                                  state_file=s.dart_cache_dir / "budget_state.json")
 
