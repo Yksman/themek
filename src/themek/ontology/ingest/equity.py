@@ -123,3 +123,20 @@ def ingest_other_corp_investments(session: Session, *, corp_code: str,
                     method="api", confidence=1.0)
         n += 1
     return n
+
+
+def ingest_equity_for_company(session: Session, client, *, corp_code: str,
+                              bsns_year: str, reprt_code: str = "11011") -> int:
+    """회사 1건 지분구조 적재(사업보고서 기준). 최대주주 + 타법인출자 엣지 수 합 반환."""
+    source_ref = f"dart:{corp_code}:{bsns_year}:{reprt_code}"
+    sh = client.fetch_largest_shareholders(
+        corp_code=corp_code, bsns_year=bsns_year, reprt_code=reprt_code)
+    inv = client.fetch_other_corp_investments(
+        corp_code=corp_code, bsns_year=bsns_year, reprt_code=reprt_code)
+    n = ingest_largest_shareholders(session, corp_code=corp_code,
+                                    bsns_year=bsns_year, rows=sh,
+                                    source_ref=source_ref)
+    n += ingest_other_corp_investments(session, corp_code=corp_code,
+                                       bsns_year=bsns_year, rows=inv,
+                                       source_ref=source_ref)
+    return n
