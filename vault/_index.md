@@ -6,7 +6,7 @@ tags: [index]
 
 
 - 회사: 39
-- 개념 노드(segment/customer/region/sector): 312
+- 개념 노드(segment/customer/region/sector): 322
 
 
 ## 회사 목록
