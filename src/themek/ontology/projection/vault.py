@@ -36,7 +36,8 @@ _CF_LABEL = {"cf_operating": "영업활동현금흐름",
              "cf_investing": "투자활동현금흐름",
              "cf_financing": "재무활동현금흐름"}
 _INLINE_ORDER = _KPI_ORDER + _CF_ORDER + ["eps", "shares_outstanding"]
-_GENERATED_DIRS = ("companies", "segments", "customers", "regions", "sectors")
+_GENERATED_DIRS = ("companies", "segments", "customers", "regions", "sectors",
+                   "people")
 _KIND_DIR = {"segment": "segments", "customer": "customers",
              "region": "regions", "sector": "sectors"}
 _SEVERITY_ORDER = ("error", "warn", "info")
@@ -197,6 +198,36 @@ def _dedup_latest(edges: list[Edge]) -> list[tuple[str, float | None]]:
     return [(oid, v[1]) for oid, v in best.items()]
 
 
+def _inbound_holders(edges: list[Edge]) -> list[tuple[str, float | None, str | None]]:
+    """주주 엣지(OWNS_STAKE_IN, object=회사) → subject별 최신 period.
+
+    반환: [(subject_id, stake_pct, relation)].
+    """
+    best: dict[str, tuple] = {}
+    for e in edges:
+        pk = e.period or ""
+        cur = best.get(e.subject_id)
+        if cur is None or pk > cur[0]:
+            best[e.subject_id] = (pk, e.qualifier.get("stake_pct"),
+                                  e.qualifier.get("relation"))
+    return [(k, v[1], v[2]) for k, v in best.items()]
+
+
+def _outbound_holdings(edges: list[Edge]) -> list[tuple[str, float | None, str | None]]:
+    """타법인 출자 엣지(OWNS_STAKE_IN, subject=회사) → object별 최신 period.
+
+    반환: [(object_id, stake_pct, affiliation_type)].
+    """
+    best: dict[str, tuple] = {}
+    for e in edges:
+        pk = e.period or ""
+        cur = best.get(e.object_id)
+        if cur is None or pk > cur[0]:
+            best[e.object_id] = (pk, e.qualifier.get("stake_pct"),
+                                 e.qualifier.get("affiliation_type"))
+    return [(k, v[1], v[2]) for k, v in best.items()]
+
+
 def build_vault(session: Session, out_dir: Path) -> dict:
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -227,6 +258,8 @@ def build_vault(session: Session, out_dir: Path) -> dict:
 
     # 개념 노드 → 백링크 수집: {concept_node_id: [(company_label, predicate, share)]}
     backlinks: dict[str, list[tuple[str, str, float | None]]] = {}
+    # 주주(person) → 보유 회사 백링크: {holder_node_id: [(company_label, stake_pct)]}
+    people_backlinks: dict[str, list[tuple[str, float | None]]] = {}
 
     def _lbl(node_id: str) -> str:
         return node_label.get(node_id, node_id)
@@ -290,6 +323,31 @@ def build_vault(session: Session, out_dir: Path) -> dict:
         if not reg:
             parts.append("- (없음)")
 
+        # 지분구조 — 주주(inbound) + 타법인 출자(outbound)
+        inbound_edges = session.execute(
+            select(Edge).where(Edge.predicate == "OWNS_STAKE_IN",
+                               Edge.object_id == c.id)
+        ).scalars().all()
+        holders = _inbound_holders(inbound_edges)
+        holdings = _outbound_holdings(
+            [e for e in edges if e.predicate == "OWNS_STAKE_IN"])
+        parts.append("\n## 지분구조\n")
+        parts.append("### 주주 (최대주주·특수관계인)\n")
+        for sid, pct, rel in holders:
+            rel_part = f" ({rel})" if rel else ""
+            pct_part = f" — {pct:g}%" if pct is not None else ""
+            parts.append(f"- {_wikilink(_lbl(sid))}{rel_part}{pct_part}")
+            people_backlinks.setdefault(sid, []).append((c.label, pct))
+        if not holders:
+            parts.append("- (없음)")
+        parts.append("\n### 타법인 출자\n")
+        for oid, pct, aff in holdings:
+            aff_part = f" [{aff}]" if aff else ""
+            pct_part = f" — {pct:g}%" if pct is not None else ""
+            parts.append(f"- {_wikilink(_lbl(oid))}{aff_part}{pct_part}")
+        if not holdings:
+            parts.append("- (없음)")
+
         parts += _render_financials(fin)
         (out_dir / "companies" / f"{_note_name(c.label)}.md").write_text(
             "\n".join(parts) + "\n", encoding="utf-8")
@@ -312,6 +370,23 @@ def build_vault(session: Session, out_dir: Path) -> dict:
         (out_dir / sub / f"{_note_name(n.label)}.md").write_text(
             "\n".join(parts) + "\n", encoding="utf-8")
 
+    # person 노트 — 보유 회사 백링크 포함
+    persons = session.execute(
+        select(Node).where(Node.kind == "person").order_by(Node.label)
+    ).scalars().all()
+    for p in persons:
+        refs = people_backlinks.get(p.id, [])
+        parts = ["---", 'type: "person"', f"name: {_yaml_str(p.label)}",
+                 f"owned_count: {len(refs)}", "tags: [person]", "---",
+                 f"# {p.label}\n", f"\n## 보유 회사 ({len(refs)})\n"]
+        for comp_label, pct in sorted(set(refs)):
+            suffix = f" — {pct:g}%" if pct is not None else ""
+            parts.append(f"- {_wikilink(comp_label)}{suffix}")
+        if not refs:
+            parts.append("- (없음)")
+        (out_dir / "people" / f"{_note_name(p.label)}.md").write_text(
+            "\n".join(parts) + "\n", encoding="utf-8")
+
     # _index.md — 회사 목록
     idx = ["---", 'type: "index"', "tags: [index]", "---",
            "# themek 온톨로지 vault\n",
@@ -331,4 +406,4 @@ def build_vault(session: Session, out_dir: Path) -> dict:
     (out_dir / "_index.md").write_text("\n".join(idx) + "\n", encoding="utf-8")
 
     return {"companies": len(companies), "concepts": len(concept_nodes),
-            "issues": len(issues)}
+            "people": len(persons), "issues": len(issues)}
