@@ -2,6 +2,14 @@
 type: "company"
 dart_code: "00122579"
 name: "BYC"
+ticker: "001460"
+market: "KOSPI"
+sector: "내의 및 잠옷 제조업"
+periods: [2023FY, 2024FY, 2025Q1, 2025H1, 2025Q3, 2025FY]
+report_count: 6
+segment_count: 3
+customer_count: 0
+issue_count: 0
 tags: [company]
 ---
 # BYC
@@ -38,33 +46,84 @@ tags: [company]
 | 부채비율 | — | — | 30.0% | 31.0% | 31.7% | 37.9% |
 | ROE | — | — | 0.6% | 0.3% | 1.1% | 3.5% |
 
+
+## 현금흐름 (단위 억원)
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 영업활동현금흐름 | 303억 | 282억 | 30억 | 151억 | 174억 | 342억 |
+| 투자활동현금흐름 | -727억 | -85억 | -224억 | -388억 | -550억 | -994억 |
+| 재무활동현금흐름 | -29억 | -86억 | 142억 | 165억 | 240억 | 609억 |
+
+
+## 주당 지표
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| EPS (원/주) | 2,836원 | 2,205원 | 385원 | 200원 | 761원 | 2,367원 |
+
+
+## 발행주식수
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 발행주식수 | — | — | 6,246,150주 | 6,246,150주 | 6,246,150주 | 6,246,150주 |
+
 revenue_2023FY:: 168401523886
 operating_income_2023FY:: 27498394275
 net_income_2023FY:: 23666593032
+cf_operating_2023FY:: 30311996898
+cf_investing_2023FY:: -72664317670
+cf_financing_2023FY:: -2913564511
+eps_2023FY:: 2836
 revenue_2024FY:: 165207568941
 operating_income_2024FY:: 23832906913
 net_income_2024FY:: 18404839494
+cf_operating_2024FY:: 28220086500
+cf_investing_2024FY:: -8525450585
+cf_financing_2024FY:: -8617198114
+eps_2024FY:: 2205
 revenue_2025Q1:: 35340964470
 operating_income_2025Q1:: 4202198337
 net_income_2025Q1:: 3201194704
 assets_2025Q1:: 713964910888
 liabilities_2025Q1:: 164721826630
 equity_2025Q1:: 549243084258
+cf_operating_2025Q1:: 3046470969
+cf_investing_2025Q1:: -22445190668
+cf_financing_2025Q1:: 14150588301
+eps_2025Q1:: 385
+shares_outstanding_2025Q1:: 6246150
 revenue_2025H1:: 39494650463
 operating_income_2025H1:: 2780619216
 net_income_2025H1:: 1661125684
 assets_2025H1:: 721007573676
 liabilities_2025H1:: 170644239258
 equity_2025H1:: 550363334418
+cf_operating_2025H1:: 15065828930
+cf_investing_2025H1:: -38763291225
+cf_financing_2025H1:: 16479021781
+eps_2025H1:: 200
+shares_outstanding_2025H1:: 6246150
 revenue_2025Q3:: 39103505562
 operating_income_2025Q3:: 8251947181
 net_income_2025Q3:: 6276794659
 assets_2025Q3:: 731111357292
 liabilities_2025Q3:: 176082036251
 equity_2025Q3:: 555029321041
+cf_operating_2025Q3:: 17439115959
+cf_investing_2025Q3:: -54976627412
+cf_financing_2025Q3:: 23986863810
+eps_2025Q3:: 761
+shares_outstanding_2025Q3:: 6246150
 revenue_2025FY:: 163166613171
 operating_income_2025FY:: 26573558468
 net_income_2025FY:: 19590575123
 assets_2025FY:: 775789336133
 liabilities_2025FY:: 213296295370
 equity_2025FY:: 562493040763
+cf_operating_2025FY:: 34233859773
+cf_investing_2025FY:: -99357574811
+cf_financing_2025FY:: 60899797584
+eps_2025FY:: 2367
+shares_outstanding_2025FY:: 6246150

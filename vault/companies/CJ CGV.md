@@ -2,6 +2,14 @@
 type: "company"
 dart_code: "00303873"
 name: "CJ CGV"
+ticker: "079160"
+market: "KOSPI"
+sector: "영화관 운영업"
+periods: [2023FY, 2024FY, 2025Q1, 2025H1, 2025Q3, 2025FY]
+report_count: 6
+segment_count: 3
+customer_count: 0
+issue_count: 0
 tags: [company]
 ---
 # CJ CGV
@@ -37,33 +45,71 @@ tags: [company]
 | 부채비율 | — | — | 622.3% | 622.4% | 700.9% | 533.9% |
 | ROE | — | — | -7.0% | -7.1% | -5.7% | -22.0% |
 
+
+## 현금흐름 (단위 억원)
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 영업활동현금흐름 | 1,801억 | 1,908억 | 93억 | 286억 | 1,081억 | 2,149억 |
+| 투자활동현금흐름 | -990억 | -2,307억 | -233억 | -451억 | -1,401억 | -1,966억 |
+| 재무활동현금흐름 | -2,798억 | 790억 | 330억 | 1,347억 | 2,059억 | 2,526억 |
+
+
+## 발행주식수
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 발행주식수 | — | — | 165,580,269주 | 165,580,680주 | 165,581,235주 | 165,581,556주 |
+
 revenue_2023FY:: 1545839243146
 operating_income_2023FY:: 49065796701
 net_income_2023FY:: -123353396404
+cf_operating_2023FY:: 180112447168
+cf_investing_2023FY:: -98961325833
+cf_financing_2023FY:: -279818247470
 revenue_2024FY:: 1957884214182
 operating_income_2024FY:: 75933768898
 net_income_2024FY:: -175469437302
+cf_operating_2024FY:: 190770411042
+cf_investing_2024FY:: -230667600983
+cf_financing_2024FY:: 79033428241
 revenue_2025Q1:: 533590697727
 operating_income_2025Q1:: 3200890054
 net_income_2025Q1:: -38091392748
 assets_2025Q1:: 3927187629707
 liabilities_2025Q1:: 3383477417968
 equity_2025Q1:: 543710211739
+cf_operating_2025Q1:: 9295004845
+cf_investing_2025Q1:: -23306951522
+cf_financing_2025Q1:: 32964274558
+shares_outstanding_2025Q1:: 165580269
 revenue_2025H1:: 491616609098
 operating_income_2025H1:: 1716783656
 net_income_2025H1:: -38212416618
 assets_2025H1:: 3860968868541
 liabilities_2025H1:: 3326512358248
 equity_2025H1:: 534456510293
+cf_operating_2025H1:: 28564990283
+cf_investing_2025H1:: -45054485925
+cf_financing_2025H1:: 134674993748
+shares_outstanding_2025H1:: 165580680
 revenue_2025Q3:: 583079484314
 operating_income_2025Q3:: 23344089982
 net_income_2025Q3:: -28706631119
 assets_2025Q3:: 4037245483356
 liabilities_2025Q3:: 3533165576388
 equity_2025Q3:: 504079906968
+cf_operating_2025Q3:: 108085951532
+cf_investing_2025Q3:: -140133527685
+cf_financing_2025Q3:: 205911685063
+shares_outstanding_2025Q3:: 165581235
 revenue_2025FY:: 2275369359771
 operating_income_2025FY:: 96217499551
 net_income_2025FY:: -143369293871
 assets_2025FY:: 4122622000546
 liabilities_2025FY:: 3472281571266
 equity_2025FY:: 650340429280
+cf_operating_2025FY:: 214869995007
+cf_investing_2025FY:: -196574222565
+cf_financing_2025FY:: 252585720297
+shares_outstanding_2025FY:: 165581556

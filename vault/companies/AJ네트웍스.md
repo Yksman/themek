@@ -2,6 +2,14 @@
 type: "company"
 dart_code: "00365387"
 name: "AJ네트웍스"
+ticker: "095570"
+market: "KOSPI"
+sector: "산업용 기계 및 장비 임대업"
+periods: [2023FY, 2024FY, 2025Q1, 2025H1, 2025Q3, 2025FY]
+report_count: 6
+segment_count: 5
+customer_count: 2
+issue_count: 0
 tags: [company]
 ---
 # AJ네트웍스
@@ -41,33 +49,84 @@ tags: [company]
 | 부채비율 | — | — | 303.1% | 299.7% | 286.8% | 289.1% |
 | ROE | — | — | 1.2% | 1.2% | 2.9% | 6.2% |
 
+
+## 현금흐름 (단위 억원)
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 영업활동현금흐름 | -181억 | 334억 | 168억 | 407억 | 528억 | 759억 |
+| 투자활동현금흐름 | -1,064억 | -1,007억 | 140억 | -49억 | 90억 | -188억 |
+| 재무활동현금흐름 | 1,163억 | 471억 | 395억 | 137억 | -12억 | -56억 |
+
+
+## 주당 지표
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| EPS (원/주) | 362원 | 488원 | 27원 | 103원 | 27원 | 494원 |
+
+
+## 발행주식수
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 발행주식수 | — | — | 45,252,759주 | 45,252,759주 | 45,252,759주 | 45,252,759주 |
+
 revenue_2023FY:: 936525061000
 operating_income_2023FY:: 78472289000
 net_income_2023FY:: 16472355000
+cf_operating_2023FY:: -18141405000
+cf_investing_2023FY:: -106360588000
+cf_financing_2023FY:: 116307779000
+eps_2023FY:: 362
 revenue_2024FY:: 964641518000
 operating_income_2024FY:: 76256280000
 net_income_2024FY:: 21600801000
+cf_operating_2024FY:: 33382442000
+cf_investing_2024FY:: -100692065000
+cf_financing_2024FY:: 47076332000
+eps_2024FY:: 488
 revenue_2025Q1:: 261122037529
 operating_income_2025Q1:: 15948417838
 net_income_2025Q1:: 5183305353
 assets_2025Q1:: 1758818519349
 liabilities_2025Q1:: 1322536792752
 equity_2025Q1:: 436281726597
+cf_operating_2025Q1:: 16791399957
+cf_investing_2025Q1:: 14023882626
+cf_financing_2025Q1:: 39545082711
+eps_2025Q1:: 27
+shares_outstanding_2025Q1:: 45252759
 revenue_2025H1:: 262299625000
 operating_income_2025H1:: 17275246000
 net_income_2025H1:: 5061116000
 assets_2025H1:: 1724720990000
 liabilities_2025H1:: 1293246029000
 equity_2025H1:: 431474961000
+cf_operating_2025H1:: 40682942000
+cf_investing_2025H1:: -4935565000
+cf_financing_2025H1:: 13661997000
+eps_2025H1:: 103
+shares_outstanding_2025H1:: 45252759
 revenue_2025Q3:: 283521342000
 operating_income_2025Q3:: 13157652000
 net_income_2025Q3:: 13266294000
 assets_2025Q3:: 1742458081000
 liabilities_2025Q3:: 1291948325000
 equity_2025Q3:: 450509756000
+cf_operating_2025Q3:: 52827743000
+cf_investing_2025Q3:: 8975581000
+cf_financing_2025Q3:: -1230114000
+eps_2025Q3:: 27
+shares_outstanding_2025Q3:: 45252759
 revenue_2025FY:: 1070114469000
 operating_income_2025FY:: 71548375000
 net_income_2025FY:: 28327120000
 assets_2025FY:: 1778787002000
 liabilities_2025FY:: 1321667203000
 equity_2025FY:: 457119800000
+cf_operating_2025FY:: 75931753000
+cf_investing_2025FY:: -18764011000
+cf_financing_2025FY:: -5625961000
+eps_2025FY:: 494
+shares_outstanding_2025FY:: 45252759

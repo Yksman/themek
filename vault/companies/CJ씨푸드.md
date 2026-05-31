@@ -2,6 +2,14 @@
 type: "company"
 dart_code: "00129013"
 name: "CJ씨푸드"
+ticker: "011150"
+market: "KOSPI"
+sector: "동물용 사료 및 조제식품 제조업"
+periods: [2023FY, 2024FY, 2025Q1, 2025H1, 2025Q3, 2025FY]
+report_count: 6
+segment_count: 2
+customer_count: 1
+issue_count: 0
 tags: [company]
 ---
 # CJ씨푸드
@@ -37,33 +45,82 @@ tags: [company]
 | 부채비율 | — | — | 110.6% | 106.4% | 120.4% | 91.5% |
 | ROE | — | — | 0.3% | 0.4% | 0.0% | 3.2% |
 
+
+## 현금흐름 (단위 억원)
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 영업활동현금흐름 | 55억 | 41억 | -34억 | -94억 | -132억 | 20억 |
+| 투자활동현금흐름 | 15억 | 20억 | -6억 | 13억 | 48억 | 22억 |
+| 재무활동현금흐름 | -63억 | -53억 | 27억 | 25억 | 32억 | -60억 |
+
+
+## 주당 지표
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| EPS (원/주) | 123원 | 139원 | 6원 | 9원 | 0원 | 78원 |
+
+
+## 발행주식수
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 발행주식수 | — | — | — | 35,931,000주 | — | 35,931,000주 |
+
 revenue_2023FY:: 148348807287
 operating_income_2023FY:: 4139339998
 net_income_2023FY:: 4435393624
+cf_operating_2023FY:: 5511061474
+cf_investing_2023FY:: 1501873489
+cf_financing_2023FY:: -6274050867
+eps_2023FY:: 123
 revenue_2024FY:: 193717170281
 operating_income_2024FY:: 4357856052
 net_income_2024FY:: 5019262467
+cf_operating_2024FY:: 4145520764
+cf_investing_2024FY:: 1956851211
+cf_financing_2024FY:: -5261967868
+eps_2024FY:: 139
 revenue_2025Q1:: 52528283248
 operating_income_2025Q1:: -1000475233
 net_income_2025Q1:: 230991938
 assets_2025Q1:: 176878437980
 liabilities_2025Q1:: 92891876246
 equity_2025Q1:: 83986561734
+cf_operating_2025Q1:: -3393716526
+cf_investing_2025Q1:: -567973275
+cf_financing_2025Q1:: 2696751668
+eps_2025Q1:: 6
 revenue_2025H1:: 42474176399
 operating_income_2025H1:: -1488275703
 net_income_2025H1:: 295182813
 assets_2025H1:: 172682876929
 liabilities_2025H1:: 89032820269
 equity_2025H1:: 83650056660
+cf_operating_2025H1:: -9410981666
+cf_investing_2025H1:: 1306955656
+cf_financing_2025H1:: 2537290908
+eps_2025H1:: 9
+shares_outstanding_2025H1:: 35931000
 revenue_2025Q3:: 49423564141
 operating_income_2025Q3:: -634738682
 net_income_2025Q3:: 10286676
 assets_2025Q3:: 186766963862
 liabilities_2025Q3:: 102031320319
 equity_2025Q3:: 84735643543
+cf_operating_2025Q3:: -13181896029
+cf_investing_2025Q3:: 4800068818
+cf_financing_2025Q3:: 3184872256
+eps_2025Q3:: 0
 revenue_2025FY:: 192117633850
 operating_income_2025FY:: -909622524
 net_income_2025FY:: 2827173450
 assets_2025FY:: 169330716894
 liabilities_2025FY:: 80914660959
 equity_2025FY:: 88416055935
+cf_operating_2025FY:: 1957670478
+cf_investing_2025FY:: 2236612529
+cf_financing_2025FY:: -5973330312
+eps_2025FY:: 78
+shares_outstanding_2025FY:: 35931000

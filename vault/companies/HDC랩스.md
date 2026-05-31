@@ -2,6 +2,14 @@
 type: "company"
 dart_code: "00350312"
 name: "HDC랩스"
+ticker: "039570"
+market: "KOSPI"
+sector: "건물설비 설치 공사업"
+periods: [2023FY, 2024FY, 2025Q1, 2025H1, 2025Q3, 2025FY]
+report_count: 6
+segment_count: 3
+customer_count: 11
+issue_count: 0
 tags: [company]
 ---
 # HDC랩스
@@ -47,33 +55,82 @@ tags: [company]
 | 부채비율 | — | — | 68.9% | 64.0% | 62.7% | 65.4% |
 | ROE | — | — | 1.0% | 1.6% | 1.0% | 4.6% |
 
+
+## 현금흐름 (단위 억원)
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 영업활동현금흐름 | 233억 | 66억 | 113억 | -59억 | 316억 | 566억 |
+| 투자활동현금흐름 | -264억 | 229억 | -19억 | 54억 | -174억 | -423억 |
+| 재무활동현금흐름 | -138억 | -139억 | -3억 | -107억 | -109억 | -111억 |
+
+
+## 주당 지표
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| EPS (원/주) | 573원 | 826원 | 114원 | 182원 | 110원 | 534원 |
+
+
+## 발행주식수
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 발행주식수 | — | — | — | 25,957,601주 | — | 25,957,601주 |
+
 revenue_2023FY:: 606281889297
 operating_income_2023FY:: 10513214237
 net_income_2023FY:: 13163298384
+cf_operating_2023FY:: 23301293882
+cf_investing_2023FY:: -26392021539
+cf_financing_2023FY:: -13835816661
+eps_2023FY:: 573
 revenue_2024FY:: 628807776981
 operating_income_2024FY:: 6401720348
 net_income_2024FY:: 18975535063
+cf_operating_2024FY:: 6600157419
+cf_investing_2024FY:: 22859765440
+cf_financing_2024FY:: -13882872822
+eps_2024FY:: 826
 revenue_2025Q1:: 162554681236
 operating_income_2025Q1:: 2968088898
 net_income_2025Q1:: 2620520328
 assets_2025Q1:: 437156900382
 liabilities_2025Q1:: 178276861837
 equity_2025Q1:: 258880038545
+cf_operating_2025Q1:: 11321639180
+cf_investing_2025Q1:: -1885367385
+cf_financing_2025Q1:: -276005225
+eps_2025Q1:: 114
 revenue_2025H1:: 169401960299
 operating_income_2025H1:: 3677548224
 net_income_2025H1:: 4188093264
 assets_2025H1:: 426638123337
 liabilities_2025H1:: 166507222158
 equity_2025H1:: 260130901179
+cf_operating_2025H1:: -5895783992
+cf_investing_2025H1:: 5430111787
+cf_financing_2025H1:: -10707237002
+eps_2025H1:: 182
+shares_outstanding_2025H1:: 25957601
 revenue_2025Q3:: 155302312513
 operating_income_2025Q3:: 2194532000
 net_income_2025Q3:: 2522712825
 assets_2025Q3:: 427340769901
 liabilities_2025Q3:: 164654882795
 equity_2025Q3:: 262685887106
+cf_operating_2025Q3:: 31628210882
+cf_investing_2025Q3:: -17414712806
+cf_financing_2025Q3:: -10870175673
+eps_2025Q3:: 110
 revenue_2025FY:: 645728085876
 operating_income_2025FY:: 10637118275
 net_income_2025FY:: 12262930001
 assets_2025FY:: 441412758024
 liabilities_2025FY:: 174545505648
 equity_2025FY:: 266867252376
+cf_operating_2025FY:: 56552244199
+cf_investing_2025FY:: -42312895359
+cf_financing_2025FY:: -11149277934
+eps_2025FY:: 534
+shares_outstanding_2025FY:: 25957601

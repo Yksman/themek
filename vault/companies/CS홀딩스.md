@@ -2,6 +2,14 @@
 type: "company"
 dart_code: "00149026"
 name: "CS홀딩스"
+ticker: "000590"
+market: "KOSPI"
+sector: "비금융 지주회사"
+periods: [2023FY, 2024FY, 2025Q1, 2025H1, 2025Q3, 2025FY]
+report_count: 6
+segment_count: 2
+customer_count: 0
+issue_count: 0
 tags: [company]
 ---
 # CS홀딩스
@@ -36,33 +44,84 @@ tags: [company]
 | 부채비율 | — | — | 9.3% | 8.5% | 8.2% | 8.0% |
 | ROE | — | — | 1.8% | 0.3% | 1.9% | 5.3% |
 
+
+## 현금흐름 (단위 억원)
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 영업활동현금흐름 | 282억 | 295억 | 67억 | 149억 | 178억 | 176억 |
+| 투자활동현금흐름 | -518억 | -184억 | -140억 | -17억 | 166억 | 110억 |
+| 재무활동현금흐름 | -78억 | -92억 | -6억 | -21억 | -22억 | -30억 |
+
+
+## 주당 지표
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| EPS (원/주) | 15,091원 | 29,452원 | 5,655원 | 1,131원 | 5,750원 | 16,782원 |
+
+
+## 발행주식수
+
+| 지표 | 2023 FY | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY |
+|------|------|------|------|------|------|------|
+| 발행주식수 | — | — | 1,154,482주 | 1,154,482주 | 1,154,482주 | 1,154,482주 |
+
 revenue_2023FY:: 171965239524
 operating_income_2023FY:: 19128717935
 net_income_2023FY:: 22145557927
+cf_operating_2023FY:: 28244134790
+cf_investing_2023FY:: -51793562057
+cf_financing_2023FY:: -7824023386
+eps_2023FY:: 15091
 revenue_2024FY:: 141950747269
 operating_income_2024FY:: 22314081505
 net_income_2024FY:: 37853224906
+cf_operating_2024FY:: 29529621775
+cf_investing_2024FY:: -18351333525
+cf_financing_2024FY:: -9189214299
+eps_2024FY:: 29452
 revenue_2025Q1:: 32837107732
 operating_income_2025Q1:: 5253926828
 net_income_2025Q1:: 6922117521
 assets_2025Q1:: 418653809280
 liabilities_2025Q1:: 35514278353
 equity_2025Q1:: 383139530927
+cf_operating_2025Q1:: 6682033336
+cf_investing_2025Q1:: -14020606771
+cf_financing_2025Q1:: -613668100
+eps_2025Q1:: 5655
+shares_outstanding_2025Q1:: 1154482
 revenue_2025H1:: 35656160687
 operating_income_2025H1:: 6231421111
 net_income_2025H1:: 1107481043
 assets_2025H1:: 414176257336
 liabilities_2025H1:: 32307682298
 equity_2025H1:: 381868575038
+cf_operating_2025H1:: 14909706785
+cf_investing_2025H1:: -1685260050
+cf_financing_2025H1:: -2058585100
+eps_2025H1:: 1131
+shares_outstanding_2025H1:: 1154482
 revenue_2025Q3:: 30626018445
 operating_income_2025Q3:: 5121863313
 net_income_2025Q3:: 7218723673
 assets_2025Q3:: 421553336521
 liabilities_2025Q3:: 31862426747
 equity_2025Q3:: 389690909774
+cf_operating_2025Q3:: 17782931273
+cf_investing_2025Q3:: 16599587478
+cf_financing_2025Q3:: -2206432500
+eps_2025Q3:: 5750
+shares_outstanding_2025Q3:: 1154482
 revenue_2025FY:: 134870815287
 operating_income_2025FY:: 20215270547
 net_income_2025FY:: 20996079784
 assets_2025FY:: 425396197381
 liabilities_2025FY:: 31670115640
 equity_2025FY:: 393726081741
+cf_operating_2025FY:: 17609691324
+cf_investing_2025FY:: 11024227106
+cf_financing_2025FY:: -3008195450
+eps_2025FY:: 16782
+shares_outstanding_2025FY:: 1154482
