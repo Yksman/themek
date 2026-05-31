@@ -15,6 +15,10 @@ _ID_MAP = {
     "ifrs-full_Assets": "assets",
     "ifrs-full_Liabilities": "liabilities",
     "ifrs-full_Equity": "equity",
+    "ifrs-full_BasicEarningsLossPerShare": "eps",
+    "ifrs-full_CashFlowsFromUsedInOperatingActivities": "cf_operating",
+    "ifrs-full_CashFlowsFromUsedInInvestingActivities": "cf_investing",
+    "ifrs-full_CashFlowsFromUsedInFinancingActivities": "cf_financing",
 }
 # account_nm → metric_key (fallback)
 _NM_MAP = {
@@ -22,6 +26,10 @@ _NM_MAP = {
     "영업이익": "operating_income", "영업이익(손실)": "operating_income",
     "당기순이익": "net_income", "당기순이익(손실)": "net_income",
     "자산총계": "assets", "부채총계": "liabilities", "자본총계": "equity",
+    "기본주당이익(손실)": "eps", "기본주당순이익": "eps",
+    "영업활동현금흐름": "cf_operating", "영업활동으로인한현금흐름": "cf_operating",
+    "투자활동현금흐름": "cf_investing", "투자활동으로인한현금흐름": "cf_investing",
+    "재무활동현금흐름": "cf_financing", "재무활동으로인한현금흐름": "cf_financing",
 }
 # 각 metric은 해당 재무제표(sj_div)에서만 유효. fnlttSinglAcntAll은 한 응답에
 # BS(재무상태표)·IS/CIS(손익)·SCE(자본변동표)·CF(현금흐름표)를 모두 담는데,
@@ -33,8 +41,14 @@ _PL = frozenset({"IS", "CIS"})
 _METRIC_SJ = {
     "revenue": _PL, "operating_income": _PL, "net_income": _PL,
     "assets": _BS, "liabilities": _BS, "equity": _BS,
+    "eps": _PL,
+    "cf_operating": frozenset({"CF"}),
+    "cf_investing": frozenset({"CF"}),
+    "cf_financing": frozenset({"CF"}),
+    "shares_outstanding": frozenset({"BS"}),  # 파싱 경로 미사용(별도 fetch) — 방어값
 }
-_FLOW = frozenset({"revenue", "operating_income", "net_income"})
+_FLOW = frozenset({"revenue", "operating_income", "net_income",
+                   "eps", "cf_operating", "cf_investing", "cf_financing"})
 _STOCK = frozenset({"assets", "liabilities", "equity"})
 
 
@@ -108,6 +122,9 @@ _REPRT_PERIOD = {"11011": "FY", "11012": "H1", "11013": "Q1", "11014": "Q3"}
 _METRIC_LABEL = {
     "revenue": "매출액", "operating_income": "영업이익", "net_income": "당기순이익",
     "assets": "자산총계", "liabilities": "부채총계", "equity": "자본총계",
+    "eps": "기본주당순이익", "cf_operating": "영업활동현금흐름",
+    "cf_investing": "투자활동현금흐름", "cf_financing": "재무활동현금흐름",
+    "shares_outstanding": "발행주식수",
 }
 
 

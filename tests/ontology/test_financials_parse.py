@@ -86,3 +86,29 @@ def test_parse_income_metric_only_from_is_cis_not_cf():
     ni = [f for f in facts if f["metric_key"] == "net_income" and f["bsns_year"] == "2023"]
     assert len(ni) == 1
     assert ni[0]["amount"] == 100.0
+
+
+def test_parse_eps_from_is_flow_expansion():
+    rows = [{"account_id": "ifrs-full_BasicEarningsLossPerShare",
+             "account_nm": "기본주당이익(손실)", "sj_div": "CIS",
+             "thstrm_amount": "8057", "frmtrm_amount": "6461",
+             "bfefrmtrm_amount": "5777"}]
+    facts = parse_financial_rows(rows, bsns_year="2024", fiscal_period="FY")
+    eps = {f["bsns_year"]: f["amount"] for f in facts if f["metric_key"] == "eps"}
+    assert eps == {"2024": 8057.0, "2023": 6461.0, "2022": 5777.0}
+
+
+def test_parse_cashflow_only_from_cf_statement():
+    rows = [
+        {"account_id": "ifrs-full_CashFlowsFromUsedInOperatingActivities",
+         "account_nm": "영업활동현금흐름", "sj_div": "CF",
+         "thstrm_amount": "100", "frmtrm_amount": "90", "bfefrmtrm_amount": "80"},
+        # 같은 account가 다른 표(BS)에 잘못 오면 무시되어야 함
+        {"account_id": "ifrs-full_CashFlowsFromUsedInOperatingActivities",
+         "account_nm": "영업활동현금흐름", "sj_div": "BS",
+         "thstrm_amount": "999", "frmtrm_amount": "", "bfefrmtrm_amount": ""},
+    ]
+    facts = parse_financial_rows(rows, bsns_year="2024", fiscal_period="FY")
+    cfo = [f for f in facts if f["metric_key"] == "cf_operating"]
+    assert {f["bsns_year"]: f["amount"] for f in cfo} == \
+        {"2024": 100.0, "2023": 90.0, "2022": 80.0}

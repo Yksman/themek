@@ -26,6 +26,8 @@ FS_DIVS = ("CFS", "OFS")
 METRIC_KEYS = (
     "revenue", "operating_income", "net_income",
     "assets", "liabilities", "equity",
+    "eps", "cf_operating", "cf_investing", "cf_financing",
+    "shares_outstanding",
 )
 
 
