@@ -96,6 +96,16 @@ class DartClient:
                 f"fnlttSinglAcntAll status={status} msg={payload.get('message')}")
         return payload.get("list", [])
 
+    def fetch_company_profile(self, *, corp_code: str) -> dict:
+        """기업개황(company.json). induty_code/induty 포함. 비정상 status는 {}."""
+        params = {"crtfc_key": self._key, "corp_code": corp_code}
+        r = self._client.get(f"{self._base}/company.json", params=params)
+        self._raise_on_error(r)
+        payload = r.json()
+        if payload.get("status") != "000":
+            return {}
+        return payload
+
     def _raise_on_error(self, r: httpx.Response) -> None:
         if r.status_code in (401, 403):
             raise DartAuthError(f"HTTP {r.status_code}: {r.text[:200]}")
