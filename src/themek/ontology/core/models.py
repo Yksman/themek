@@ -5,7 +5,7 @@ from datetime import datetime as _dt
 
 from sqlalchemy import (
     String, Float, Numeric, ForeignKey, Enum as SQLEnum, JSON,
-    DateTime, UniqueConstraint, func,
+    DateTime, UniqueConstraint, Index, func, text,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -61,6 +61,15 @@ class Edge(Base):
     # many-to-one → UOW가 Node를 Edge보다 먼저 INSERT하도록 보장
     subject_node: Mapped[Node] = relationship("Node", foreign_keys=[subject_id])
     object_node: Mapped[Node] = relationship("Node", foreign_keys=[object_id])
+
+    __table_args__ = (
+        Index(
+            "ux_edge_spo",
+            text("subject_id"), text("predicate"), text("object_id"),
+            text("coalesce(period, '')"),
+            unique=True,
+        ),
+    )
 
 
 class FinancialFact(Base):

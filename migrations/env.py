@@ -5,7 +5,8 @@ from themek.config import get_settings
 from themek.db.engine import Base
 
 # 모든 모델을 import해야 metadata에 포함됨
-import themek.db.models  # noqa: F401
+import themek.db.corp_models  # noqa: F401
+import themek.ontology.core.models  # noqa: F401
 
 config = context.config
 if config.config_file_name is not None:

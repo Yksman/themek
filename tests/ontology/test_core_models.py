@@ -46,6 +46,37 @@ def test_financial_fact_unique_constraint(ontology_session):
         s.commit()
 
 
+def test_edge_unique_constraint(ontology_session):
+    s = ontology_session
+    s.add(Node(id="company:1", kind="company", label="A"))
+    s.add(Node(id="segment:x", kind="segment", label="x")); s.commit()
+
+    def _edge():
+        return Edge(subject_id="company:1", predicate="HAS_SEGMENT",
+                    object_id="segment:x", period="2024", qualifier={},
+                    source_type="llm", method="llm", confidence=0.9)
+    s.add(_edge()); s.commit()
+    s.add(_edge())
+    with pytest.raises(Exception):   # IntegrityError — 동일 (s,p,o,period)
+        s.commit()
+
+
+def test_edge_unique_constraint_null_period(ontology_session):
+    s = ontology_session
+    s.rollback()
+    s.add(Node(id="company:2", kind="company", label="B"))
+    s.add(Node(id="sector:G2520", kind="sector", label="반도체")); s.commit()
+
+    def _edge():
+        return Edge(subject_id="company:2", predicate="IN_SECTOR",
+                    object_id="sector:G2520", period=None, qualifier={},
+                    source_type="manual", method="manual", confidence=1.0)
+    s.add(_edge()); s.commit()
+    s.add(_edge())
+    with pytest.raises(Exception):   # COALESCE(period,'') 덕분에 NULL도 차단
+        s.commit()
+
+
 def test_concept_alias_lookup(ontology_session):
     s = ontology_session
     s.add(Node(id="segment:메모리반도체", kind="segment", label="메모리반도체"))
