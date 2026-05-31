@@ -51,6 +51,8 @@ pipeline_app = typer.Typer(help="DART 통합 파이프라인")
 app.add_typer(pipeline_app, name="pipeline")
 financials_app = typer.Typer(help="재무 정합성 명령")
 app.add_typer(financials_app, name="financials")
+equity_app = typer.Typer(help="지분구조 적재 명령")
+app.add_typer(equity_app, name="equity")
 
 DEFAULT_LEARNED_PATTERNS_PATH = "data/dart/learned_header_patterns.json"
 DEFAULT_PROPOSALS_PATH = "data/dart/pattern_proposals.json"
@@ -828,6 +830,39 @@ def ingest_financials_cmd(
                         s, client, corp_code=code, bsns_year=yr, reprt_code=rc)
         s.commit()
     typer.echo(f"ingested {total} financial facts")
+
+
+@equity_app.command("ingest")
+def equity_ingest_cmd(
+    years: str = typer.Option(..., "--years", help="예: 2022-2024 또는 2024"),
+    corp: Optional[str] = typer.Option(None, "--corp", help="단일 corp_code"),
+):
+    """DART 최대주주현황 + 타법인출자현황을 OWNS_STAKE_IN 엣지로 적재."""
+    from themek.ontology.ingest.equity import ingest_equity_for_company
+    if "-" in years:
+        lo, hi = years.split("-", 1)
+        year_list = [str(y) for y in range(int(lo), int(hi) + 1)]
+    else:
+        year_list = [years]
+    client = DartClient(api_key=get_settings().dart_api_key)
+    total = 0
+    with _session() as s:
+        if corp:
+            corp_codes = [corp]
+        else:
+            corp_codes = [
+                n.attrs.get("dart_code")
+                for n in s.execute(
+                    select(Node).where(Node.kind == "company")
+                ).scalars().all()
+                if n.attrs.get("dart_code")
+            ]
+        for code in corp_codes:
+            for yr in year_list:
+                total += ingest_equity_for_company(
+                    s, client, corp_code=code, bsns_year=yr)
+        s.commit()
+    typer.echo(f"ingested {total} ownership edges")
 
 
 @financials_app.command("rebuild")
