@@ -1,5 +1,5 @@
 from logging.config import fileConfig
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import engine_from_config, event, pool
 from alembic import context
 from themek.config import get_settings
 from themek.db.engine import Base
@@ -35,6 +35,18 @@ def run_migrations_online() -> None:
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
+
+    # SQLite batch 재생성(DROP/RENAME)은 FK 부모 테이블(nodes 등)에서 막힌다.
+    # engine.py의 전역 connect 리스너가 PRAGMA foreign_keys=ON을 강제하므로,
+    # 마이그레이션 전용 엔진에 한해 raw-connect(autocommit) 시점에 OFF로 덮어쓴다.
+    # PRAGMA는 트랜잭션 내부에선 무시되므로 connect 이벤트에서 켜야 효력이 있다.
+    if connectable.dialect.name == "sqlite":
+        @event.listens_for(connectable, "connect")
+        def _disable_fk(dbapi_conn, _record):  # noqa: ANN001
+            cur = dbapi_conn.cursor()
+            cur.execute("PRAGMA foreign_keys=OFF")
+            cur.close()
+
     with connectable.connect() as connection:
         context.configure(
             connection=connection,
