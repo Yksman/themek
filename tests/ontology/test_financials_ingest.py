@@ -28,7 +28,8 @@ def test_ingest_creates_facts_and_period_metric_nodes(ontology_session):
     n = ingest_financials_for_company(
         s, client, corp_code="00126380", bsns_year="2024", reprt_code="11011")
     s.commit()
-    assert n == 18
+    # flow 3종×3개년(9) + stock 3종×당기만(3) = 12 (stock은 비교열 미적재)
+    assert n == 12
     facts = s.query(FinancialFact).filter_by(metric_key="operating_income",
                                              bsns_year="2024").all()
     assert len(facts) == 1
@@ -62,4 +63,4 @@ def test_ingest_idempotent(ontology_session):
                                   bsns_year="2024", reprt_code="11011"); s.commit()
     ingest_financials_for_company(s, client, corp_code="00126380",
                                   bsns_year="2024", reprt_code="11011"); s.commit()
-    assert s.query(FinancialFact).count() == 18  # 중복 없음
+    assert s.query(FinancialFact).count() == 12  # 중복 없음 (flow 9 + stock 3)
