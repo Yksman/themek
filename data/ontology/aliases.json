@@ -1,0 +1,9 @@
+{
+  "customers": [
+    {"corp": "00126380", "variants": ["삼성전자", "삼성전자(주)", "Samsung Electronics"]},
+    {"corp": "00164742", "variants": ["현대자동차", "현대차", "Hyundai Motor"]}
+  ],
+  "segments": [
+    {"canonical": "메모리반도체", "variants": ["메모리", "메모리 반도체", "메모리 사업"]}
+  ]
+}
