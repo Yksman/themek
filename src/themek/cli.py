@@ -913,12 +913,16 @@ def ontology_link_cmd(
 def ontology_resolve_cmd():
     """별칭 시드 → customer→company 해소 → segment 병합 → 무결성 검사."""
     from themek.ontology.ingest.seeds import seed_aliases
-    from themek.ontology.ingest.resolution import resolve_customers, merge_segments
+    from themek.ontology.ingest.resolution import (
+        resolve_customers, merge_segments, resolve_external_companies,
+        resolve_owners)
     from themek.ontology.validate import check_integrity
     with _session() as s:
         seeded = seed_aliases(s)
         cust = resolve_customers(s)
         seg = merge_segments(s)
+        ext = resolve_external_companies(s)
+        owners = resolve_owners(s)
         errors = [i for i in check_integrity(s) if i.severity == "error"]
         s.commit()
     typer.echo(f"aliases seeded: {seeded}")
@@ -926,6 +930,9 @@ def ontology_resolve_cmd():
                f"unresolved: {cust['unresolved']}, "
                f"edges repointed: {cust['edges_repointed']}")
     typer.echo(f"segments merged: {seg['merged']}")
+    typer.echo(f"external companies resolved: {ext['resolved']}, "
+               f"unresolved: {ext['unresolved']}")
+    typer.echo(f"owners merged: {owners['merged']}")
     typer.echo(f"integrity errors: {len(errors)}")
     if errors:
         raise typer.Exit(code=1)

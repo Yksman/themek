@@ -7,7 +7,8 @@ from pathlib import Path
 from sqlalchemy.orm import Session
 
 from themek.ontology.core.ids import (
-    company_id, stock_id, sector_id, region_id, segment_id)
+    company_id, stock_id, sector_id, region_id, segment_id,
+    canonical_person_id)
 from themek.ontology.core.models import ConceptAlias, Node
 from themek.ontology.core.resolve import (
     upsert_node, upsert_edge, normalize_corp_name, normalize_alias)
@@ -75,5 +76,16 @@ def seed_aliases(session: Session, path: Path = _DEFAULT_ALIASES) -> int:
         target = segment_id(entry["canonical"])
         for variant in entry["variants"]:
             if _upsert_alias(session, normalize_alias(variant), target):
+                n += 1
+    for entry in data.get("owners", []):
+        target = canonical_person_id(entry["canonical"])
+        upsert_node(session, target, "person", entry["canonical"])
+        for variant in entry["variants"]:
+            if _upsert_alias(session, normalize_alias(variant), target):
+                n += 1
+    for entry in data.get("external_companies", []):
+        target = company_id(entry["corp"])
+        for variant in entry["variants"]:
+            if _upsert_alias(session, normalize_corp_name(variant), target):
                 n += 1
     return n

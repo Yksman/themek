@@ -5,5 +5,11 @@
   ],
   "segments": [
     {"canonical": "메모리반도체", "variants": ["메모리", "메모리 반도체", "메모리 사업"]}
+  ],
+  "owners": [
+    {"canonical": "이재용", "variants": ["이재용", "李在鎔"]}
+  ],
+  "external_companies": [
+    {"corp": "00126380", "variants": ["삼성전자", "삼성전자(주)", "삼성전자주식회사"]}
   ]
 }
