@@ -23,6 +23,17 @@ _NM_MAP = {
     "당기순이익": "net_income", "당기순이익(손실)": "net_income",
     "자산총계": "assets", "부채총계": "liabilities", "자본총계": "equity",
 }
+# 각 metric은 해당 재무제표(sj_div)에서만 유효. fnlttSinglAcntAll은 한 응답에
+# BS(재무상태표)·IS/CIS(손익)·SCE(자본변동표)·CF(현금흐름표)를 모두 담는데,
+# 예) account_id 'ifrs-full_Equity'(자본총계)는 BS의 총계 1행 외에 SCE에 구성요소로
+# 여러 번 등장한다. sj_div로 제한하지 않으면 SCE 구성요소(비지배지분 등)가 총계를
+# 덮어써 값이 오염된다.
+_BS = frozenset({"BS"})
+_PL = frozenset({"IS", "CIS"})
+_METRIC_SJ = {
+    "revenue": _PL, "operating_income": _PL, "net_income": _PL,
+    "assets": _BS, "liabilities": _BS, "equity": _BS,
+}
 
 
 def _to_amount(raw) -> float | None:
@@ -39,9 +50,14 @@ def _to_amount(raw) -> float | None:
 
 def _metric_of(row: dict) -> str | None:
     key = _ID_MAP.get((row.get("account_id") or "").strip())
-    if key:
-        return key
-    return _NM_MAP.get((row.get("account_nm") or "").strip())
+    if not key:
+        key = _NM_MAP.get((row.get("account_nm") or "").strip())
+    if not key:
+        return None
+    # 해당 재무제표(sj_div)에서 온 행만 유효 — SCE/CF 오염 차단.
+    if (row.get("sj_div") or "").strip() not in _METRIC_SJ[key]:
+        return None
+    return key
 
 
 def parse_financial_rows(rows: list[dict], *, bsns_year: str,
