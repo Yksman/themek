@@ -1,0 +1,35 @@
+=== Eval: E5 — 삼성전자 (005930) period=2023 (N=5) ===
+Ground truth:  /tmp/empty_gt.json
+HTML source:   data/dart/raw/20240312000736/business.html
+
+Segments  recall=    n/a
+Segments  precision= 0.000 ± 0.000
+Customers recall=    n/a
+Customers precision= 0.000 ± 0.000
+Regions   recall=    n/a
+Regions   precision= 0.000 ± 0.000
+Share_pct MAE        n/a
+
+Token usage (5 runs):
+  input_tokens:  65,513 (13,102 / run)
+  output_tokens: 20,040 (4,008 / run)
+  cost_usd:      $1.658 ($0.332 / run)
+  duration:      250.1s (50.0s / run)
+
+Section filter:
+  escalation_level: regex
+  regex matched:    overview, products, revenue
+  llm fallback:     not called
+  llm matched:      -
+  invalid_targets:  -
+  body_chars:       overview=2084, products=990, revenue=2377
+  skipped:          -
+  output chars:     5491
+
+Missed/Extra (union across 5 runs):
+  segments missed:  []
+  segments extra:   ['DS 부문', 'DX 부문', 'Harman', 'SDC']
+  customers missed: []
+  customers extra:  ['Apple', 'Best Buy', 'Deutsche Telekom', 'Qualcomm', 'Verizon']
+  regions missed:   []
+  regions extra:    ['CN', 'EU', 'KR', 'ROW', 'US']

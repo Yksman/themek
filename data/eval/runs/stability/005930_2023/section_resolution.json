@@ -1,0 +1,20 @@
+{
+  "regex_matched": {
+    "overview": "사업의 개요",
+    "products": "주요 제품 및 서비스",
+    "revenue": "매출 및 수주상황"
+  },
+  "llm_called": false,
+  "llm_input_candidates": [],
+  "llm_decision": {},
+  "skipped": [],
+  "output_chars": 5491,
+  "escalation_level": "regex",
+  "body_chars_per_target": {
+    "overview": 2084,
+    "products": 990,
+    "revenue": 2377
+  },
+  "invalid_targets": [],
+  "learned_samples": []
+}

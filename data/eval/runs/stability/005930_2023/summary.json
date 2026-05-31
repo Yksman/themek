@@ -1,0 +1,44 @@
+{
+  "segment_recall_mean": null,
+  "segment_recall_stdev": null,
+  "segment_precision_mean": 0.0,
+  "segment_precision_stdev": 0.0,
+  "customer_recall_mean": null,
+  "customer_recall_stdev": null,
+  "customer_precision_mean": 0.0,
+  "customer_precision_stdev": 0.0,
+  "region_recall_mean": null,
+  "region_recall_stdev": null,
+  "region_precision_mean": 0.0,
+  "region_precision_stdev": 0.0,
+  "share_pct_mae_mean": null,
+  "share_pct_mae_stdev": null,
+  "total_input_tokens": 65513,
+  "total_output_tokens": 20040,
+  "total_cost_usd": 1.65766675,
+  "total_duration_ms": 250126,
+  "missed_segments_union": [],
+  "extra_segments_union": [
+    "DS 부문",
+    "DX 부문",
+    "Harman",
+    "SDC"
+  ],
+  "missed_customers_union": [],
+  "extra_customers_union": [
+    "Apple",
+    "Best Buy",
+    "Deutsche Telekom",
+    "Qualcomm",
+    "Verizon"
+  ],
+  "missed_regions_union": [],
+  "extra_regions_union": [
+    "CN",
+    "EU",
+    "KR",
+    "ROW",
+    "US"
+  ],
+  "n_runs": 5
+}

@@ -1,0 +1,142 @@
+{
+  "run_index": 2,
+  "parsed_extraction": {
+    "period": "2023",
+    "segments": [
+      {
+        "name_ko": "DX 부문",
+        "share_pct": 65.7,
+        "description": "완제품(Set) 사업 — TV·가전·스마트폰·네트워크·컴퓨터 등 생산·판매",
+        "products": [
+          "TV",
+          "모니터",
+          "냉장고",
+          "세탁기",
+          "에어컨",
+          "스마트폰",
+          "네트워크시스템",
+          "컴퓨터"
+        ]
+      },
+      {
+        "name_ko": "DS 부문",
+        "share_pct": 25.7,
+        "description": "반도체 부품 사업 — 메모리·시스템반도체 생산·판매",
+        "products": [
+          "DRAM",
+          "NAND Flash",
+          "모바일AP"
+        ]
+      },
+      {
+        "name_ko": "SDC",
+        "share_pct": 12.0,
+        "description": "스마트폰용 OLED 디스플레이 패널 생산·판매",
+        "products": [
+          "스마트폰용 OLED 패널"
+        ]
+      },
+      {
+        "name_ko": "Harman",
+        "share_pct": 5.6,
+        "description": "전장(디지털 콕핏·카오디오) 및 소비자오디오 제품 생산·판매",
+        "products": [
+          "디지털 콕핏",
+          "카오디오",
+          "포터블 스피커",
+          "사운드바 스피커"
+        ]
+      }
+    ],
+    "customers": [
+      {
+        "name_raw": "Apple",
+        "revenue_share_pct": null,
+        "tier": "unknown"
+      },
+      {
+        "name_raw": "Best Buy",
+        "revenue_share_pct": null,
+        "tier": "unknown"
+      },
+      {
+        "name_raw": "Deutsche Telekom",
+        "revenue_share_pct": null,
+        "tier": "unknown"
+      },
+      {
+        "name_raw": "Qualcomm",
+        "revenue_share_pct": null,
+        "tier": "unknown"
+      },
+      {
+        "name_raw": "Verizon",
+        "revenue_share_pct": null,
+        "tier": "unknown"
+      }
+    ],
+    "geographic": [
+      {
+        "region_code": "KR",
+        "share_pct": 12.0
+      },
+      {
+        "region_code": "US",
+        "share_pct": 30.0
+      },
+      {
+        "region_code": "EU",
+        "share_pct": 14.0
+      },
+      {
+        "region_code": "CN",
+        "share_pct": 24.8
+      },
+      {
+        "region_code": "ROW",
+        "share_pct": 19.2
+      }
+    ]
+  },
+  "usage": {
+    "input_tokens": 16370,
+    "output_tokens": 4615,
+    "cost_usd": 0.482635,
+    "duration_ms": 62301
+  },
+  "eval_result": {
+    "segment_recall": null,
+    "segment_precision": 0.0,
+    "customer_recall": null,
+    "customer_precision": 0.0,
+    "region_recall": null,
+    "region_precision": 0.0,
+    "share_pct_mae": null,
+    "matched_segment_count": 0,
+    "truth_segment_count": 0,
+    "extracted_segment_count": 4,
+    "missed_segments": [],
+    "extra_segments": [
+      "DS 부문",
+      "DX 부문",
+      "Harman",
+      "SDC"
+    ],
+    "missed_customers": [],
+    "extra_customers": [
+      "Apple",
+      "Best Buy",
+      "Deutsche Telekom",
+      "Qualcomm",
+      "Verizon"
+    ],
+    "missed_regions": [],
+    "extra_regions": [
+      "CN",
+      "EU",
+      "KR",
+      "ROW",
+      "US"
+    ]
+  }
+}
