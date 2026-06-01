@@ -1,0 +1,38 @@
+---
+type: "company"
+dart_code: ""
+name: "BATAVIA BIOSCIENCES B.V."
+ticker: ""
+market: ""
+sector: ""
+periods: []
+report_count: 0
+segment_count: 0
+customer_count: 0
+issue_count: 0
+tags: [company]
+---
+# BATAVIA BIOSCIENCES B.V.
+
+
+## 세그먼트
+
+- (없음)
+
+## 고객사
+
+- (없음)
+
+## 지역 노출
+
+- (없음)
+
+## 지분구조
+
+### 주주 (최대주주·특수관계인)
+
+- [[CJ제일제당]] — 75.82%
+
+### 타법인 출자
+
+- (없음)

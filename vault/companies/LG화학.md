@@ -20,24 +20,128 @@ tags: [company]
 ## 세그먼트
 
 - [[LG에너지솔루션]] — 60.9%
-- [[공통 및 기타부문]] — 1.5%
-- [[생명과학 사업부문]] — 2%
 - [[석유화학 사업부문]] — 31.1%
 - [[첨단소재 사업부문]] — 4.4%
+- [[생명과학 사업부문]] — 2%
+- [[공통 및 기타부문]] — 1.5%
 
 ## 고객사
 
-- [[2차전지업체]]
-- [[가전제품 생산업체]]
-- [[농업 관련 업체]]
-- [[병의원 및 의약품 농업 유통 관련 업체]]
-- [[자동차 관련 업체]]
-- [[정보통신업체]]
 - [[합성수지, 플라스틱 가공업체]]
+- [[가전제품 생산업체]]
+- [[2차전지업체]]
+- [[정보통신업체]]
+- [[자동차 관련 업체]]
+- [[병의원 및 의약품 농업 유통 관련 업체]]
+- [[농업 관련 업체]]
 
 ## 지역 노출
 
 - [[국내]] — 43.9%
+
+## 지분구조
+
+### 주주 (최대주주·특수관계인)
+
+- [[(주)LG]] (최대주주 본인) — 30.69%
+- [[LG연암문화재단]] ((주)LG의 최대주주의 특수관계법인) — 0.03%
+- [[정호영]] (계열회사 임원) — 0%
+
+### 타법인 출자
+
+- [[Ningbo LG Yongxing Chemical Co.,Ltd.]] [자회사] — 75%
+- [[LG Chem Europe GmbH]] [자회사] — 100%
+- [[LG Chem Poland Sp. z o.o.]] [자회사] — 100%
+- [[LGC Petrochemical India Private Ltd.]] [자회사] — 100%
+- [[(주) 행복누리]] [자회사] — 100%
+- [[LG CHEM TK Kimya SANAYI VE TIC. Ltd. STI.]] [자회사] — 100%
+- [[LG Chem Japan Co.,Ltd.]] [자회사] — 100%
+- [[LG NanoH2O, LLC]] [자회사] — 100%
+- [[LG Chem (Chongqing) Engineering Plastics Co.,Ltd.]] [자회사] — 100%
+- [[(주) 테크윈]] [관계회사] — 20%
+- [[LG Chem BRASIL INTERMEDIACAO DE NEGOCIOS DO SETOR QUIMICO LT a67b89|LG Chem BRASIL INTERMEDIACAO DE NEGOCIOS DO SETOR QUIMICO LTDA.]] [자회사] — 100%
+- [[LG Chem America, Inc.]] [자회사] — 100%
+- [[LG Chem Malaysia SDN.BHD.]] [자회사] — 100%
+- [[VINA Plasticizers Chemical Co.,Ltd]] [기타] — 0%
+- [[(주) 씨텍]] [자회사] — 50%
+- [[㈜티엘케미칼]] [관계회사] — 40%
+- [[PT.Halim Samudra Interutama]] [기타] — 12%
+- [[EIC Properties Pte. Ltd.]] [기타] — 9%
+- [[인텔렉추얼 디스커버리㈜]] [기타] — 3%
+- [[충북창조경제혁신펀드]] [기타] — 19%
+- [[창조경제 바이오 펀드]] [관계회사] — 20%
+- [[㈜팜한농]] [자회사] — 100%
+- [[LG Chemical India Pvt. Ltd.]] [자회사] — 100%
+- [[LG Chem(HUIZHOU) Petrochemical Co., Ltd.]] [자회사] — 70%
+- [[LG Life Sciences India Pvt. Ltd.]] [자회사] — 100%
+- [[LG Jiansheng Life Sciences (Beijing) Co., Ltd.]] [자회사] — 100%
+- [[LG Life Sciences (Thailand) Ltd.]] [자회사] — 100%
+- [[LG Life Sciences Poland Ltd.]] [자회사] — 100%
+- [[LG Chem Hai Phong Veitnam Co.,Ltd.]] [자회사] — 100%
+- [[켐코 주식회사]] [기타] — 4%
+- [[LG Chem Mexico S.A. de C.V.]] [자회사] — 100%
+- [[LG Chem Hai Phong Engineering Plastics Ltd.]] [자회사] — 100%
+- [[LG Chem (Guangzhou) Information & Electronics Materials Co., c303f6|LG Chem (Guangzhou) Information & Electronics Materials Co.,Ltd.]] [자회사] — 100%
+- [[LG Chemical (Guangzhou) Engineering Plastics Co.,Ltd.]] [자회사] — 100%
+- [[IM Holdings I, Inc.]] [기타] — 2%
+- [[IM Holdings II, Inc.]] [기타] — 2%
+- [[아주 좋은 Life Science 3.0 벤처 펀드]] [관계회사] — 24%
+- [[LEYOU NEW ENERGY MATERIALS(WUXI) Co.,LTD]] [자회사] — 51%
+- [[LG Chem Fund I LLC]] [자회사] — 100%
+- [[Enevate]] [기타] — 3%
+- [[HUAJIN NEW ENERGY MATERIALS(QUZHOU)CO.,LTD]] [관계회사] — 49%
+- [[Cue Biopharma]] [기타] — 3%
+- [[Kryptos Biotechnoligies Inc.]] [기타] — 11%
+- [[그로스엑셀러레이션펀드]] [기타] — 0%
+- [[LG Chem (Taiwan), Ltd.]] [자회사] — 100%
+- [[㈜대영]] [기타] — 4%
+- [[주식회사 LG에너지솔루션]] [자회사] — 82%
+- [[Uniseal,Inc.]] [자회사] — 100%
+- [[LG Chem Life Science Innovation Center, Inc.]] [자회사] — 100%
+- [[LG Chem Asia Pte. Ltd.]] [자회사] — 100%
+- [[LG Chem Hangzhou Advanced Materials Co., Ltd.]] [기타] — 0%
+- [[주식회사 엘지에이치와이비씨엠]] [자회사] — 51%
+- [[LG Chem Ohio Petrochemical, Inc.]] [자회사] — 100%
+- [[LG Chem VietNam Co., Ltd]] [자회사] — 100%
+- [[PT LG CHEM INDONESIA]] [자회사] — 100%
+- [[Tianjin LG Bohai Chemical Co.,Ltd.]] [자회사] — 68%
+- [[티더블유바이오매스에너지 주식회사]] [자회사] — 60%
+- [[Jiujiang Defu Technology Co.,Ltd]] [기타] — 3%
+- [[이너보틀]] [기타] — 9%
+- [[Mura Technology]] [기타] — 2%
+- [[KBE 펀드]] [기타] — 14%
+- [[Li-Cycle]] [기타] — 2%
+- [[LG Toray Hungary Battery Separator Kft.]] [자회사] — 50%
+- [[한국전구체 주식회사]] [관계회사] — 49%
+- [[Tianqi Lithium]] [기타] — 1%
+- [[Reventas Limited]] [기타] — 5%
+- [[Tianjin LG BOTIAN Chemical Co.,Ltd.]] [자회사] — 58%
+- [[BNZ 펀드]] [기타] — 3%
+- [[고려아연]] [기타] — 2%
+- [[LG PETRONAS Chemicals Malaysia Sdn.Bhd.]] [자회사] — 51%
+- [[Piedmont Lithium]] [기타] — 6%
+- [[Impact Recycling]] [기타] — 4%
+- [[Bioworks]] [기타] — 9%
+- [[재영텍]] [기타] — 0%
+- [[LG Chem (China) Investment Co.,Ltd.]] [자회사] — 100%
+- [[LG Chem (Tianjin) Engineering Plastics Co.,Ltd.]] [자회사] — 90%
+- [[합계]] [기타]
+- [[LG Chem Life Sciences India Pvt. Ltd.]] [자회사] — 100%
+- [[LG Chem Life Sciences (Thailand) Ltd.]] [자회사] — 100%
+- [[LG Chem Hai Phong Vietnam Company Ltd.]] [자회사] — 100%
+- [[LG Chem Hai Phong Engineering Plastics LLC.]] [자회사] — 100%
+- [[LG Chem (Guangzhou) Information & Electronics Materials Co., 24c4f3|LG Chem (Guangzhou) Information & Electronics Materials Co.,Ltd.]] [자회사] — 100%
+- [[LG Chem Life Sciences USA, Inc]] [자회사] — 100%
+- [[LG Chem BRASIL INTERMEDIACAO DE NEGOCIOS DO SETOR QUIMICO LT fc0b24|LG Chem BRASIL INTERMEDIACAO DE NEGOCIOS DO SETOR QUIMICO LTDA.]] [자회사] — 100%
+- [[LG Chem America Advanced Materials, Inc.]] [자회사] — 100%
+- [[주식회사 엘지에니바이오리파이닝]] [자회사] — 51%
+- [[(주)팜한농]] [자회사] — 100%
+- [[LG Chem Life Sciences Poland Ltd.]] [자회사] — 100%
+- [[(주)티엘케미칼]] [관계회사] — 40%
+- [[인텔렉추얼 디스커버리(주)]] [기타] — 3%
+- [[(주)대영]] [기타] — 4%
+- [[세원정공]] [기타] — 4%
+- [[Rhythm pharmaceuticals]] [기타] — 0%
 
 ## 재무 (연결 우선, 단위 억원)
 

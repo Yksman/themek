@@ -19,11 +19,11 @@ tags: [company]
 
 ## 세그먼트
 
-- [[그린에너지]] — 1.7%
-- [[기타]] — 0.8%
-- [[엔진기계]] — 9.7%
 - [[조선]] — 83.6%
 - [[해양플랜트]] — 4.2%
+- [[엔진기계]] — 9.7%
+- [[그린에너지]] — 1.7%
+- [[기타]] — 0.8%
 
 ## 고객사
 
@@ -32,6 +32,82 @@ tags: [company]
 ## 지역 노출
 
 - [[국내]] — 9%
+
+## 지분구조
+
+### 주주 (최대주주·특수관계인)
+
+- [[HD현대㈜]] (최대주주) — 35.05%
+- [[김 형 관]] (계열회사 임원) — 0%
+- [[이 상 균]] (계열회사 임원) — 0%
+- [[(재)아산사회복지재단]] (계열비영리법인) — 0.98%
+- [[(재)아산나눔재단]] (계열비영리법인) — 0.61%
+- [[가 삼 현]] (계열회사 임원) — 0%
+- [[정 기 선]] (최대주주의특수관계인) — 0%
+- [[권 오 갑]] (계열회사 임원) — 0%
+- [[한 영 석]] (계열회사 임원) — 0%
+- [[김 성 준]] (계열회사 임원) — 0%
+- [[신 현 대]] (계열회사 임원) — 0%
+
+### 타법인 출자
+
+- [[에이치엠엠 ㈜(보통주)]] [기타]
+- [[현대공조㈜]] [기타] — 10%
+- [[KC 상생투자조합]] [기타] — 16.67%
+- [[글로벌ICT융합펀드]] [기타] — 2%
+- [[NIKORMA TRANSPORT LTD.]] [기타] — 11.5%
+- [[㈜청구]] [기타] — 0%
+- [[㈜하스코(동아정기)]] [기타] — 0.01%
+- [[㈜강원도민프로축구단]] [기타] — 0.01%
+- [[㈜아진카인텍(KCO에너지)]] [기타] — 0%
+- [[SK hynix America Inc. (SKHYA)]] [기타] — 0%
+- [[Enova Systems Inc.]] [기타] — 0.46%
+- [[㈜케이씨씨]] [기타] — 0.06%
+- [[OSX CONSTRUCAO NAVAL S.A.]] [기타] — 0.2%
+- [[MBP Investors, LLC]] [기타] — 2.9%
+- [[창명해운㈜]] [기타] — 0.97%
+- [[한국투자사모투신사모 1호]] [기타]
+- [[HD현대중공업㈜]] [자회사] — 75.02%
+- [[현대삼호중공업㈜]] [자회사] — 96.58%
+- [[㈜현대미포조선]] [관계회사] — 42.4%
+- [[㈜HD현대스포츠]] [자회사] — 100%
+- [[Hyundai-Vietnam Shipbuilding Co., Ltd.]] [기타] — 10%
+- [[HHI MAURITIUS LIMITED]] [자회사] — 100%
+- [[㈜케이씨씨글라스]] [기타] — 0.03%
+- [[Hyundai Transformers and Engineering India Pvt, Ltd.]] [기타]
+- [[Hyundai Heavy Industries Miraflores PowerPlant Inc]] [자회사] — 100%
+- [[Hyundai Arabia Company Ltd.]] [자회사] — 100%
+- [[HD현대중공업모스㈜]] [기타]
+- [[HD현대에너지솔루션㈜]] [자회사] — 53.57%
+- [[Hyundai Samho Heavy Industries Panama Inc.]] [자회사] — 100%
+- [[Hyundai Technology Center India Pvt., Ltd.]] [자회사] — 100%
+- [[Pontos Investment LLC]] [자회사] — 100%
+- [[씨마크서비스㈜]] [자회사] — 100%
+- [[HD Hyundai Europe Research and Development Center GmbH]] [자회사] — 100%
+- [[현대중공업파워시스템㈜]] [관계회사] — 20%
+- [[신고려관광㈜]] [관계회사] — 29%
+- [[현대힘스㈜]] [관계회사] — 20.91%
+- [[Hyundai Green Industries Co., W.L.L.]] [관계회사] — 49%
+- [[International Maritime Industries]] [관계회사] — 20%
+- [[현대융자조임유한공사]] [관계회사] — 41.26%
+- [[Saudi Engines Manufacturing Company]] [관계회사] — 30%
+- [[Elcogen Group PLC]] [기타] — 15.33%
+- [[현대엠파트너스㈜]] [기타] — 9.93%
+- [[㈜벡스코]] [기타] — 7.96%
+- [[㈜현대경제연구원]] [기타] — 1.76%
+- [[극동중기㈜]] [기타] — 7.5%
+- [[KSF 선박금융㈜]] [기타] — 2.36%
+- [[합계]] [기타]
+- [[HD현대삼호㈜]] [자회사] — 96.65%
+- [[HD현대미포㈜]] [관계회사] — 42.4%
+- [[HD Hyundai-Vietnam Shipbuilding Co., Ltd.]] [기타] — 10%
+- [[HD Hyundai Europe Research and Development Center GmbH]] [자회사] — 100%
+- [[HD Hyundai Heavy Industries Philippines, Inc.]] [자회사] — 100%
+- [[HD현대마린엔진 ㈜]] [관계회사] — 35.05%
+- [[HD하이드로젠 ㈜]] [자회사] — 100%
+- [[AMC사이언스 ㈜]] [자회사] — 84.38%
+- [[International Maritime Industries Company]] [관계회사] — 20%
+- [[HD HYUNDAI (SHANGHAI) FINANCIAL LEASING CO.,Ltd.]] [관계회사] — 41.26%
 
 ## 재무 (연결 우선, 단위 억원)
 

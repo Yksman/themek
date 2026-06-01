@@ -31,6 +31,87 @@ tags: [company]
 
 - (없음)
 
+## 지분구조
+
+### 주주 (최대주주·특수관계인)
+
+- [[SK스퀘어㈜]] (최대주주) — 20.07%
+- [[정덕균]] (특수관계인) — 0%
+- [[노종원]] (특수관계인) — 0%
+- [[신창환]] (특수관계인) — 0%
+- [[박정호]] (특수관계인) — 0%
+- [[곽노정]] (특수관계인) — 0%
+- [[하영구]] (특수관계인) — 0%
+- [[송호근]] (특수관계인) — 0%
+- [[윤태화]] (특수관계인) — 0%
+- [[조현재]] (특수관계인) — 0%
+- [[한애라]] (특수관계인) — 0%
+- [[김정원]] (특수관계인) — 0%
+- [[안현]] (특수관계인) — 0%
+- [[손현철]] (특수관계인) — 0%
+- [[양동훈]] (특수관계인) — 0%
+
+### 타법인 출자
+
+- [[에스케이하이이엔지 주식회사]] [자회사] — 100%
+- [[SK hynix Semiconductor Asia Pte.Ltd.]] [자회사] — 100%
+- [[SK hynix Semiconductor HongKong Ltd.]] [자회사] — 100%
+- [[SK hynix Semiconductor (Shanghai) Co.,Ltd.]] [기타]
+- [[SK hynix Japan Inc.]] [자회사] — 100%
+- [[SK hynix Semiconductor Taiwan Inc.]] [자회사] — 100%
+- [[SK hynix Semiconductor India Private Limited]] [기타] — 1%
+- [[SK hynix Semiconductor (China) Ltd.]] [자회사] — 100%
+- [[HITECH Semiconductor (Wuxi) Co., Ltd.]] [관계회사] — 45%
+- [[SK hynix (Wuxi) Semiconductor Sales Ltd.]] [자회사] — 100%
+- [[SK hynix Italy S.r.l]] [기타] — 0%
+- [[에스케이하이스텍 주식회사]] [자회사] — 100%
+- [[SK hynix memory solutions Taiwan, Inc.]] [자회사] — 100%
+- [[SK APTECH Ltd.]] [자회사] — 100%
+- [[SK hynix memory solutions Eastern Europe, LLC.]] [기타]
+- [[STRATIO,INC.]] [기타] — 9.4%
+- [[SK South East Asia Investment Pte. Ltd.]] [관계회사] — 20%
+- [[SK China Company Limited]] [기타] — 11.9%
+- [[Exnodes. Inc.]] [기타]
+- [[SK hynix Ventures Hong Kong Ltd.]] [자회사] — 100%
+- [[MEMS Drive, Inc.]] [기타] — 2.4%
+- [[FemtoMetrix, Inc.]] [기타] — 11.7%
+- [[행복모아 주식회사]] [자회사] — 100%
+- [[ProMOS Technologies Inc.]] [기타] — 13.3%
+- [[GigaIO Networks, Inc.]] [기타] — 9.7%
+- [[Aeye, Inc. (주1)]] [기타] — 1%
+- [[인텔렉추얼 디스커버리㈜]] [기타] — 4.8%
+- [[TetraMem Holdings, Incorporation]] [기타] — 3.8%
+- [[BCPE Pangea Intermediate Holdings Cayman, LP]] [자회사] — 73.5%
+- [[BCPE Pangea Cayman2 Limited]] [기타] — 0%
+- [[SiFive, Inc.]] [기타] — 4.8%
+- [[Gauss Labs Inc.]] [자회사] — 98.3%
+- [[MemVerge Inc.]] [기타] — 1.1%
+- [[행복나래㈜]] [자회사] — 100%
+- [[FMC]] [기타] — 5.8%
+- [[SK hynix NAND Product Solutions Corp.]] [자회사] — 98.5%
+- [[SK hynix Semiconductor (Dalian) Co., Ltd.]] [자회사] — 100%
+- [[SK hynix Ventures America LLC]] [기타]
+- [[Sonatus, Inc.]] [기타] — 2.5%
+- [[Elastics.Cloud]] [기타]
+- [[미래에셋위반도체 제1호 창업벤처전문사모투자 합작회사]] [관계회사] — 30%
+- [[d-Matrix Corporation]] [기타] — 1.4%
+- [[주식회사 키파운드리]] [자회사] — 100%
+- [[SK Telecom Japan]] [관계회사] — 25.3%
+- [[에스케이하이닉스시스템아이씨㈜]] [자회사] — 100%
+- [[농업회사법인 푸르메소셜팜㈜]] [관계회사] — 35.5%
+- [[SK hynix Semiconductor America, Inc.]] [자회사] — 100%
+- [[SK hynix Semiconductor Deutschland GmbH]] [자회사] — 100%
+- [[SK hynix U.K. Ltd.]] [자회사] — 100%
+- [[합계]] [기타]
+- [[에스케이하이이엔지㈜]] [자회사] — 100%
+- [[SK hynix Semiconductor India Private Ltd.]] [기타] — 1%
+- [[에스케이하이스텍㈜]] [자회사] — 100%
+- [[SK Americas, Inc.]] [관계회사] — 20%
+- [[SK hynix memory solutions Poland sp. z o.o.]] [자회사] — 100%
+- [[행복모아㈜]] [자회사] — 100%
+- [[AEye, Inc.]] [기타] — 0%
+- [[에스케이키파운드리㈜]] [자회사] — 100%
+
 ## 재무 (연결 우선, 단위 억원)
 
 | 지표 | 2021 FY | 2022 FY | 2023 Q1 | 2023 H1 | 2023 Q3 | 2023 FY | 2024 Q1 | 2024 H1 | 2024 Q3 | 2024 FY | 2025 Q1 | 2025 H1 | 2025 Q3 | 2025 FY | 2026 Q1 |
