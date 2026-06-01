@@ -59,3 +59,20 @@ def segment_id(name_ko: str, company_key: str | None = None) -> str:
 
 def customer_id(raw: str) -> str:
     return f"customer:{slug(raw)}"
+
+
+def person_id(name: str, company_key: str) -> str:
+    """개인 주주 노드 ID. 기본은 회사 네임스페이스(`person:{company_key}:{slug}`)로
+    동명이인 우발 병합 방지(C2 segment 선례). 시드 alias로 canonical에 병합."""
+    return f"person:{company_key}:{slug(name)}"
+
+
+def canonical_person_id(name: str) -> str:
+    """오너 병합 대상 전역 person 노드(`person:{slug}`)."""
+    return f"person:{slug(name)}"
+
+
+def external_company_id(name: str) -> str:
+    """universe 밖 법인(최대주주 법인/피출자사) 노드(`company:ext:{slug}`).
+    이후 resolve_external_companies가 universe company로 병합 가능."""
+    return f"company:ext:{slug(name)}"

@@ -90,6 +90,37 @@ def ingest_financials_all(session: Session, client, *,
     return {"companies": processed, "facts": facts, "failed": failed}
 
 
+def ingest_equity_all(session: Session, client, *,
+                      years: list[str] | None = None,
+                      today: "date | None" = None, floor_n: int = 3) -> dict:
+    """전 회사 지분구조 적재(사업보고서 11011만). 재무와 동일한 연도 도출 전략:
+    years 명시 시 강제, 아니면 회사별 제출연도 ∪ 최신화 floor."""
+    from themek.ontology.ingest.equity import ingest_equity_for_company
+
+    floor = (set() if years is not None
+             else set(recent_fiscal_years(today or date.today(), floor_n)))
+    companies = session.execute(
+        select(Node).where(Node.kind == "company")
+    ).scalars().all()
+    edges = 0
+    processed = 0
+    failed: list[tuple[str, str]] = []
+    for node in companies:
+        dart_code = node.attrs.get("dart_code")
+        if not dart_code:
+            continue
+        processed += 1
+        company_years = (years if years is not None else sorted(
+            set(company_report_years(session, node.id)) | floor))
+        for yr in company_years:
+            try:
+                edges += ingest_equity_for_company(
+                    session, client, corp_code=dart_code, bsns_year=yr)
+            except Exception as e:  # 회사별 관용
+                failed.append((dart_code, f"{yr}: {e}"))
+    return {"companies": processed, "edges": edges, "failed": failed}
+
+
 def rebuild_financials(session: Session, client, *,
                        today: "date | None" = None, floor_n: int = 3) -> dict:
     """financial_facts 전체 purge 후 회사별 제출 연도 ∪ 최신화 floor로 재적재 + 무결성 검사.
@@ -117,6 +148,7 @@ class PipelineResult:
     sync: int | None = None
     structure: object | None = None
     financials: dict | None = None
+    equity: dict | None = None
     export: dict | None = None
 
 
@@ -125,7 +157,8 @@ from pathlib import Path  # noqa: E402
 
 def run_pipeline(
     session: Session, client, *, cache,
-    skip_sync: bool, skip_structure: bool, skip_financials: bool, skip_export: bool,
+    skip_sync: bool, skip_structure: bool, skip_financials: bool,
+    skip_equity: bool, skip_export: bool,
     since, until, universe, rate_budget, extractor,
     out_vault, out_graph,
 ) -> PipelineResult:
@@ -161,6 +194,13 @@ def run_pipeline(
         stats["years"] = derive_financial_years(session)  # 전역 요약(표시용)
         result.financials = stats
         result.ran.append("financials")
+
+    # 3b. equity (지분구조 — 사업보고서 기준)
+    if skip_equity:
+        result.skipped.append("equity")
+    else:
+        result.equity = ingest_equity_all(session, client)
+        result.ran.append("equity")
 
     # 4. export (vault + graph)
     if skip_export:

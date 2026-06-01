@@ -1,0 +1,14 @@
+{
+  "status": "000",
+  "message": "정상",
+  "list": [
+    {"corp_code": "00126380", "nm": "이재용", "relate": "최대주주 본인",
+     "stock_knd": "보통주", "bsis_posesn_stock_co": "12345678",
+     "bsis_posesn_stock_qota_rt": "1.50", "trmend_posesn_stock_co": "12345678",
+     "trmend_posesn_stock_qota_rt": "1.63", "rm": "-"},
+    {"corp_code": "00126380", "nm": "삼성생명보험(주)", "relate": "계열회사",
+     "stock_knd": "보통주", "bsis_posesn_stock_co": "50000000",
+     "bsis_posesn_stock_qota_rt": "8.51", "trmend_posesn_stock_co": "50000000",
+     "trmend_posesn_stock_qota_rt": "8.51", "rm": "-"}
+  ]
+}

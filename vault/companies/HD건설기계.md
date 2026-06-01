@@ -20,8 +20,8 @@ tags: [company]
 ## 세그먼트
 
 - [[건설기계]] — 79.2%
-- [[부품 외]] — 9.75%
 - [[산업차량]] — 11.05%
+- [[부품 외]] — 9.75%
 
 ## 고객사
 
@@ -30,6 +30,33 @@ tags: [company]
 ## 지역 노출
 
 - [[국내]] — 8.6%
+
+## 지분구조
+
+### 주주 (최대주주·특수관계인)
+
+- [[HD현대사이트솔루션(주)]] (최대주주 본인) — 35.64%
+- [[(재)아산사회복지재단]] (재단) — 2.6%
+- [[(재)아산나눔재단]] (재단) — 0.66%
+- [[최철곤]] (최대주주 계열회사 임원) — 0.03%
+- [[정기선]] (최대주주 계열회사 임원) — 0%
+- [[송명준]] (최대주주 계열회사 임원) — 0%
+- [[신필종]] (최대주주 계열회사 임원) — 0%
+
+### 타법인 출자
+
+- [[HD Hyundai Construction Equipment Europe N.V.]] [자회사] — 100%
+- [[HD Hyundai Construction Equipment North America Inc.]] [자회사] — 100%
+- [[PT. Hyundai Construction Equipment Asia]] [자회사] — 69.96%
+- [[HD Hyundai Construction Equipment Brasil - Manufacturing and 69eac5|HD Hyundai Construction Equipment Brasil - Manufacturing and Trading of Construction Equipment S.A]] [자회사] — 100%
+- [[HD Hyundai Construction Equipment India Private. Ltd.]] [자회사] — 100%
+- [[현대중공(중국)투자유한공사]] [자회사] — 100%
+- [[합계]] [기타]
+- [[HD Hyundai Construction Equipment North America Inc.]] [자회사] — 100%
+- [[PT HD Hyundai Construction Equipment Indonesia]] [자회사] — 69.97%
+- [[HD Hyundai Construction Equipment Brasil - Manufacturing and b90f22|HD Hyundai Construction Equipment Brasil - Manufacturing and Trading of Construction Equipment S.A]] [자회사] — 100%
+- [[HD Hyundai Construction Equipment India Private. Ltd.]] [자회사] — 100%
+- [[HD Hyundai (China) Investment Co., Ltd.]] [자회사] — 100%
 
 ## 재무 (연결 우선, 단위 억원)
 

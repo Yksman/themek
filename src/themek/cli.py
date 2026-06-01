@@ -51,6 +51,8 @@ pipeline_app = typer.Typer(help="DART 통합 파이프라인")
 app.add_typer(pipeline_app, name="pipeline")
 financials_app = typer.Typer(help="재무 정합성 명령")
 app.add_typer(financials_app, name="financials")
+equity_app = typer.Typer(help="지분구조 적재 명령")
+app.add_typer(equity_app, name="equity")
 
 DEFAULT_LEARNED_PATTERNS_PATH = "data/dart/learned_header_patterns.json"
 DEFAULT_PROPOSALS_PATH = "data/dart/pattern_proposals.json"
@@ -620,7 +622,7 @@ def dart_parser_stats_cmd():
     )
     lines = [
         f"fixtures: {len(fixtures)}",
-        f"learned patterns:",
+        "learned patterns:",
     ]
     for t in ("overview", "products", "revenue"):
         learned_count = sum(
@@ -830,6 +832,51 @@ def ingest_financials_cmd(
     typer.echo(f"ingested {total} financial facts")
 
 
+@equity_app.command("ingest")
+def equity_ingest_cmd(
+    years: str = typer.Option(..., "--years", help="예: 2022-2024 또는 2024"),
+    corp: Optional[str] = typer.Option(None, "--corp", help="단일 corp_code"),
+):
+    """DART 최대주주현황 + 타법인출자현황을 OWNS_STAKE_IN 엣지로 적재."""
+    from themek.ontology.ingest.equity import ingest_equity_for_company
+    if "-" in years:
+        lo, hi = years.split("-", 1)
+        year_list = [str(y) for y in range(int(lo), int(hi) + 1)]
+    else:
+        year_list = [years]
+    client = DartClient(api_key=get_settings().dart_api_key)
+    total = 0
+    with _session() as s:
+        if corp:
+            corp_codes = [corp]
+        else:
+            corp_codes = [
+                n.attrs.get("dart_code")
+                for n in s.execute(
+                    select(Node).where(Node.kind == "company")
+                ).scalars().all()
+                if n.attrs.get("dart_code")
+            ]
+        for code in corp_codes:
+            for yr in year_list:
+                total += ingest_equity_for_company(
+                    s, client, corp_code=code, bsns_year=yr)
+        s.commit()
+    typer.echo(f"ingested {total} ownership edges")
+
+
+@equity_app.command("verify")
+def equity_verify_cmd():
+    """지분구조 적재 검증(측정 게이트). 게이트 미달 시 exit code 1."""
+    from themek.ontology.verify_equity import verify_equity
+    with _session() as s:
+        rep = verify_equity(s)
+    for k, v in rep.items():
+        typer.echo(f"{k}: {v}")
+    if not rep["ok"]:
+        raise typer.Exit(code=1)
+
+
 @financials_app.command("rebuild")
 def financials_rebuild_cmd():
     """financial_facts purge 후 DART 재적재 + 무결성 검사 (BS 오염 교정)."""
@@ -878,12 +925,16 @@ def ontology_link_cmd(
 def ontology_resolve_cmd():
     """별칭 시드 → customer→company 해소 → segment 병합 → 무결성 검사."""
     from themek.ontology.ingest.seeds import seed_aliases
-    from themek.ontology.ingest.resolution import resolve_customers, merge_segments
+    from themek.ontology.ingest.resolution import (
+        resolve_customers, merge_segments, resolve_external_companies,
+        resolve_owners)
     from themek.ontology.validate import check_integrity
     with _session() as s:
         seeded = seed_aliases(s)
         cust = resolve_customers(s)
         seg = merge_segments(s)
+        ext = resolve_external_companies(s)
+        owners = resolve_owners(s)
         errors = [i for i in check_integrity(s) if i.severity == "error"]
         s.commit()
     typer.echo(f"aliases seeded: {seeded}")
@@ -891,6 +942,9 @@ def ontology_resolve_cmd():
                f"unresolved: {cust['unresolved']}, "
                f"edges repointed: {cust['edges_repointed']}")
     typer.echo(f"segments merged: {seg['merged']}")
+    typer.echo(f"external companies resolved: {ext['resolved']}, "
+               f"unresolved: {ext['unresolved']}")
+    typer.echo(f"owners merged: {owners['merged']}")
     typer.echo(f"integrity errors: {len(errors)}")
     if errors:
         raise typer.Exit(code=1)
@@ -917,6 +971,7 @@ def pipeline_run_cmd(
     skip_sync: bool = typer.Option(False, "--skip-sync"),
     skip_structure: bool = typer.Option(False, "--skip-structure"),
     skip_financials: bool = typer.Option(False, "--skip-financials"),
+    skip_equity: bool = typer.Option(False, "--skip-equity"),
     skip_export: bool = typer.Option(False, "--skip-export"),
 ):
     """DART 파이프라인 통합 구동: sync→structure→financials→export (재무 연도 자동)."""
@@ -935,7 +990,7 @@ def pipeline_run_cmd(
     universe: set[str] = set()
     rate_budget = None
     extractor = _stub_extractor_from_env()
-    if not (skip_sync and skip_structure and skip_financials):
+    if not (skip_sync and skip_structure and skip_financials and skip_equity):
         try:
             client, cache = _dart_client_and_cache()
         except DartAuthError as e:
@@ -965,7 +1020,8 @@ def pipeline_run_cmd(
         result = run_pipeline(
             sess, client, cache=cache,
             skip_sync=skip_sync, skip_structure=skip_structure,
-            skip_financials=skip_financials, skip_export=skip_export,
+            skip_financials=skip_financials, skip_equity=skip_equity,
+            skip_export=skip_export,
             since=since_d, until=until_d, universe=universe,
             rate_budget=rate_budget, extractor=extractor,
             out_vault=out_vault, out_graph=out_graph,
@@ -983,6 +1039,10 @@ def pipeline_run_cmd(
             f = result.financials
             typer.echo(f"[financials] years={f['years']} companies={f['companies']} "
                        f"facts={f['facts']} failed={len(f['failed'])}")
+        elif stage == "equity":
+            e = result.equity
+            typer.echo(f"[equity] companies={e['companies']} edges={e['edges']} "
+                       f"failed={len(e['failed'])}")
         elif stage == "export":
             e = result.export
             typer.echo(f"[export] vault {e['companies']} companies → {out_vault}/ ; "

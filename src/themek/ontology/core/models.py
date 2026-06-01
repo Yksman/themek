@@ -13,11 +13,12 @@ from themek.db.engine import Base
 
 NODE_KINDS = (
     "company", "stock", "sector", "region", "segment",
-    "customer", "period", "metric", "group",
+    "customer", "period", "metric", "group", "person",
 )
 PREDICATES = (
     "HAS_SEGMENT", "SELLS_TO", "EXPOSED_TO", "IN_SECTOR",
     "ISSUES_STOCK", "BELONGS_TO_GROUP", "SUB_SECTOR_OF",
+    "OWNS_STAKE_IN",
 )
 SOURCE_TYPES = ("dart_api", "dart_report", "social", "llm", "manual")
 METHODS = ("api", "llm", "manual")
