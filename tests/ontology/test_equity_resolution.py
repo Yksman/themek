@@ -33,6 +33,29 @@ def test_resolve_external_company_to_universe(ontology_session):
     assert e.object_id == "company:00126380"
 
 
+def test_resolve_external_company_as_subject_repoints_both_sides(ontology_session):
+    """외부법인이 법인 최대주주(subject)로 등장하는 엣지도 재지정 후 삭제(FK 위반 방지)."""
+    session = ontology_session
+    session.add(Corporation(dart_code="00126380", name_ko="삼성전자"))
+    upsert_node(session, "company:00126380", "company", "삼성전자",
+                {"dart_code": "00126380"})
+    upsert_node(session, "company:00200", "company", "피출자사",
+                {"dart_code": "00200"})
+    upsert_node(session, "company:ext:삼성전자-주", "company", "삼성전자(주)",
+                {"external": True})
+    # ext가 subject(주주): 삼성전자(주) → 피출자사
+    _owns(session, "company:ext:삼성전자-주", "company:00200",
+          q={"stake_pct": 40.0})
+    session.flush()
+    res = resolve_external_companies(session)
+    session.flush()
+    assert res["resolved"] == 1
+    assert session.get(Node, "company:ext:삼성전자-주") is None
+    e = session.query(Edge).filter_by(predicate="OWNS_STAKE_IN").one()
+    assert e.subject_id == "company:00126380"
+    assert e.object_id == "company:00200"
+
+
 def test_resolve_owner_seed_merge(ontology_session):
     session = ontology_session
     upsert_node(session, "person:이재용", "person", "이재용")

@@ -17,6 +17,19 @@ def test_personal_name_is_person():
     assert classify_shareholder("홍길동", "배우자") == "person"
 
 
+def test_executive_relate_is_person():
+    # "계열회사 임원"은 corp 키워드(계열회사)를 포함하지만 개인(임원)이다.
+    assert classify_shareholder("이부진", "계열회사 임원") == "person"
+    assert classify_shareholder("한종희", "계열회사 임원") == "person"
+    # 가족 관계도 개인.
+    assert classify_shareholder("홍라희", "최대주주의 특수관계인") == "person"
+
+
+def test_corp_affix_beats_person_relate():
+    # 이름에 법인 접미사가 있으면 관계가 "최대주주 본인"이어도 company.
+    assert classify_shareholder("삼성생명보험㈜", "최대주주 본인") == "company"
+
+
 def test_affiliation_from_stake_thresholds():
     assert affiliation_from_stake(84.78) == "자회사"   # >=50
     assert affiliation_from_stake(19.58) == "기타"  # 19.58 < 20 → 기타

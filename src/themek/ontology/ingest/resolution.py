@@ -154,8 +154,12 @@ def resolve_external_companies(session: Session) -> dict:
         if target is None or session.get(Node, target) is None:
             unresolved += 1
             continue
+        # 외부법인은 피출자(object)일 수도, 법인 최대주주(subject)일 수도 있다.
+        # 양방향 엣지를 모두 universe 노드로 재지정해야 FK 위반 없이 삭제 가능.
         repointed += _repoint_edges(session, old_object_id=node.id,
                                     new_object_id=target)
+        repointed += _repoint_subject_edges(session, old_subject_id=node.id,
+                                             new_subject_id=target)
         session.delete(node)
         resolved += 1
     session.flush()
